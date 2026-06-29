@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Environment variables
+.env
+.env.*
+.env.local
+.env.production
+.env.development.local
+.env.test.local
+!.env.example
+!.env.template
+
+# Testing
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Upload & temp directories
+public/uploads/
+public/temp/
+tmp/
+
+# Sentry
+.sentryclirc
+
+# Vercel
+.vercel
+
+# Debug
+*.dump

@@ -1,0 +1,81 @@
+{
+  "name": "Mumtaz AI - Your AI Dream Team",
+  "short_name": "Mumtaz AI",
+  "description": "Transform your workflow with 18 specialized AI personalities. Chat, build, deploy — all from one platform.",
+  "start_url": "/?utm_source=pwa&utm_medium=homescreen",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
+  "orientation": "any",
+  "lang": "en",
+  "dir": "ltr",
+  "id": "/",
+  "categories": ["productivity", "business", "utilities", "developer"],
+  "icons": [
+    {
+      "src": "/favicon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Chat with AI",
+      "short_name": "Chat",
+      "description": "Start a conversation with your AI agents",
+      "url": "/chat?utm_source=pwa_shortcut",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Canvas Studio",
+      "short_name": "Canvas",
+      "description": "Build and deploy web apps with AI",
+      "url": "/canvas?utm_source=pwa_shortcut",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your AI analytics and settings",
+      "url": "/dashboard?utm_source=pwa_shortcut",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "handle_links": "preferred",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}

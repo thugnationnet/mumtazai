@@ -1,0 +1,2137 @@
+// Prisma schema for Mumtaz AI
+// PostgreSQL Database Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
+model User {
+  id                   String    @id @default(cuid())
+  email                String    @unique
+  name                 String?
+  password             String?
+  authMethod           AuthMethod @default(password)
+  emailVerified        DateTime?
+  image                String?
+  avatar               String?
+  bio                  String?   @db.VarChar(500)
+  phoneNumber          String?
+  location             String?
+  timezone             String?
+  profession           String?
+  company              String?
+  
+  // Social links (JSON)
+  socialLinks          Json?     @default("{}")
+  
+  // Preferences (JSON)
+  preferences          Json?     @default("{\"language\":\"en\",\"theme\":\"auto\",\"notifications\":{\"email\":true,\"push\":true,\"sms\":false},\"privacy\":{\"profileVisibility\":\"public\",\"showEmail\":false,\"showPhone\":false}}")
+  
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  lastLoginAt          DateTime?
+  isActive             Boolean   @default(true)
+  role                 UserRole  @default(user)
+  
+  // Email verification
+  emailVerificationCode   String?
+  emailVerificationExpiry DateTime?
+
+  // Security
+  resetPasswordToken   String?
+  resetPasswordExpires DateTime?
+  sessionId            String?
+  sessionExpiry        DateTime?
+  twoFactorEnabled     Boolean   @default(false)
+  twoFactorSecret      String?
+  tempTwoFactorSecret  String?
+  backupCodes          String[]  @default([])
+  tempBackupCodes      String[]  @default([])
+  lastPasswordChange   DateTime?
+  loginAttempts        Int       @default(0)
+  lockUntil            DateTime?
+  tempToken            String?
+  tempTokenExpiry      DateTime?
+  adminAccessToken     String?
+  adminAccessExpiry    DateTime?
+
+  // Relations
+  subscriptions        AgentSubscription[]
+  chatSessions         ChatSession[]
+  transactions         Transaction[]
+  favorites            UserFavorites[]
+  communityPosts       CommunityPost[]
+  communityComments    CommunityComment[]
+  communityLikes       CommunityLike[]
+  memberships          CommunityMembership[]
+  supportTickets       SupportTicket[]
+  jobApplications      JobApplication[]
+  webinarRegistrations WebinarRegistration[]
+  agentMemories        AgentMemory[]
+  visitors             Visitor[]
+  sessions             Session[]
+  pageViews            PageView[]
+  analyticsEvents      AnalyticsEvent[]
+  chatFeedback         ChatFeedback[]
+  chatSettings         ChatSettings[]
+  agentPersonalizations AgentPersonalization[]
+  toolUsages           ToolUsage[]
+  userEvents           UserEvent[]
+  apiUsages            ApiUsage[]
+  chatInteractions     ChatAnalyticsInteraction[]
+  security             UserSecurity?
+  canvasProjects       CanvasProject[]
+  canvasBuildProjects  CanvasBuildProject[]
+  canvasDeployCredentials CanvasDeployCredential[]
+  canvasAssets         CanvasAsset[]
+  appHostingPlans      AppHostingPlan[]
+  appUsageRecords      AppUsageRecord[]
+  memoryProfile        UserMemoryProfile?
+  userPreferences      UserPreferences?
+  pushSubscriptions    PushSubscription[]
+
+  @@index([email])
+  @@index([sessionId])
+  @@index([resetPasswordToken])
+}
+
+// ============================================
+// PUSH NOTIFICATION SUBSCRIPTIONS
+// ============================================
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  endpoint  String   @unique
+  keys      Json     // { p256dh, auth }
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([endpoint])
+  @@map("push_subscriptions")
+}
+
+// User Security - Audit & device tracking (2FA config lives on User model)
+model UserSecurity {
+  id                   String    @id @default(cuid())
+  userId               String    @unique
+  trustedDevices       Json      @default("[]")
+  loginHistory         Json      @default("[]")
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  // Relation
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_security")
+}
+
+enum AuthMethod {
+  password
+  passwordless
+  google
+  github
+  yahoo
+  microsoft
+}
+
+enum UserRole {
+  user
+  admin
+  moderator
+}
+
+// ============================================
+// AGENTS
+// ============================================
+
+model Agent {
+  id            String      @id @default(cuid())
+  agentId       String      @unique // Custom agent ID like "nova", "pixel", etc.
+  name          String      @db.VarChar(100)
+  avatarUrl     String?
+  specialty     String?     @db.VarChar(100)
+  description   String?     @db.VarChar(500)
+  systemPrompt  String
+  welcomeMessage String
+  specialties   String[]    @default([])
+  tags          String[]    @default([])
+  color         String?     @db.VarChar(100)
+  
+  // AI Provider settings (JSON)
+  aiProvider    Json?       @default("{}")
+  
+  // Pricing
+  pricingDaily  Float?      @default(0)
+  pricingWeekly Float?      @default(0)
+  pricingMonthly Float?     @default(0)
+  
+  // Stats
+  totalUsers    Int         @default(0)
+  totalSessions Int         @default(0)
+  averageRating Float       @default(0)
+  
+  status        AgentStatus @default(active)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relations
+  subscriptions AgentSubscription[]
+  chatSessions  ChatSession[]
+  memories      AgentMemory[]
+  files         AgentFile[]
+  personalizations AgentPersonalization[]
+  toolUsages    ToolUsage[]
+  chatInteractions ChatAnalyticsInteraction[]
+
+  @@index([agentId])
+  @@index([status])
+  @@index([tags])
+}
+
+enum AgentStatus {
+  active
+  maintenance
+  deprecated
+}
+
+model AgentSubscription {
+  id                   String             @id @default(cuid())
+  userId               String
+  agentId              String
+  plan                 SubscriptionPlan
+  price                Float
+  status               SubscriptionStatus @default(active)
+  startDate            DateTime           @default(now())
+  expiryDate           DateTime
+  autoRenew            Boolean            @default(false)
+  stripeSubscriptionId String?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  // Relations
+  user                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent                Agent              @relation(fields: [agentId], references: [agentId], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([agentId])
+  @@index([userId, agentId])
+  @@index([stripeSubscriptionId])
+  @@map("subscriptions")
+}
+
+enum SubscriptionPlan {
+  daily
+  weekly
+  monthly
+  yearly
+}
+
+enum SubscriptionStatus {
+  active
+  expired
+  cancelled
+}
+
+model AgentFile {
+  id           String   @id @default(cuid())
+  agentId      String?
+  userId       String
+  filename     String
+  originalName String?
+  folder       String   @default("/")
+  path         String
+  mimeType     String?
+  size         Int      @default(0)
+  storageType  String   @default("database")
+  content      String?
+  s3Key        String?
+  s3Bucket     String?
+  s3Url        String?
+  isDeleted    Boolean  @default(false)
+  metadata     Json?    @default("{}")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations — optional so files can be created without a valid agent
+  agent        Agent?   @relation(fields: [agentId], references: [agentId], onDelete: SetNull)
+
+  @@index([agentId])
+  @@index([userId])
+  @@index([userId, path])
+  @@index([userId, isDeleted])
+}
+
+model AgentPersonalization {
+  id           String   @id @default(cuid())
+  userId       String
+  agentId      String
+  nickname     String?
+  customPrompt String?
+  preferences  Json?    @default("{}")
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent        Agent    @relation(fields: [agentId], references: [agentId], onDelete: Cascade)
+
+  @@unique([userId, agentId])
+  @@index([userId])
+  @@index([agentId])
+}
+
+// ============================================
+// AGENT MEMORY - Long-term learning
+// ============================================
+
+model AgentMemory {
+  id          String      @id @default(cuid())
+  agentId     String
+  userId      String
+  
+  // Individual memory entries stored as JSON array
+  memories    Json        @default("[]")
+  
+  // Summary of the relationship
+  summary     String?
+  
+  // Stats
+  totalMemories Int       @default(0)
+  lastAccessed  DateTime?
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  agent       Agent       @relation(fields: [agentId], references: [agentId], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([agentId, userId])
+  @@index([agentId])
+  @@index([userId])
+  @@map("agent_memories")
+}
+
+// ============================================
+// CHAT
+// ============================================
+
+model ChatSession {
+  id          String        @id @default(cuid())
+  sessionId   String        @unique
+  userId      String
+  agentId     String?
+  name        String        @db.VarChar(100)
+  description String?       @db.VarChar(500)
+  isActive    Boolean       @default(true)
+  isArchived  Boolean       @default(false)
+  tags        String[]      @default([])
+  
+  // Settings (JSON)
+  settings    Json?         @default("{\"temperature\":0.7,\"maxTokens\":2000,\"mode\":\"balanced\",\"provider\":\"openai\"}")
+  
+  // Stats (JSON)
+  stats       Json?         @default("{\"messageCount\":0,\"totalTokens\":0,\"durationMs\":0}")
+  
+  archivedAt  DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent       Agent?        @relation(fields: [agentId], references: [agentId])
+  messages    ChatMessage[]
+  feedback    ChatFeedback[]
+  canvasFiles ChatCanvasFile[]
+  canvasHistory ChatCanvasHistory[]
+  canvasProjects ChatCanvasProject[]
+
+  @@index([userId, updatedAt])
+  @@index([agentId, createdAt])
+  @@index([isActive, updatedAt])
+  @@index([tags])
+  @@map("chat_sessions")
+}
+
+model ChatMessage {
+  id           String      @id @default(cuid())
+  sessionId    String
+  role         MessageRole
+  content      String
+  metadata     Json?       @default("{}")
+  tokenCount   Int?
+  latencyMs    Int?
+  isPinned     Boolean     @default(false)
+  isSaved      Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+
+  // Relations
+  session      ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
+  @@index([sessionId, createdAt])
+  @@map("chat_messages")
+}
+
+enum MessageRole {
+  user
+  assistant
+  system
+}
+
+model ChatFeedback {
+  id          String      @id @default(cuid())
+  sessionId   String
+  userId      String
+  messageId   String?
+  rating      Int?        // 1-5 stars
+  feedback    String?
+  type        FeedbackType?
+  createdAt   DateTime    @default(now())
+
+  // Relations
+  session     ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([userId])
+  @@map("chat_feedback")
+}
+
+enum FeedbackType {
+  helpful
+  not_helpful
+  incorrect
+  offensive
+  other
+}
+
+model ChatSettings {
+  id              String   @id @default(cuid())
+  userId          String
+  defaultProvider String   @default("openai")
+  defaultModel    String?
+  temperature     Float    @default(0.7)
+  maxTokens       Int      @default(2000)
+  defaultMode     String   @default("balanced")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+  @@map("chat_settings")
+}
+
+model ChatQuickAction {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  prompt      String
+  category    String?
+  icon        String?
+  isGlobal    Boolean  @default(false)
+  userId      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([userId])
+  @@map("chat_quick_actions")
+}
+
+// ============================================
+// CANVAS
+// ============================================
+
+model ChatCanvasFile {
+  id          String      @id @default(cuid())
+  sessionId   String
+  fileName    String
+  fileType    String
+  content     String
+  version     Int         @default(1)
+  metadata    Json?       @default("{}")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  session     ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@map("chat_canvas_files")
+}
+
+model ChatCanvasHistory {
+  id          String      @id @default(cuid())
+  sessionId   String
+  action      String
+  data        Json?
+  createdAt   DateTime    @default(now())
+
+  // Relations
+  session     ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
+  @@index([sessionId, createdAt])
+  @@map("chat_canvas_history")
+}
+
+model ChatCanvasProject {
+  id          String      @id @default(cuid())
+  sessionId   String
+  name        String
+  description String?
+  files       Json?       @default("[]")
+  settings    Json?       @default("{}")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  session     ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@map("chat_canvas_projects")
+}
+
+// ============================================
+// TRANSACTIONS & BILLING
+// ============================================
+
+model Transaction {
+  id                    String            @id @default(cuid())
+  transactionId         String            @unique
+  userId                String
+  
+  // Stripe references
+  stripePaymentIntentId String?
+  stripeChargeId        String?
+  stripeInvoiceId       String?
+  stripeSubscriptionId  String?
+  
+  type                  TransactionType
+  
+  // Item purchased (JSON)
+  item                  Json?             @default("{}")
+  
+  // Subscription details (JSON)
+  subscription          Json?
+  
+  // Amount
+  amount                Float
+  currency              String            @default("USD")
+  tax                   Float             @default(0)
+  discount              Float             @default(0)
+  couponCode            String?
+  
+  // Payment method (JSON)
+  paymentMethod         Json?
+  
+  status                TransactionStatus
+  
+  // Error details
+  errorCode             String?
+  errorMessage          String?
+  
+  // Refund details
+  refundAmount          Float?
+  refundReason          String?
+  refundedAt            DateTime?
+  
+  // Metadata
+  metadata              Json?             @default("{}")
+  notes                 String?
+  
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  // Relations
+  user                  User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([transactionId])
+  @@index([type])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum TransactionType {
+  purchase
+  subscription
+  renewal
+  upgrade
+  downgrade
+  refund
+  credit
+  chargeback
+  failed
+}
+
+enum TransactionStatus {
+  pending
+  processing
+  completed
+  failed
+  refunded
+  partially_refunded
+  disputed
+  cancelled
+}
+
+// ============================================
+// ANALYTICS
+// ============================================
+
+model Visitor {
+  id           String   @id @default(cuid())
+  visitorId    String   @unique
+  sessionId    String
+  userId       String?
+  firstVisit   DateTime @default(now())
+  lastVisit    DateTime @default(now())
+  visitCount   Int      @default(1)
+  ipAddress    String
+  userAgent    String
+  country      String   @default("Unknown")
+  city         String   @default("Unknown")
+  device       DeviceType
+  browser      String
+  os           String
+  referrer     String?
+  landingPage  String   @default("/")
+  isRegistered Boolean  @default(false)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user         User?    @relation(fields: [userId], references: [id])
+
+  @@index([visitorId])
+  @@index([userId])
+  @@map("visitors")
+}
+
+enum DeviceType {
+  mobile
+  tablet
+  desktop
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionId    String   @unique
+  visitorId    String
+  userId       String?
+  startTime    DateTime @default(now())
+  lastActivity DateTime @default(now())
+  pageViews    Int      @default(0)
+  events       Int      @default(0)
+  duration     Int      @default(0) // in seconds
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user         User?    @relation(fields: [userId], references: [id])
+
+  @@index([sessionId])
+  @@index([visitorId])
+  @@index([userId])
+  @@map("sessions")
+}
+
+model PageView {
+  id         String   @id @default(cuid())
+  visitorId  String
+  sessionId  String
+  userId     String?
+  url        String
+  title      String?
+  referrer   String?
+  timeSpent  Int      @default(0) // in seconds
+  timestamp  DateTime @default(now())
+
+  // Relations
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@index([visitorId])
+  @@index([sessionId])
+  @@index([userId])
+  @@index([timestamp])
+  @@map("page_views")
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(cuid())
+  visitorId  String
+  sessionId  String
+  userId     String?
+  eventName  String
+  eventData  Json?    @default("{}")
+  timestamp  DateTime @default(now())
+
+  // Relations
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@index([visitorId])
+  @@index([sessionId])
+  @@index([userId])
+  @@index([eventName])
+  @@index([timestamp])
+  @@map("analytics_events")
+}
+
+model ToolUsage {
+  id           String       @id @default(cuid())
+  toolName     String
+  version      String?
+  userId       String?
+  agentId      String?
+  command      String
+  arguments    Json?
+  inputPreview String?
+  outputPreview String?
+  tokensInput  Int          @default(0)
+  tokensOutput Int          @default(0)
+  latencyMs    Int          @default(0)
+  status       ToolStatus   @default(completed)
+  integration  String?
+  environment  String?
+  tags         String[]     @default([])
+  occurredAt   DateTime     @default(now())
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  // Relations
+  user         User?        @relation(fields: [userId], references: [id])
+  agent        Agent?       @relation(fields: [agentId], references: [id])
+
+  @@index([toolName])
+  @@index([userId])
+  @@index([agentId])
+  @@index([occurredAt])
+  @@map("tool_usages")
+}
+
+enum ToolStatus {
+  pending
+  completed
+  failed
+}
+
+model UserEvent {
+  id          String      @id @default(cuid())
+  userId      String?
+  eventType   String
+  category    String
+  action      String
+  label       String?
+  value       Int?
+  properties  Json?
+  durationMs  Int?
+  success     Boolean?
+  source      EventSource @default(web)
+  occurredAt  DateTime    @default(now())
+  tags        String[]    @default([])
+  featureFlag String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  user        User?       @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([eventType])
+  @@index([category])
+  @@index([occurredAt])
+  @@map("user_events")
+}
+
+enum EventSource {
+  web
+  mobile
+  api
+}
+
+model ApiUsage {
+  id           String   @id @default(cuid())
+  visitorId    String
+  sessionId    String
+  userId       String?
+  endpoint     String
+  method       String
+  statusCode   Int
+  responseTime Int      // in milliseconds
+  userAgent    String?
+  ipAddress    String?
+  timestamp    DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user         User?    @relation(fields: [userId], references: [id])
+
+  @@index([visitorId])
+  @@index([sessionId])
+  @@index([userId])
+  @@index([endpoint])
+  @@index([timestamp])
+  @@map("api_usages")
+}
+
+model ChatAnalyticsInteraction {
+  id              String       @id @default(cuid())
+  conversationId  String
+  userId          String?
+  agentId         String?
+  channel         ChatChannel  @default(web)
+  language        String       @default("en")
+  messages        Json         @default("[]")
+  keywords        String[]     @default([])
+  actionItems     String[]     @default([])
+  totalTokens     Int          @default(0)
+  durationMs      Int          @default(0)
+  turnCount       Int          @default(0)
+  status          ChatStatus   @default(active)
+  tags            String[]     @default([])
+  priority        ChatPriority @default(medium)
+  startedAt       DateTime     @default(now())
+  closedAt        DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  // Relations
+  user            User?        @relation(fields: [userId], references: [id])
+  agent           Agent?       @relation(fields: [agentId], references: [id])
+
+  @@index([conversationId])
+  @@index([userId])
+  @@index([agentId])
+  @@index([startedAt])
+  @@map("chat_analytics_interactions")
+}
+
+enum ChatChannel {
+  web
+  mobile
+  api
+}
+
+enum ChatStatus {
+  active
+  closed
+  archived
+}
+
+enum ChatPriority {
+  low
+  medium
+  high
+}
+
+// ============================================
+// COMMUNITY
+// ============================================
+
+model CommunityPost {
+  id           String             @id @default(cuid())
+  authorId     String?
+  authorName   String
+  authorAvatar String             @default("👤")
+  content      String             @db.VarChar(5000)
+  category     PostCategory       @default(general)
+  isPinned     Boolean            @default(false)
+  likesCount   Int                @default(0)
+  repliesCount Int                @default(0)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  // Relations
+  author       User?              @relation(fields: [authorId], references: [id])
+  comments     CommunityComment[]
+  likes        CommunityLike[]
+
+  @@index([category])
+  @@index([createdAt])
+  @@map("community_posts")
+}
+
+enum PostCategory {
+  general
+  agents
+  ideas
+  help
+}
+
+model CommunityComment {
+  id           String        @id @default(cuid())
+  postId       String
+  authorId     String?
+  authorName   String
+  authorAvatar String        @default("👤")
+  content      String        @db.VarChar(2000)
+  likesCount   Int           @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  // Relations
+  post         CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author       User?         @relation(fields: [authorId], references: [id])
+  likes        CommunityLike[]
+
+  @@index([postId])
+  @@index([authorId])
+  @@map("community_comments")
+}
+
+model CommunityLike {
+  id        String            @id @default(cuid())
+  userId    String
+  postId    String?
+  commentId String?
+  createdAt DateTime          @default(now())
+
+  // Relations
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      CommunityPost?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment   CommunityComment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@unique([userId, commentId])
+  @@index([userId])
+  @@map("community_likes")
+}
+
+model CommunityGroup {
+  id          String               @id @default(cuid())
+  name        String
+  description String?
+  avatar      String?
+  coverImage  String?
+  isPublic    Boolean              @default(true)
+  creatorId   String
+  memberCount Int                  @default(0)
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+
+  // Relations
+  memberships CommunityMembership[]
+
+  @@index([creatorId])
+  @@map("community_groups")
+}
+
+model CommunityMembership {
+  id        String         @id @default(cuid())
+  userId    String
+  groupId   String
+  role      MembershipRole @default(member)
+  joinedAt  DateTime       @default(now())
+
+  // Relations
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group     CommunityGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, groupId])
+  @@index([userId])
+  @@index([groupId])
+  @@map("community_memberships")
+}
+
+enum MembershipRole {
+  member
+  moderator
+  admin
+}
+
+model CommunityEvent {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  startDate   DateTime
+  endDate     DateTime?
+  location    String?
+  isVirtual   Boolean   @default(false)
+  virtualUrl  String?
+  creatorId   String
+  maxAttendees Int?
+  attendeeCount Int     @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([startDate])
+  @@index([creatorId])
+  @@map("community_events")
+}
+
+model CommunityContent {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  type        String   // article, tutorial, resource, etc.
+  authorId    String
+  tags        String[] @default([])
+  viewCount   Int      @default(0)
+  isPublished Boolean  @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([authorId])
+  @@index([type])
+  @@index([tags])
+  @@map("community_content")
+}
+
+model CommunitySuggestion {
+  id            String           @id @default(cuid())
+  suggestionId  String?          @unique
+  userId        String?
+  userEmail     String?
+  userName      String?
+  isAnonymous   Boolean          @default(false)
+  title         String
+  description   String
+  category      String?
+  relatedTo     String?
+  userPriority  String?          @default("would-be-helpful")
+  tags          String[]         @default([])
+  status        SuggestionStatus @default(pending)
+  votes         Int              @default(0)
+  votesUp       Int              @default(0)
+  votesDown     Int              @default(0)
+  voters        Json             @default("[]")
+  comments      Json             @default("[]")
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([status])
+  @@index([votes])
+  @@index([suggestionId])
+  @@map("community_suggestions")
+}
+
+enum SuggestionStatus {
+  pending
+  approved
+  rejected
+  implemented
+}
+
+model CommunityModeration {
+  id          String           @id @default(cuid())
+  targetType  String           // post, comment, user
+  targetId    String
+  reporterId  String
+  reason      String
+  status      ModerationStatus @default(pending)
+  resolvedBy  String?
+  resolvedAt  DateTime?
+  notes       String?
+  createdAt   DateTime         @default(now())
+
+  @@index([targetType, targetId])
+  @@index([status])
+  @@map("community_moderation")
+}
+
+enum ModerationStatus {
+  pending
+  reviewed
+  resolved
+  dismissed
+}
+
+model CommunityMetrics {
+  id            String   @id @default(cuid())
+  date          DateTime @unique
+  totalUsers    Int      @default(0)
+  activeUsers   Int      @default(0)
+  newUsers      Int      @default(0)
+  totalPosts    Int      @default(0)
+  newPosts      Int      @default(0)
+  totalComments Int      @default(0)
+  newComments   Int      @default(0)
+  totalLikes    Int      @default(0)
+  engagement    Float    @default(0)
+  createdAt     DateTime @default(now())
+
+  @@index([date])
+  @@map("community_metrics")
+}
+
+// ============================================
+// SUPPORT & CONTACT
+// ============================================
+
+model SupportTicket {
+  id          String       @id @default(cuid())
+  userId      String?
+  email       String
+  name        String?
+  subject     String
+  description String
+  category    String?
+  priority    TicketPriority @default(medium)
+  status      TicketStatus @default(open)
+  assignedTo  String?
+  resolvedAt  DateTime?
+  metadata    Json?        @default("{}")
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relations
+  user        User?        @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([priority])
+  @@map("support_tickets")
+}
+
+enum TicketPriority {
+  low
+  medium
+  high
+  urgent
+}
+
+enum TicketStatus {
+  open
+  in_progress
+  waiting
+  resolved
+  closed
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  source    String?  // website, app, etc.
+  isRead    Boolean  @default(false)
+  repliedAt DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([isRead])
+  @@map("contact_messages")
+}
+
+// Newsletter & Early Access Subscribers
+model NewsletterSubscriber {
+  id              String                    @id @default(cuid())
+  email           String                    @unique
+  name            String?
+  source          NewsletterSource          @default(newsletter)
+  status          NewsletterSubscriberStatus @default(active)
+  ipAddress       String?
+  userAgent       String?
+  referrer        String?
+  confirmedAt     DateTime?
+  unsubscribedAt  DateTime?
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @updatedAt
+
+  @@index([email])
+  @@index([source])
+  @@index([status])
+  @@index([createdAt])
+  @@map("newsletter_subscribers")
+}
+
+enum NewsletterSource {
+  newsletter      // Main newsletter form
+  early_access    // Early access signup
+  footer          // Footer signup
+  popup           // Popup modal
+  blog            // Blog subscription
+  other
+}
+
+enum NewsletterSubscriberStatus {
+  pending         // Awaiting confirmation
+  active          // Confirmed and active
+  unsubscribed    // User unsubscribed
+  bounced         // Email bounced
+}
+
+// ============================================
+// EMAIL TRACKING
+// ============================================
+
+model EmailTracking {
+  id          String   @id @default(cuid())
+  trackingId  String   @unique @default(cuid())
+  userId      String?
+  email       String
+  emailType   String   // welcome, newsletter, notification, etc.
+  subject     String?
+  sentAt      DateTime @default(now())
+  delivered   Boolean  @default(false)
+  deliveredAt DateTime?
+  failed      Boolean  @default(false)
+  failedAt    DateTime?
+  failedReason String?
+  opened      Boolean  @default(false)
+  openedAt    DateTime?
+  openCount   Int      @default(0)
+  userAgent   String?
+  ipAddress   String?
+  metadata    Json?    @default("{}")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([email])
+  @@index([emailType])
+  @@index([sentAt])
+  @@index([opened])
+  @@index([delivered])
+  @@index([trackingId])
+  @@map("email_tracking")
+}
+
+// ============================================
+// CAREERS & CONSULTATIONS
+// ============================================
+
+model JobApplication {
+  id          String            @id @default(cuid())
+  userId      String?
+  name        String
+  email       String
+  phone       String?
+  position    String
+  resumeUrl   String?
+  coverLetter String?
+  linkedinUrl String?
+  portfolioUrl String?
+  status      ApplicationStatus @default(submitted)
+  notes       String?
+  reviewedAt  DateTime?
+  reviewedBy  String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  // Relations
+  user        User?             @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([position])
+  @@map("job_applications")
+}
+
+enum ApplicationStatus {
+  submitted
+  under_review
+  interviewed
+  offered
+  accepted
+  rejected
+  withdrawn
+}
+
+model Consultation {
+  id              String             @id @default(cuid())
+  name            String
+  email           String
+  phone           String?
+  company         String?
+  topic           String
+  description     String?
+  preferredDate   DateTime?
+  preferredTime   String?
+  timezone        String?
+  status          ConsultationStatus @default(requested)
+  scheduledAt     DateTime?
+  meetingUrl      String?
+  notes           String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@map("consultations")
+}
+
+enum ConsultationStatus {
+  requested
+  scheduled
+  completed
+  cancelled
+  no_show
+}
+
+// ============================================
+// WEBINARS & EVENTS
+// ============================================
+
+model WebinarRegistration {
+  id         String   @id @default(cuid())
+  userId     String?
+  webinarId  String
+  name       String
+  email      String
+  company    String?
+  jobTitle   String?
+  attended   Boolean  @default(false)
+  joinedAt   DateTime?
+  leftAt     DateTime?
+  createdAt  DateTime @default(now())
+
+  // Relations
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@unique([webinarId, email])
+  @@index([userId])
+  @@index([webinarId])
+  @@map("webinar_registrations")
+}
+
+// ============================================
+// USER FAVORITES
+// ============================================
+
+model UserFavorites {
+  id          String   @id @default(cuid())
+  userId      String
+  itemType    String   // agent, session, prompt, etc.
+  itemId      String
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, itemType, itemId])
+  @@index([userId])
+  @@map("user_favorites")
+}
+
+// ============================================
+// LAB EXPERIMENTS
+// ============================================
+
+enum ExperimentStatus {
+  pending
+  processing
+  completed
+  failed
+  cancelled
+}
+
+model LabExperiment {
+  id             String           @id @default(cuid())
+  experimentId   String           @unique
+  experimentType String
+  userId         String?
+  sessionId      String?
+  visitorId      String?
+  input          Json?            @default("{}")
+  output         Json?
+  status         ExperimentStatus @default(pending)
+  errorMessage   String?
+  processingTime Int?             @default(0)
+  tokensUsed     Int?             @default(0)
+  creditsUsed    Float?           @default(0)
+  startedAt      DateTime?
+  completedAt    DateTime?
+  feedback       Json?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([experimentId])
+  @@index([experimentType])
+  @@index([userId])
+  @@index([sessionId])
+  @@index([status])
+  @@map("lab_experiments")
+}
+
+enum DebateStatus {
+  active
+  completed
+  archived
+}
+
+model Debate {
+  id          String       @id @default(cuid())
+  debateId    String       @unique
+  topic       String
+  status      DebateStatus @default(active)
+  agent1      Json         @default("{\"name\":\"Nova\",\"position\":\"Pro\",\"avatar\":\"⚡\",\"provider\":\"Nova\",\"response\":\"\",\"responseTime\":0,\"votes\":0}")
+  agent2      Json         @default("{\"name\":\"Blaze\",\"position\":\"Con\",\"avatar\":\"🔥\",\"provider\":\"Blaze\",\"response\":\"\",\"responseTime\":0,\"votes\":0}")
+  totalVotes  Int          @default(0)
+  viewers     Int          @default(0)
+  votedUsers  String[]     @default([])
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([debateId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("debates")
+}
+
+// ============================================
+// CANVAS BUILDER - AI App Generation
+// ============================================
+
+enum CanvasFramework {
+  vite_react
+  nextjs
+  html
+  express
+  fastapi
+}
+
+enum CanvasProjectStatus {
+  draft
+  building
+  deployed
+  error
+}
+
+enum CanvasBuildStatus {
+  pending
+  building
+  success
+  failed
+}
+
+enum CanvasDeploymentStatus {
+  pending
+  deploying
+  live
+  failed
+  stopped
+}
+
+model CanvasProject {
+  id              String               @id @default(cuid())
+  userId          String
+  name            String               @db.VarChar(200)
+  description     String?              @db.VarChar(1000)
+  framework       CanvasFramework      @default(vite_react)
+  
+  // Project structure stored as JSON
+  files           Json                 @default("[]")
+  pages           Json                 @default("[]")
+  routes          Json                 @default("[]")
+  apiRoutes       Json                 @default("[]")
+  
+  // i18n configuration
+  languages       String[]             @default(["en"])
+  defaultLanguage String               @default("en")
+  translations    Json                 @default("{}")
+  
+  // Backend settings
+  hasBackend      Boolean              @default(false)
+  database        Json?
+  
+  // Deployment info
+  subdomain       String?              @unique
+  deploymentUrl   String?
+  status          CanvasProjectStatus  @default(draft)
+  
+  // Build info
+  lastBuildId     String?
+  lastBuildStatus CanvasBuildStatus?
+  lastBuildAt     DateTime?
+  
+  // Product source — which app created this project
+  source          String?              @db.VarChar(20) // 'canvas-studio' | 'canvas-build'
+
+  // Metadata
+  thumbnail       String?
+  tags            String[]             @default([])
+  isPublic        Boolean              @default(false)
+  viewCount       Int                  @default(0)
+  forkCount       Int                  @default(0)
+  forkedFromId    String?
+  
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  
+  // Relations
+  user            User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  builds          CanvasBuild[]
+  deployments     CanvasDeployment[]
+  assets          CanvasAsset[]
+  forkedFrom      CanvasProject?       @relation("ProjectForks", fields: [forkedFromId], references: [id])
+  forks           CanvasProject[]      @relation("ProjectForks")
+  
+  @@index([userId])
+  @@index([subdomain])
+  @@index([status])
+  @@index([isPublic])
+  @@index([createdAt])
+  @@map("canvas_projects")
+}
+
+// ============================================
+// CANVAS BUILD PROJECTS (universal-chat overlay — separate table)
+// Simpler schema for the canvas-build product inside universal-chat.
+// Previously shared canvas_projects table with source-column isolation;
+// now has its own dedicated table for true DB-level separation.
+// ============================================
+
+model CanvasBuildProject {
+  id              String    @id @default(cuid())
+  userId          String
+  name            String    @db.VarChar(200)
+  description     String?   @db.VarChar(1000)
+
+  // Project files stored as JSON array of { path, name, content, language }
+  files           Json      @default("[]")
+
+  // Chat history — array of { role, content, timestamp }
+  chatHistory     Json      @default("[]")
+
+  // Arbitrary metadata (agent, model, etc.)
+  metadata        Json      @default("{}")
+
+  // Visual
+  thumbnail       String?
+  tags            String[]  @default([])
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  builds          CanvasBuild[]
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("canvas_build_projects")
+}
+
+model CanvasBuild {
+  id              String             @id @default(cuid())
+  projectId       String?            // canvas-studio projects (CanvasProject)
+  buildProjectId  String?            // universal-chat projects (CanvasBuildProject)
+  version         Int                @default(1)
+  status          CanvasBuildStatus  @default(pending)
+  
+  // Build configuration
+  framework       CanvasFramework
+  buildCommand    String?
+  
+  // Build outputs
+  logs            String?            @db.Text
+  artifactUrl     String?
+  containerImage  String?
+  
+  // Timing
+  duration        Int?               // seconds
+  createdAt       DateTime           @default(now())
+  startedAt       DateTime?
+  completedAt     DateTime?
+  
+  // Error info
+  errorMessage    String?
+  errorStack      String?            @db.Text
+  
+  // Relations
+  project         CanvasProject?      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  buildProject    CanvasBuildProject? @relation(fields: [buildProjectId], references: [id], onDelete: Cascade)
+  
+  @@index([projectId])
+  @@index([buildProjectId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("canvas_builds")
+}
+
+model CanvasDeployment {
+  id              String                  @id @default(cuid())
+  projectId       String
+  buildId         String?
+  
+  // Deployment info
+  subdomain       String
+  url             String
+  status          CanvasDeploymentStatus  @default(pending)
+  type            String                  @default("static") // static, container, serverless
+  
+  // Container/server info
+  containerImage  String?
+  containerPort   Int?
+  healthCheckUrl  String?
+  
+  // SSL
+  sslEnabled      Boolean                 @default(true)
+  sslExpiresAt    DateTime?
+  
+  // Environment variables (encrypted)
+  envVars         Json?                   @default("{}")
+  
+  // Traffic & analytics
+  requestCount    Int                     @default(0)
+  bandwidthUsed   BigInt                  @default(0)
+  lastAccessedAt  DateTime?
+  
+  // Timing
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  deployedAt      DateTime?
+  
+  // Relations
+  project         CanvasProject           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  @@index([projectId])
+  @@index([subdomain])
+  @@index([status])
+  @@map("canvas_deployments")
+}
+
+model CanvasTemplate {
+  id              String          @id @default(cuid())
+  name            String          @db.VarChar(100)
+  description     String?         @db.VarChar(500)
+  category        String          @default("landing") // landing, ecommerce, dashboard, blog, portfolio, saas
+  framework       CanvasFramework @default(vite_react)
+  
+  // Template content
+  files           Json            @default("[]")
+  pages           Json            @default("[]")
+  thumbnail       String?
+  previewUrl      String?
+  
+  // Metadata
+  features        String[]        @default([])
+  tags            String[]        @default([])
+  isPremium       Boolean         @default(false)
+  price           Float?
+  
+  // Stats
+  usageCount      Int             @default(0)
+  rating          Float           @default(0)
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  @@index([category])
+  @@index([framework])
+  @@index([isPremium])
+  @@map("canvas_templates")
+}
+
+model CanvasDeployCredential {
+  id              String    @id @default(cuid())
+  userId          String
+  provider        String    @db.VarChar(50)  // vercel, railway, netlify, cloudflare
+  name            String    @default("Default") @db.VarChar(100)
+  token           String    @db.Text         // AES-256-CBC encrypted
+  teamId          String?   @db.VarChar(200)
+  source          String    @default("") @db.VarChar(20)  // 'canvas-studio' | 'canvas-build' | '' (legacy/shared)
+  isValid         Boolean   @default(true)
+  lastValidatedAt DateTime  @default(now())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, provider, source])
+  @@index([userId])
+  @@index([userId, source])
+  @@map("canvas_deploy_credentials")
+}
+
+// ============================================
+// CANVAS ASSETS (Project files, images, fonts, etc.)
+// ============================================
+
+model CanvasAsset {
+  id              String    @id @default(cuid())
+  projectId       String
+  userId          String
+
+  // File info
+  type            String    @default("other") @db.VarChar(20) // image, video, font, document, other
+  originalName    String    @db.VarChar(255)
+  originalSize    Int       // bytes
+  optimizedSize   Int?      // bytes (after compression)
+  mimeType        String?   @db.VarChar(100)
+
+  // Storage
+  storagePath     String    @db.VarChar(500) // local or S3 path
+  cdnUrl          String    @db.VarChar(500)
+  thumbnailUrl    String?   @db.VarChar(500)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  project         CanvasProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("canvas_assets")
+}
+
+// ============================================
+// CANVAS MONITORING (Logs, errors, events)
+// ============================================
+
+model CanvasMonitoringLog {
+  id              String    @id @default(cuid())
+  projectId       String
+  severity        String    @default("info") @db.VarChar(10) // critical, error, warning, info, debug
+  message         String    @db.Text
+  source          String?   @db.VarChar(50) // build, deploy, runtime, sandbox
+  metadata        Json?
+
+  createdAt       DateTime  @default(now())
+
+  @@index([projectId])
+  @@index([severity])
+  @@index([createdAt])
+  @@map("canvas_monitoring_logs")
+}
+
+model CanvasErrorGroup {
+  id              String    @id @default(cuid())
+  projectId       String
+  fingerprint     String    // hash of error message + stack
+  message         String    @db.Text
+  severity        String    @default("error") @db.VarChar(10)
+  stack           String?   @db.Text
+  count           Int       @default(1)
+  resolved        Boolean   @default(false)
+  resolvedAt      DateTime?
+  firstSeen       DateTime  @default(now())
+  lastSeen        DateTime  @default(now())
+
+  @@unique([projectId, fingerprint])
+  @@index([projectId])
+  @@index([resolved])
+  @@index([lastSeen])
+  @@map("canvas_error_groups")
+}
+
+// ============================================
+// APP HOSTING & BILLING (Canvas-Studio SaaS)
+// ============================================
+
+enum HostingTier {
+  free
+  starter
+  pro
+  business
+}
+
+enum HostingPlanStatus {
+  active
+  expired
+  cancelled
+  past_due
+}
+
+model AppHostingPlan {
+  id                   String            @id @default(cuid())
+  userId               String
+  tier                 HostingTier       @default(free)
+  status               HostingPlanStatus @default(active)
+  
+  // Billing
+  price                Float             @default(0)
+  billingCycle         SubscriptionPlan  @default(monthly)
+  stripeSubscriptionId String?
+  stripeCustomerId     String?
+  
+  // Limits (per billing cycle)
+  maxApps              Int               @default(1)
+  maxBandwidthMb       Int               @default(100)      // MB per month
+  maxRequestsPerMonth  Int               @default(1000)
+  maxStorageMb         Int               @default(50)       // MB total storage
+  customDomain         Boolean           @default(false)
+  sslIncluded          Boolean           @default(true)
+  prioritySupport      Boolean           @default(false)
+  
+  // Current usage (reset each billing cycle)
+  currentBandwidthMb   Float             @default(0)
+  currentRequests      Int               @default(0)
+  currentStorageMb     Float             @default(0)
+  currentApps          Int               @default(0)
+  
+  // Dates
+  startDate            DateTime          @default(now())
+  expiryDate           DateTime?
+  lastResetAt          DateTime          @default(now())
+  cancelledAt          DateTime?
+  
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  
+  // Relations
+  user                 User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  usageRecords         AppUsageRecord[]
+  
+  @@unique([userId, tier])
+  @@index([userId])
+  @@index([status])
+  @@index([stripeSubscriptionId])
+  @@map("app_hosting_plans")
+}
+
+model AppUsageRecord {
+  id                String         @id @default(cuid())
+  userId            String
+  hostingPlanId     String?
+  deploymentId      String?
+  projectId         String?
+  appSource         String?        // 'canvas-studio' | 'canvas-build' — which product generated usage
+  
+  // Usage data
+  eventType         String         // request, bandwidth, deploy, build, storage
+  value             Float          @default(0)  // count or MB depending on type
+  metadata          Json?          @default("{}")
+  
+  // Period tracking
+  periodStart       DateTime
+  periodEnd         DateTime
+  
+  createdAt         DateTime       @default(now())
+  
+  // Relations
+  user              User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hostingPlan       AppHostingPlan? @relation(fields: [hostingPlanId], references: [id])
+  
+  @@index([userId])
+  @@index([hostingPlanId])
+  @@index([eventType])
+  @@index([periodStart, periodEnd])
+  @@index([createdAt])
+  @@map("app_usage_records")
+}
+
+// ============================================
+// USER MEMORY PROFILE - Auto-memory + profile settings
+// ============================================
+
+model UserMemoryProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  
+  // Profile fields
+  enabled     Boolean  @default(false)
+  userName    String   @default("")
+  language    String   @default("")
+  gender      String   @default("")
+  dateOfBirth String   @default("")
+  
+  // Auto-extracted memories stored as JSON array
+  // Each entry: { id, fact, category, createdAt }
+  memories    Json     @default("[]")
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relation
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("user_memory_profiles")
+}
+
+// ============================================
+// USER PREFERENCES - All client-side prefs stored in DB
+// ============================================
+
+model UserPreferences {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  
+  // Per-agent chat settings: { "agentId": { temperature, maxTokens, mode, systemPrompt } }
+  agentSettings Json @default("{}")
+  
+  // Per-agent chat themes: { "agentId": "default" | "neural" }
+  agentThemes   Json @default("{}")
+  
+  // Global site theme: "light" | "dark"
+  siteTheme     String @default("light")
+  
+  // Chat history stored in DB (JSONB) — keyed by agentId
+  // Each entry: { sessions: { sessionId: { id, name, messages, lastUpdated } }, activeSessionId }
+  chatHistory   Json @default("{}")
+  
+  // Per-agent canvas chat messages: { "agentId": [{ id, role, content, timestamp }] }
+  canvasMessages Json @default("{}")
+  
+  // UI state flags: { "canvas_sidebar_animated_agentId": true, "canvas_migrated": true, ... }
+  uiFlags        Json @default("{}")
+  
+  // Per-message feedback: { "messageId": "up" | "down" }
+  messageFeedback Json @default("{}")
+
+  // Canvas-studio store states: { "canvas-deploy-store": {...}, "canvas-editor-settings": {...}, ... }
+  // Replaces localStorage for all Zustand persist stores + deployment history
+  canvasState     Json @default("{}")
+
+  // Tool-specific state: { "domain_reputation": { history, watchlist, alerts, settings }, "whois_lookup": { history, favorites, settings }, ... }
+  toolState       Json @default("{}")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relation
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("user_preferences")
+}
+
+// ============================================
+// AUTH LOCKOUT — Progressive lockout system
+// Tier 0: 3 fails → 15 min lock
+// Tier 1: 3 fails after tier 0 → 24 hour lock
+// Tier 2: 3 fails after tier 1 → permanent lock (contact support)
+// ============================================
+
+model AuthLockout {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  failedAttempts  Int       @default(0)
+  lockoutTier     Int       @default(0)   // 0 = initial, 1 = after 15min, 2 = after 24h
+  lockedUntil     DateTime?               // null = not locked, set when locked
+  permanentlyLocked Boolean @default(false)
+  lastFailedAt    DateTime?
+  lastFailedIp    String?                  // last IP that failed (for support reference)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("auth_lockouts")
+}
+
+// ============================================
+// GAMIFICATION — User engagement metrics
+// ============================================
+
+model GamificationMetrics {
+  id                      String   @id @default(cuid())
+  userId                  String   @unique
+  username                String   @default("User")
+  totalMessagesEarned     Int      @default(0)
+  perfectResponseCount    Int      @default(0)
+  highScoreCount          Int      @default(0)
+  agentsUsed              Json     @default("[]")
+  agentUsageCount         Json     @default("{}")
+  longestConversation     Int      @default(0)
+  totalConversationLength Int      @default(0)
+  conversationSessions    Json     @default("[]")
+  usageByHour             Json     @default("{}")
+  usageByDay              Json     @default("{}")
+  firstUsageToday         DateTime?
+  lastActivityTime        DateTime @default(now())
+  currentStreak           Int      @default(0)
+  longestStreak           Int      @default(0)
+  lastChallengeTime       DateTime?
+  completedChallengesCount Int     @default(0)
+  averageResponseTime     Float    @default(0)
+  averageConversationLength Float  @default(0)
+  accountCreatedAt        DateTime @default(now())
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@map("gamification_metrics")
+}
+
+// ============================================
+// MARKETPLACE — Tools, reviews, transactions, developers
+// ============================================
+
+model MarketplaceTool {
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  description  String   @default("")
+  category     String   @default("utility")
+  tags         Json     @default("[]")
+  icon         String   @default("🔧")
+  code         String   @default("")
+  permissions  Json     @default("[]")
+  pricing      Json     @default("{\"type\":\"free\"}")
+  developerId  String
+  version      String   @default("1.0.0")
+  downloads    Int      @default(0)
+  uses         Int      @default(0)
+  averageRating Float   @default(0)
+  reviewCount  Int      @default(0)
+  published    Boolean  @default(false)
+  verified     Boolean  @default(false)
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  reviews      MarketplaceReview[]
+  transactions MarketplaceTransaction[]
+  developer    MarketplaceDeveloper? @relation(fields: [developerId], references: [id])
+
+  @@index([developerId])
+  @@index([category])
+  @@index([slug])
+  @@map("marketplace_tools")
+}
+
+model MarketplaceReview {
+  id           String   @id @default(cuid())
+  toolId       String
+  userId       String
+  title        String   @default("")
+  content      String   @default("")
+  rating       Int      @default(5)
+  verified     Boolean  @default(false)
+  helpfulCount Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tool         MarketplaceTool @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  @@index([toolId])
+  @@index([userId])
+  @@map("marketplace_reviews")
+}
+
+model MarketplaceTransaction {
+  id             String   @id @default(cuid())
+  toolId         String
+  toolName       String   @default("")
+  userId         String
+  developerId    String
+  amount         Float    @default(0)
+  platformFee    Float    @default(0)
+  developerShare Float    @default(0)
+  type           String   @default("purchase")
+  status         String   @default("completed")
+  createdAt      DateTime @default(now())
+
+  tool           MarketplaceTool @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([developerId])
+  @@index([toolId])
+  @@map("marketplace_transactions")
+}
+
+model MarketplaceDeveloper {
+  id              String   @id @default(cuid())
+  name            String
+  verified        Boolean  @default(false)
+  totalDownloads  Int      @default(0)
+  totalEarnings   Float    @default(0)
+  joinedAt        DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  tools           MarketplaceTool[]
+
+  @@map("marketplace_developers")
+}
+
+// ============================================
+// PERMISSION REQUESTS — Plugin/role permission tracking
+// ============================================
+
+model PermissionRequest {
+  id          String   @id @default(cuid())
+  entityId    String
+  entityType  String   @default("plugin")
+  permissions Json     @default("[]")
+  reason      String   @default("")
+  risk        String   @default("low")
+  status      String   @default("pending")
+  approvedBy  String?
+  approvedAt  DateTime?
+  deniedBy    String?
+  deniedAt    DateTime?
+  denyReason  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([entityId])
+  @@index([status])
+  @@map("permission_requests")
+}
+
+// ============================================
+// DEVICE TRACKING — Lost device location tracking
+// ============================================
+
+model TrackedDevice {
+  id              String              @id @default(cuid())
+  deviceToken     String              @unique
+  deviceName      String?
+  deviceModel     String?
+  deviceOS        String?
+  deviceOSVersion String?
+  appVersion      String?
+  imeiHash        String?             @unique
+  ownerEmail      String?
+  ownerPhone      String?
+  registeredIp    String?
+  isLost          Boolean             @default(false)
+  isActive        Boolean             @default(true)
+  lastSeenAt      DateTime?
+  lastLat         Float?
+  lastLng         Float?
+  lastAccuracy    Float?
+  lastBattery     Int?
+  lastNetwork     String?
+  locationUnlocked Boolean            @default(false)
+  paymentRef      String?
+  notes           String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  pings           DeviceLocationPing[]
+
+  @@index([deviceToken])
+  @@index([imeiHash])
+  @@index([isLost])
+  @@index([lastSeenAt])
+  @@map("tracked_devices")
+}
+
+model DeviceLocationPing {
+  id          String        @id @default(cuid())
+  deviceId    String
+  lat         Float
+  lng         Float
+  accuracy    Float?
+  altitude    Float?
+  speed       Float?
+  heading     Float?
+  battery     Int?
+  network     String?
+  ipAddress   String?
+  timestamp   DateTime      @default(now())
+
+  device      TrackedDevice @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+
+  @@index([deviceId])
+  @@index([timestamp])
+  @@map("device_location_pings")
+}

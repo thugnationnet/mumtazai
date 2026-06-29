@@ -1,0 +1,1260 @@
+// Prisma schema for Mumtaz AI
+// PostgreSQL Database Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
+model User {
+  id                   String    @id @default(cuid())
+  email                String    @unique
+  name                 String?
+  password             String?
+  authMethod           AuthMethod @default(password)
+  emailVerified        DateTime?
+  image                String?
+  avatar               String?
+  bio                  String?   @db.VarChar(500)
+  phoneNumber          String?
+  location             String?
+  timezone             String?
+  profession           String?
+  company              String?
+  
+  // Social links (JSON)
+  socialLinks          Json?     @default("{}")
+  
+  // Preferences (JSON)
+  preferences          Json?     @default("{\"language\":\"en\",\"theme\":\"auto\",\"notifications\":{\"email\":true,\"push\":true,\"sms\":false},\"privacy\":{\"profileVisibility\":\"public\",\"showEmail\":false,\"showPhone\":false}}")
+  
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  lastLoginAt          DateTime?
+  isActive             Boolean   @default(true)
+  role                 UserRole  @default(user)
+  
+  // Security
+  resetPasswordToken   String?
+  resetPasswordExpires DateTime?
+  sessionId            String?
+  sessionExpiry        DateTime?
+  twoFactorEnabled     Boolean   @default(false)
+  twoFactorSecret      String?
+  backupCodes          String[]  @default([])
+  loginAttempts        Int       @default(0)
+  lockUntil            DateTime?
+
+  // Relations
+  subscriptions        AgentSubscription[]
+  chatSessions         ChatSession[]
+  transactions         Transaction[]
+  favorites            UserFavorites[]
+  communityPosts       CommunityPost[]
+  communityComments    CommunityComment[]
+  communityLikes       CommunityLike[]
+  memberships          CommunityMembership[]
+  supportTickets       SupportTicket[]
+  jobApplications      JobApplication[]
+  webinarRegistrations WebinarRegistration[]
+  agentMemories        AgentMemory[]
+  visitors             Visitor[]
+  sessions             Session[]
+  pageViews            PageView[]
+  analyticsEvents      AnalyticsEvent[]
+  chatFeedback         ChatFeedback[]
+  chatSettings         ChatSettings[]
+  agentPersonalizations AgentPersonalization[]
+  toolUsages           ToolUsage[]
+  userEvents           UserEvent[]
+  apiUsages            ApiUsage[]
+  chatInteractions     ChatAnalyticsInteraction[]
+  security             UserSecurity?
+
+  @@index([email])
+  @@index([sessionId])
+  @@index([resetPasswordToken])
+}
+
+// User Security - Extended security settings
+model UserSecurity {
+  id                   String    @id @default(cuid())
+  userId               String    @unique
+  twoFactorEnabled     Boolean   @default(false)
+  twoFactorSecret      String?
+  tempTwoFactorSecret  String?
+  backupCodes          String[]  @default([])
+  tempBackupCodes      String[]  @default([])
+  trustedDevices       Json      @default("[]")
+  loginHistory         Json      @default("[]")
+  lastPasswordChange   DateTime?
+  passwordHistory      String[]  @default([])
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  // Relation
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_security")
+}
+
+enum AuthMethod {
+  password
+  passwordless
+}
+
+enum UserRole {
+  user
+  admin
+  moderator
+}
+
+// ============================================
+// AGENTS
+// ============================================
+
+model Agent {
+  id            String      @id @default(cuid())
+  agentId       String      @unique // Custom agent ID like "nova", "pixel", etc.
+  name          String      @db.VarChar(100)
+  avatarUrl     String?
+  specialty     String?     @db.VarChar(100)
+  description   String?     @db.VarChar(500)
+  systemPrompt  String
+  welcomeMessage String
+  specialties   String[]    @default([])
+  tags          String[]    @default([])
+  color         String?     @db.VarChar(100)
+  
+  // AI Provider settings (JSON)
+  aiProvider    Json?       @default("{}")
+  
+  // Pricing
+  pricingDaily  Float?      @default(0)
+  pricingWeekly Float?      @default(0)
+  pricingMonthly Float?     @default(0)
+  
+  // Stats
+  totalUsers    Int         @default(0)
+  totalSessions Int         @default(0)
+  averageRating Float       @default(0)
+  
+  status        AgentStatus @default(active)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relations
+  subscriptions AgentSubscription[]
+  chatSessions  ChatSession[]
+  memories      AgentMemory[]
+  files         AgentFile[]
+  personalizations AgentPersonalization[]
+  toolUsages    ToolUsage[]
+  chatInteractions ChatAnalyticsInteraction[]
+
+  @@index([agentId])
+  @@index([status])
+  @@index([tags])
+}
+
+enum AgentStatus {
+  active
+  maintenance
+  deprecated
+}
+
+model AgentSubscription {
+  id                   String             @id @default(cuid())
+  userId               String
+  agentId              String
+  plan                 SubscriptionPlan
+  price                Float
+  status               SubscriptionStatus @default(active)
+  startDate            DateTime           @default(now())
+  expiryDate           DateTime
+  autoRenew            Boolean            @default(false)
+  stripeSubscriptionId String?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  // Relations
+  user                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent                Agent              @relation(fields: [agentId], references: [agentId], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([agentId])
+  @@index([userId, agentId])
+  @@index([stripeSubscriptionId])
+  @@map("subscriptions")
+}
+
+enum SubscriptionPlan {
+  daily
+  weekly
+  monthly
+  yearly
+}
+
+enum SubscriptionStatus {
+  active
+  expired
+  cancelled
+}
+
+model AgentFile {
+  id          String   @id @default(cuid())
+  agentId     String
+  userId      String
+  fileName    String
+  fileType    String
+  fileSize    Int
+  s3Key       String
+  s3Url       String
+  contentType String?
+  metadata    Json?    @default("{}")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  agent       Agent    @relation(fields: [agentId], references: [agentId], onDelete: Cascade)
+
+  @@index([agentId])
+  @@index([userId])
+}
+
+model AgentPersonalization {
+  id           String   @id @default(cuid())
+  userId       String
+  agentId      String
+  nickname     String?
+  customPrompt String?
+  preferences  Json?    @default("{}")
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent        Agent    @relation(fields: [agentId], references: [agentId], onDelete: Cascade)
+
+  @@unique([userId, agentId])
+  @@index([userId])
+  @@index([agentId])
+}
+
+// ============================================
+// AGENT MEMORY - Long-term learning
+// ============================================
+
+model AgentMemory {
+  id          String      @id @default(cuid())
+  agentId     String
+  userId      String
+  
+  // Individual memory entries stored as JSON array
+  memories    Json        @default("[]")
+  
+  // Summary of the relationship
+  summary     String?
+  
+  // Stats
+  totalMemories Int       @default(0)
+  lastAccessed  DateTime?
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  agent       Agent       @relation(fields: [agentId], references: [agentId], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([agentId, userId])
+  @@index([agentId])
+  @@index([userId])
+  @@map("agent_memories")
+}
+
+// ============================================
+// CHAT
+// ============================================
+
+model ChatSession {
+  id          String        @id @default(cuid())
+  sessionId   String        @unique
+  userId      String
+  agentId     String?
+  name        String        @db.VarChar(100)
+  description String?       @db.VarChar(500)
+  isActive    Boolean       @default(true)
+  isArchived  Boolean       @default(false)
+  tags        String[]      @default([])
+  
+  // Settings (JSON)
+  settings    Json?         @default("{\"temperature\":0.7,\"maxTokens\":2000,\"mode\":\"balanced\",\"provider\":\"mistral\"}")
+  
+  // Stats (JSON)
+  stats       Json?         @default("{\"messageCount\":0,\"totalTokens\":0,\"durationMs\":0}")
+  
+  archivedAt  DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent       Agent?        @relation(fields: [agentId], references: [agentId])
+  messages    ChatMessage[]
+  feedback    ChatFeedback[]
+  canvasFiles ChatCanvasFile[]
+  canvasHistory ChatCanvasHistory[]
+  canvasProjects ChatCanvasProject[]
+
+  @@index([userId, updatedAt])
+  @@index([agentId, createdAt])
+  @@index([isActive, updatedAt])
+  @@index([tags])
+  @@map("chat_sessions")
+}
+
+model ChatMessage {
+  id           String      @id @default(cuid())
+  sessionId    String
+  role         MessageRole
+  content      String
+  metadata     Json?       @default("{}")
+  tokenCount   Int?
+  latencyMs    Int?
+  createdAt    DateTime    @default(now())
+
+  // Relations
+  session      ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
+  @@index([sessionId, createdAt])
+  @@map("chat_messages")
+}
+
+enum MessageRole {
+  user
+  assistant
+  system
+}
+
+model ChatFeedback {
+  id          String      @id @default(cuid())
+  sessionId   String
+  userId      String
+  messageId   String?
+  rating      Int?        // 1-5 stars
+  feedback    String?
+  type        FeedbackType?
+  createdAt   DateTime    @default(now())
+
+  // Relations
+  session     ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([userId])
+  @@map("chat_feedback")
+}
+
+enum FeedbackType {
+  helpful
+  not_helpful
+  incorrect
+  offensive
+  other
+}
+
+model ChatSettings {
+  id              String   @id @default(cuid())
+  userId          String
+  defaultProvider String   @default("mistral")
+  defaultModel    String?
+  temperature     Float    @default(0.7)
+  maxTokens       Int      @default(2000)
+  defaultMode     String   @default("balanced")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+  @@map("chat_settings")
+}
+
+model ChatQuickAction {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  prompt      String
+  category    String?
+  icon        String?
+  isGlobal    Boolean  @default(false)
+  userId      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([userId])
+  @@map("chat_quick_actions")
+}
+
+// ============================================
+// CANVAS
+// ============================================
+
+model ChatCanvasFile {
+  id          String      @id @default(cuid())
+  sessionId   String
+  fileName    String
+  fileType    String
+  content     String
+  version     Int         @default(1)
+  metadata    Json?       @default("{}")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  session     ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@map("chat_canvas_files")
+}
+
+model ChatCanvasHistory {
+  id          String      @id @default(cuid())
+  sessionId   String
+  action      String
+  data        Json?
+  createdAt   DateTime    @default(now())
+
+  // Relations
+  session     ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
+  @@index([sessionId, createdAt])
+  @@map("chat_canvas_history")
+}
+
+model ChatCanvasProject {
+  id          String      @id @default(cuid())
+  sessionId   String
+  name        String
+  description String?
+  files       Json?       @default("[]")
+  settings    Json?       @default("{}")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  session     ChatSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@map("chat_canvas_projects")
+}
+
+// ============================================
+// TRANSACTIONS & BILLING
+// ============================================
+
+model Transaction {
+  id                    String            @id @default(cuid())
+  transactionId         String            @unique
+  userId                String
+  
+  // Stripe references
+  stripePaymentIntentId String?
+  stripeChargeId        String?
+  stripeInvoiceId       String?
+  stripeSubscriptionId  String?
+  
+  type                  TransactionType
+  
+  // Item purchased (JSON)
+  item                  Json?             @default("{}")
+  
+  // Subscription details (JSON)
+  subscription          Json?
+  
+  // Amount
+  amount                Float
+  currency              String            @default("USD")
+  tax                   Float             @default(0)
+  discount              Float             @default(0)
+  couponCode            String?
+  
+  // Payment method (JSON)
+  paymentMethod         Json?
+  
+  status                TransactionStatus
+  
+  // Error details
+  errorCode             String?
+  errorMessage          String?
+  
+  // Refund details
+  refundAmount          Float?
+  refundReason          String?
+  refundedAt            DateTime?
+  
+  // Metadata
+  metadata              Json?             @default("{}")
+  notes                 String?
+  
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  // Relations
+  user                  User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([transactionId])
+  @@index([type])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum TransactionType {
+  purchase
+  subscription
+  renewal
+  upgrade
+  downgrade
+  refund
+  credit
+  chargeback
+  failed
+}
+
+enum TransactionStatus {
+  pending
+  processing
+  completed
+  failed
+  refunded
+  partially_refunded
+  disputed
+  cancelled
+}
+
+// ============================================
+// ANALYTICS
+// ============================================
+
+model Visitor {
+  id           String   @id @default(cuid())
+  visitorId    String   @unique
+  sessionId    String
+  userId       String?
+  firstVisit   DateTime @default(now())
+  lastVisit    DateTime @default(now())
+  visitCount   Int      @default(1)
+  ipAddress    String
+  userAgent    String
+  country      String   @default("Unknown")
+  city         String   @default("Unknown")
+  device       DeviceType
+  browser      String
+  os           String
+  referrer     String?
+  landingPage  String   @default("/")
+  isRegistered Boolean  @default(false)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user         User?    @relation(fields: [userId], references: [id])
+
+  @@index([visitorId])
+  @@index([userId])
+  @@map("visitors")
+}
+
+enum DeviceType {
+  mobile
+  tablet
+  desktop
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionId    String   @unique
+  visitorId    String
+  userId       String?
+  startTime    DateTime @default(now())
+  lastActivity DateTime @default(now())
+  pageViews    Int      @default(0)
+  events       Int      @default(0)
+  duration     Int      @default(0) // in seconds
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user         User?    @relation(fields: [userId], references: [id])
+
+  @@index([sessionId])
+  @@index([visitorId])
+  @@index([userId])
+  @@map("sessions")
+}
+
+model PageView {
+  id         String   @id @default(cuid())
+  visitorId  String
+  sessionId  String
+  userId     String?
+  url        String
+  title      String?
+  referrer   String?
+  timeSpent  Int      @default(0) // in seconds
+  timestamp  DateTime @default(now())
+
+  // Relations
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@index([visitorId])
+  @@index([sessionId])
+  @@index([userId])
+  @@index([timestamp])
+  @@map("page_views")
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(cuid())
+  visitorId  String
+  sessionId  String
+  userId     String?
+  eventName  String
+  eventData  Json?    @default("{}")
+  timestamp  DateTime @default(now())
+
+  // Relations
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@index([visitorId])
+  @@index([sessionId])
+  @@index([userId])
+  @@index([eventName])
+  @@index([timestamp])
+  @@map("analytics_events")
+}
+
+model ToolUsage {
+  id           String       @id @default(cuid())
+  toolName     String
+  version      String?
+  userId       String?
+  agentId      String?
+  command      String
+  arguments    Json?
+  inputPreview String?
+  outputPreview String?
+  tokensInput  Int          @default(0)
+  tokensOutput Int          @default(0)
+  latencyMs    Int          @default(0)
+  status       ToolStatus   @default(completed)
+  integration  String?
+  environment  String?
+  tags         String[]     @default([])
+  occurredAt   DateTime     @default(now())
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  // Relations
+  user         User?        @relation(fields: [userId], references: [id])
+  agent        Agent?       @relation(fields: [agentId], references: [id])
+
+  @@index([toolName])
+  @@index([userId])
+  @@index([agentId])
+  @@index([occurredAt])
+  @@map("tool_usages")
+}
+
+enum ToolStatus {
+  pending
+  completed
+  failed
+}
+
+model UserEvent {
+  id          String      @id @default(cuid())
+  userId      String?
+  eventType   String
+  category    String
+  action      String
+  label       String?
+  value       Int?
+  properties  Json?
+  durationMs  Int?
+  success     Boolean?
+  source      EventSource @default(web)
+  occurredAt  DateTime    @default(now())
+  tags        String[]    @default([])
+  featureFlag String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  user        User?       @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([eventType])
+  @@index([category])
+  @@index([occurredAt])
+  @@map("user_events")
+}
+
+enum EventSource {
+  web
+  mobile
+  api
+}
+
+model ApiUsage {
+  id           String   @id @default(cuid())
+  visitorId    String
+  sessionId    String
+  userId       String?
+  endpoint     String
+  method       String
+  statusCode   Int
+  responseTime Int      // in milliseconds
+  userAgent    String?
+  ipAddress    String?
+  timestamp    DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user         User?    @relation(fields: [userId], references: [id])
+
+  @@index([visitorId])
+  @@index([sessionId])
+  @@index([userId])
+  @@index([endpoint])
+  @@index([timestamp])
+  @@map("api_usages")
+}
+
+model ChatAnalyticsInteraction {
+  id              String       @id @default(cuid())
+  conversationId  String
+  userId          String?
+  agentId         String?
+  channel         ChatChannel  @default(web)
+  language        String       @default("en")
+  messages        Json         @default("[]")
+  keywords        String[]     @default([])
+  actionItems     String[]     @default([])
+  totalTokens     Int          @default(0)
+  durationMs      Int          @default(0)
+  turnCount       Int          @default(0)
+  status          ChatStatus   @default(active)
+  tags            String[]     @default([])
+  priority        ChatPriority @default(medium)
+  startedAt       DateTime     @default(now())
+  closedAt        DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  // Relations
+  user            User?        @relation(fields: [userId], references: [id])
+  agent           Agent?       @relation(fields: [agentId], references: [id])
+
+  @@index([conversationId])
+  @@index([userId])
+  @@index([agentId])
+  @@index([startedAt])
+  @@map("chat_analytics_interactions")
+}
+
+enum ChatChannel {
+  web
+  mobile
+  api
+}
+
+enum ChatStatus {
+  active
+  closed
+  archived
+}
+
+enum ChatPriority {
+  low
+  medium
+  high
+}
+
+// ============================================
+// COMMUNITY
+// ============================================
+
+model CommunityPost {
+  id           String             @id @default(cuid())
+  authorId     String?
+  authorName   String
+  authorAvatar String             @default("👤")
+  content      String             @db.VarChar(5000)
+  category     PostCategory       @default(general)
+  isPinned     Boolean            @default(false)
+  likesCount   Int                @default(0)
+  repliesCount Int                @default(0)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  // Relations
+  author       User?              @relation(fields: [authorId], references: [id])
+  comments     CommunityComment[]
+  likes        CommunityLike[]
+
+  @@index([category])
+  @@index([createdAt])
+  @@map("community_posts")
+}
+
+enum PostCategory {
+  general
+  agents
+  ideas
+  help
+}
+
+model CommunityComment {
+  id           String        @id @default(cuid())
+  postId       String
+  authorId     String?
+  authorName   String
+  authorAvatar String        @default("👤")
+  content      String        @db.VarChar(2000)
+  likesCount   Int           @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  // Relations
+  post         CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author       User?         @relation(fields: [authorId], references: [id])
+  likes        CommunityLike[]
+
+  @@index([postId])
+  @@index([authorId])
+  @@map("community_comments")
+}
+
+model CommunityLike {
+  id        String            @id @default(cuid())
+  userId    String
+  postId    String?
+  commentId String?
+  createdAt DateTime          @default(now())
+
+  // Relations
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      CommunityPost?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment   CommunityComment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@unique([userId, commentId])
+  @@index([userId])
+  @@map("community_likes")
+}
+
+model CommunityGroup {
+  id          String               @id @default(cuid())
+  name        String
+  description String?
+  avatar      String?
+  coverImage  String?
+  isPublic    Boolean              @default(true)
+  creatorId   String
+  memberCount Int                  @default(0)
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+
+  // Relations
+  memberships CommunityMembership[]
+
+  @@index([creatorId])
+  @@map("community_groups")
+}
+
+model CommunityMembership {
+  id        String         @id @default(cuid())
+  userId    String
+  groupId   String
+  role      MembershipRole @default(member)
+  joinedAt  DateTime       @default(now())
+
+  // Relations
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group     CommunityGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, groupId])
+  @@index([userId])
+  @@index([groupId])
+  @@map("community_memberships")
+}
+
+enum MembershipRole {
+  member
+  moderator
+  admin
+}
+
+model CommunityEvent {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  startDate   DateTime
+  endDate     DateTime?
+  location    String?
+  isVirtual   Boolean   @default(false)
+  virtualUrl  String?
+  creatorId   String
+  maxAttendees Int?
+  attendeeCount Int     @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([startDate])
+  @@index([creatorId])
+  @@map("community_events")
+}
+
+model CommunityContent {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  type        String   // article, tutorial, resource, etc.
+  authorId    String
+  tags        String[] @default([])
+  viewCount   Int      @default(0)
+  isPublished Boolean  @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([authorId])
+  @@index([type])
+  @@index([tags])
+  @@map("community_content")
+}
+
+model CommunitySuggestion {
+  id          String           @id @default(cuid())
+  userId      String?
+  title       String
+  description String
+  category    String?
+  status      SuggestionStatus @default(pending)
+  votes       Int              @default(0)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@index([status])
+  @@index([votes])
+  @@map("community_suggestions")
+}
+
+enum SuggestionStatus {
+  pending
+  approved
+  rejected
+  implemented
+}
+
+model CommunityModeration {
+  id          String           @id @default(cuid())
+  targetType  String           // post, comment, user
+  targetId    String
+  reporterId  String
+  reason      String
+  status      ModerationStatus @default(pending)
+  resolvedBy  String?
+  resolvedAt  DateTime?
+  notes       String?
+  createdAt   DateTime         @default(now())
+
+  @@index([targetType, targetId])
+  @@index([status])
+  @@map("community_moderation")
+}
+
+enum ModerationStatus {
+  pending
+  reviewed
+  resolved
+  dismissed
+}
+
+model CommunityMetrics {
+  id            String   @id @default(cuid())
+  date          DateTime @unique
+  totalUsers    Int      @default(0)
+  activeUsers   Int      @default(0)
+  newUsers      Int      @default(0)
+  totalPosts    Int      @default(0)
+  newPosts      Int      @default(0)
+  totalComments Int      @default(0)
+  newComments   Int      @default(0)
+  totalLikes    Int      @default(0)
+  engagement    Float    @default(0)
+  createdAt     DateTime @default(now())
+
+  @@index([date])
+  @@map("community_metrics")
+}
+
+// ============================================
+// SUPPORT & CONTACT
+// ============================================
+
+model SupportTicket {
+  id          String       @id @default(cuid())
+  userId      String?
+  email       String
+  name        String?
+  subject     String
+  description String
+  category    String?
+  priority    TicketPriority @default(medium)
+  status      TicketStatus @default(open)
+  assignedTo  String?
+  resolvedAt  DateTime?
+  metadata    Json?        @default("{}")
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relations
+  user        User?        @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([priority])
+  @@map("support_tickets")
+}
+
+enum TicketPriority {
+  low
+  medium
+  high
+  urgent
+}
+
+enum TicketStatus {
+  open
+  in_progress
+  waiting
+  resolved
+  closed
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  source    String?  // website, app, etc.
+  isRead    Boolean  @default(false)
+  repliedAt DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([isRead])
+  @@map("contact_messages")
+}
+
+// ============================================
+// CAREERS & CONSULTATIONS
+// ============================================
+
+model JobApplication {
+  id          String            @id @default(cuid())
+  userId      String?
+  name        String
+  email       String
+  phone       String?
+  position    String
+  resumeUrl   String?
+  coverLetter String?
+  linkedinUrl String?
+  portfolioUrl String?
+  status      ApplicationStatus @default(submitted)
+  notes       String?
+  reviewedAt  DateTime?
+  reviewedBy  String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  // Relations
+  user        User?             @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([position])
+  @@map("job_applications")
+}
+
+enum ApplicationStatus {
+  submitted
+  under_review
+  interviewed
+  offered
+  accepted
+  rejected
+  withdrawn
+}
+
+model Consultation {
+  id              String             @id @default(cuid())
+  name            String
+  email           String
+  phone           String?
+  company         String?
+  topic           String
+  description     String?
+  preferredDate   DateTime?
+  preferredTime   String?
+  timezone        String?
+  status          ConsultationStatus @default(requested)
+  scheduledAt     DateTime?
+  meetingUrl      String?
+  notes           String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@map("consultations")
+}
+
+enum ConsultationStatus {
+  requested
+  scheduled
+  completed
+  cancelled
+  no_show
+}
+
+// ============================================
+// WEBINARS & EVENTS
+// ============================================
+
+model WebinarRegistration {
+  id         String   @id @default(cuid())
+  userId     String?
+  webinarId  String
+  name       String
+  email      String
+  company    String?
+  jobTitle   String?
+  attended   Boolean  @default(false)
+  joinedAt   DateTime?
+  leftAt     DateTime?
+  createdAt  DateTime @default(now())
+
+  // Relations
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@unique([webinarId, email])
+  @@index([userId])
+  @@index([webinarId])
+  @@map("webinar_registrations")
+}
+
+// ============================================
+// USER FAVORITES
+// ============================================
+
+model UserFavorites {
+  id          String   @id @default(cuid())
+  userId      String
+  itemType    String   // agent, session, prompt, etc.
+  itemId      String
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, itemType, itemId])
+  @@index([userId])
+  @@map("user_favorites")
+}
+
+// ============================================
+// LAB EXPERIMENTS
+// ============================================
+
+enum ExperimentStatus {
+  pending
+  processing
+  completed
+  failed
+  cancelled
+}
+
+model LabExperiment {
+  id             String           @id @default(cuid())
+  experimentId   String           @unique
+  experimentType String
+  userId         String?
+  sessionId      String?
+  visitorId      String?
+  input          Json?            @default("{}")
+  output         Json?
+  status         ExperimentStatus @default(pending)
+  errorMessage   String?
+  processingTime Int?             @default(0)
+  tokensUsed     Int?             @default(0)
+  creditsUsed    Float?           @default(0)
+  startedAt      DateTime?
+  completedAt    DateTime?
+  feedback       Json?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([experimentId])
+  @@index([experimentType])
+  @@index([userId])
+  @@index([sessionId])
+  @@index([status])
+  @@map("lab_experiments")
+}
+
+enum DebateStatus {
+  active
+  completed
+  archived
+}
+
+model Debate {
+  id          String       @id @default(cuid())
+  debateId    String       @unique
+  topic       String
+  status      DebateStatus @default(active)
+  agent1      Json         @default("{\"name\":\"Nova\",\"position\":\"Pro\",\"avatar\":\"⚡\",\"provider\":\"Nova\",\"response\":\"\",\"responseTime\":0,\"votes\":0}")
+  agent2      Json         @default("{\"name\":\"Blaze\",\"position\":\"Con\",\"avatar\":\"🔥\",\"provider\":\"Blaze\",\"response\":\"\",\"responseTime\":0,\"votes\":0}")
+  totalVotes  Int          @default(0)
+  viewers     Int          @default(0)
+  votedUsers  String[]     @default([])
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([debateId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("debates")
+}

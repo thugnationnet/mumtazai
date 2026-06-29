@@ -1,0 +1,17 @@
+# Mumtaz AI - robots.txt
+# https://mumtaz.ai
+
+User-agent: *
+Allow: /
+
+# Disallow private/admin areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /payment/
+Disallow: /subscribe/
+Disallow: /subscription-success/
+
+# Sitemap
+Sitemap: https://mumtaz.ai/sitemap.xml

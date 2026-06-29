@@ -1,0 +1,41 @@
+import { BACKEND_URL } from '@/lib/backend-url';
+import { NextRequest, NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
+
+const backendBase = BACKEND_URL;
+
+export async function GET(request: NextRequest) {
+  try {
+    const incomingUrl = new URL(request.url);
+    const targetUrl = new URL('/api/status/api-status', backendBase);
+
+    incomingUrl.searchParams.forEach((value, key) => {
+      targetUrl.searchParams.append(key, value);
+    });
+
+    const response = await fetch(targetUrl.toString(), {
+      method: 'GET',
+      headers: {
+        cookie: request.headers.get('cookie') || '',
+      },
+      cache: 'no-store',
+    });
+
+    const body = await response.text();
+
+    return new NextResponse(body, {
+      status: response.status,
+      headers: {
+        'content-type':
+          response.headers.get('content-type') || 'application/json',
+      },
+    });
+  } catch (error) {
+    console.error('Error proxying /api/status/api-status:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch API status data' },
+      { status: 500 }
+    );
+  }
+}

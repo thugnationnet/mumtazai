@@ -1,0 +1,4 @@
+# Never commit real .env files — use .env.example as template
+**/.env
+# node_modules are symlinked on server, not committed
+**/node_modules

@@ -1,0 +1,2151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* shadcn/ui CSS Variables */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
+/* ==========================================
+   CRYSTAL FLOW GLASSMORPHISM — Global Design System
+   Premium fluid UI with glass cards, organic shapes
+   ========================================== */
+
+/* Fluid Background Shapes */
+.glass-bg-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(20px);
+  opacity: 0.6;
+}
+
+.glass-snake {
+  position: absolute;
+  border-radius: 100px;
+  filter: blur(40px);
+}
+
+.glass-snake-1 {
+  width: 800px;
+  height: 60px;
+  top: 20%;
+  left: -10%;
+  transform: rotate(-25deg);
+  background: linear-gradient(90deg, #38bdf8, #34d399, #60a5fa);
+}
+
+.glass-snake-2 {
+  width: 600px;
+  height: 80px;
+  bottom: 10%;
+  right: -5%;
+  transform: rotate(15deg);
+  background: linear-gradient(90deg, #60a5fa, #a855f7);
+}
+
+.glass-orb {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, transparent 70%);
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 32px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 20px 25px -5px rgba(0, 0, 0, 0.03),
+    0 10px 10px -5px rgba(0, 0, 0, 0.02),
+    inset 0 2px 4px rgba(255, 255, 255, 0.8);
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 30px 50px -12px rgba(56, 189, 248, 0.15),
+    inset 0 0 10px rgba(255, 255, 255, 1);
+}
+
+/* Neumorphic Hero Banner */
+.neu-hero {
+  background: #e8edf5;
+  border-radius: 0 0 2rem 2rem;
+  box-shadow:
+    8px 8px 20px rgba(163, 177, 198, 0.6),
+    -8px -8px 20px rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+.neu-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(99, 102, 241, 0.06) 50%, rgba(16, 185, 129, 0.04) 100%);
+  pointer-events: none;
+}
+.neu-hero-icon {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 1.25rem;
+  background: #e8edf5;
+  box-shadow:
+    6px 6px 14px rgba(163, 177, 198, 0.5),
+    -6px -6px 14px rgba(255, 255, 255, 0.9),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.neu-hero-icon svg,
+.neu-hero-icon .icon {
+  color: #3b82f6;
+  width: 2rem;
+  height: 2rem;
+}
+.neu-hero h1 {
+  color: #1e293b;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+}
+.neu-hero h1 span {
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.neu-hero p {
+  color: #64748b;
+}
+.neu-hero a {
+  color: #64748b;
+  transition: color 0.2s;
+}
+.neu-hero a:hover {
+  color: #334155;
+}
+.neu-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.75rem;
+  background: #e8edf5;
+  box-shadow:
+    3px 3px 8px rgba(163, 177, 198, 0.45),
+    -3px -3px 8px rgba(255, 255, 255, 0.8);
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.neu-back-link:hover {
+  color: #1e293b;
+  box-shadow:
+    inset 2px 2px 5px rgba(163, 177, 198, 0.4),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.7);
+}
+
+/* Glass Hero Banner (legacy alias) */
+.glass-hero {
+  background: #e8edf5;
+  border-radius: 0 0 2rem 2rem;
+  box-shadow:
+    8px 8px 20px rgba(163, 177, 198, 0.6),
+    -8px -8px 20px rgba(255, 255, 255, 0.8);
+}
+
+/* Neumorphic Card */
+.neu-card {
+  background: #e8edf5;
+  border-radius: 1.25rem;
+  box-shadow:
+    6px 6px 16px rgba(163, 177, 198, 0.5),
+    -6px -6px 16px rgba(255, 255, 255, 0.8);
+  position: relative;
+}
+.neu-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.06) 0%, rgba(99, 102, 241, 0.04) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Neumorphic CTA (replaces gradient CTAs) */
+.neu-cta {
+  background: #e8edf5;
+  border-radius: 1.25rem;
+  box-shadow:
+    8px 8px 20px rgba(163, 177, 198, 0.6),
+    -8px -8px 20px rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+.neu-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(99, 102, 241, 0.08) 50%, rgba(16, 185, 129, 0.05) 100%);
+  pointer-events: none;
+}
+.neu-cta h2,
+.neu-cta h3 { color: #1e293b; }
+.neu-cta p { color: #64748b; }
+
+/* Neumorphic Icon Badge */
+.neu-icon {
+  border-radius: 1rem;
+  background: #e8edf5;
+  box-shadow:
+    4px 4px 10px rgba(163, 177, 198, 0.45),
+    -4px -4px 10px rgba(255, 255, 255, 0.8),
+    inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.neu-icon svg { color: #3b82f6; }
+
+/* Neumorphic Info Box */
+.neu-info {
+  background: #e8edf5;
+  border-radius: 1rem;
+  box-shadow:
+    4px 4px 12px rgba(163, 177, 198, 0.4),
+    -4px -4px 12px rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Neumorphic Page BG */
+.neu-page-bg {
+  background: #e8edf5;
+  min-height: 100vh;
+}
+
+/* Status Pill */
+.status-pill {
+  background: linear-gradient(90deg, #0ea5e9, #2dd4bf);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@layer base {
+  /* Reset and Base Styles */
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  body {
+    background-color: #f8fafc;
+    @apply text-slate-700;
+    @apply leading-relaxed antialiased;
+    overflow-x: hidden;
+    max-width: 100vw;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Typography Hierarchy — Crystal Flow */
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-black text-slate-800 leading-tight tracking-tight;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold text-slate-800 leading-tight mb-4;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl font-bold text-slate-800 leading-snug mb-3;
+  }
+
+  h4 {
+    @apply text-lg md:text-xl font-semibold text-slate-700 leading-snug mb-2;
+  }
+
+  p {
+    @apply text-base md:text-lg text-slate-500 leading-relaxed mb-4;
+  }
+
+  .text-subtitle {
+    @apply text-lg md:text-xl text-slate-500 font-medium leading-relaxed;
+  }
+
+  .text-caption {
+    @apply text-sm text-slate-400 font-normal;
+  }
+}
+
+@layer components {
+  /* Layout System - Fix #1: Grid/Layout System */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .container-wide {
+    @apply max-w-9xl mx-auto px-4 sm:px-6 lg:px-8;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Grid Systems for Consistent Layouts */
+  .grid-responsive {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8;
+  }
+
+  .grid-2-col {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12;
+  }
+
+  .grid-3-col {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8;
+  }
+
+  .grid-4-col {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6;
+  }
+
+  /* Section Spacing - Fix #3: Hero Section Alignment */
+  .section-padding {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  .section-padding-sm {
+    @apply py-8 md:py-12;
+  }
+
+  .section-padding-lg {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  /* Reusable Navigation — Crystal Flow */
+  .nav-link {
+    @apply text-slate-600 hover:text-blue-600 font-medium transition-colors duration-200;
+    @apply border-b-2 border-transparent hover:border-blue-400;
+  }
+
+  .nav-link-active {
+    @apply text-blue-600 border-b-2 border-blue-500;
+  }
+
+  .nav-mobile-link {
+    @apply block px-3 py-2 text-base font-medium text-slate-700 hover:text-blue-600;
+    @apply hover:bg-blue-50 rounded-md transition-colors duration-200;
+  }
+
+  /* Button System — Crystal Flow */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-2xl;
+    @apply bg-gradient-to-r from-blue-600 to-indigo-500 text-white;
+    box-shadow: 0 4px 20px -4px rgba(37, 99, 235, 0.35);
+    @apply hover:from-blue-700 hover:to-indigo-600;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+    @apply transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-2xl;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    @apply text-blue-600 border-2 border-white/80;
+    @apply hover:bg-white/70 hover:border-blue-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+    @apply transition-all duration-200;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-xl;
+    @apply text-slate-600 hover:text-blue-600 hover:bg-blue-50/50;
+    @apply transition-colors duration-200;
+  }
+
+  /* Card Components — Crystal Flow Glass */
+  .card {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 32px;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 20px 25px -5px rgba(0, 0, 0, 0.03),
+      inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow:
+      0 30px 50px -12px rgba(56, 189, 248, 0.12),
+      inset 0 0 10px rgba(255, 255, 255, 1);
+  }
+
+  .card-padding {
+    @apply p-6 lg:p-8;
+  }
+
+  .card-header {
+    @apply border-b border-white/40 pb-4 mb-6;
+  }
+
+  /* Stats Cards — Crystal Flow */
+  .stats-card {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
+    @apply p-6;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    @apply transition-all duration-500;
+  }
+
+  .stats-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .stats-number {
+    @apply text-3xl md:text-4xl font-black text-sky-600;
+  }
+
+  .stats-label {
+    @apply text-sm font-bold text-slate-400 uppercase tracking-wider;
+  }
+
+  /* Hero Section Components — Crystal Flow */
+  .hero-container {
+    @apply container-custom section-padding-lg text-center;
+  }
+
+  .hero-title {
+    @apply mb-6;
+  }
+
+  .hero-subtitle {
+    @apply text-subtitle mb-8 max-w-3xl mx-auto;
+  }
+
+  .hero-actions {
+    @apply flex flex-col sm:flex-row gap-4 justify-center items-center mb-12;
+  }
+
+  .hero-stats {
+    @apply grid-4-col max-w-4xl mx-auto;
+  }
+
+  /* Agent Cards — Crystal Flow */
+  .agent-card {
+    @apply card card-padding cursor-pointer;
+    @apply transition-all duration-500;
+    overflow: visible;
+  }
+
+  .agent-avatar {
+    @apply w-16 h-16 rounded-full bg-gradient-to-r from-blue-400 to-indigo-400;
+    @apply flex items-center justify-center text-white text-2xl font-bold mb-4;
+    @apply group-hover:scale-110 transition-transform duration-300;
+    flex-shrink: 0;
+  }
+
+  .agent-name {
+    @apply text-lg font-semibold text-slate-800 mb-2;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .agent-description {
+    @apply text-sm text-slate-500 leading-relaxed;
+  }
+
+  /* Form Components — Crystal Flow */
+  .form-input {
+    @apply block w-full px-4 py-3 text-base rounded-xl;
+    background: rgba(255, 255, 255, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    @apply focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+    @apply placeholder-slate-400 transition-all duration-200;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-slate-500 mb-2;
+  }
+
+  /* Responsive Utilities - Fix #5: Responsive Design */
+  .mobile-hidden {
+    @apply hidden md:block;
+  }
+
+  .mobile-only {
+    @apply block md:hidden;
+  }
+
+  .desktop-grid {
+    @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+  }
+}
+
+@layer utilities {
+  /* Color & Contrast — Crystal Flow */
+  .text-contrast-high {
+    @apply text-slate-800;
+  }
+
+  .text-contrast-medium {
+    @apply text-slate-600;
+  }
+
+  .text-contrast-low {
+    @apply text-slate-400;
+  }
+
+  .bg-brand-gradient {
+    @apply bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700;
+  }
+
+  .bg-neural-gradient {
+    background: transparent;
+  }
+
+  /* Animation Utilities */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Spacing Utilities for Consistent Layouts */
+  .space-section {
+    @apply mb-8 md:mb-12 lg:mb-16;
+  }
+
+  .space-element {
+    @apply mb-4 md:mb-6;
+  }
+}
+
+/* ==========================================
+   THEMED SECTION BACKGROUND
+   Reusable lavender-glass section shell with a
+   dark charcoal/violet/cyan variant under .dark-theme.
+   Use on any <section>/<div> in place of the inline
+   `linear-gradient(135deg, #e8e0f0 ...)` style so the
+   background adapts to the active theme.
+   The matching `.themed-section-ribbon` utility tints
+   the inner glass ribbons for each theme.
+   ========================================== */
+.themed-section-bg {
+  background: linear-gradient(
+    135deg,
+    #e8e0f0 0%,
+    #d5d0e8 25%,
+    #c8bfdd 50%,
+    #ddd8ec 75%,
+    #eae5f3 100%
+  );
+}
+
+.themed-section-sweep {
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.1),
+    transparent 50%,
+    rgba(255, 255, 255, 0.05)
+  );
+}
+
+.dark-theme .themed-section-bg {
+  background:
+    radial-gradient(
+      ellipse at 18% 20%,
+      rgba(139, 92, 246, 0.22) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 82% 78%,
+      rgba(6, 182, 212, 0.18) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      135deg,
+      #0a0a0a 0%,
+      #120f24 25%,
+      #1a1330 50%,
+      #120f24 75%,
+      #0a0a0a 100%
+    ) !important;
+}
+
+.dark-theme .themed-section-sweep {
+  background: linear-gradient(
+    to bottom right,
+    rgba(139, 92, 246, 0.12),
+    transparent 45%,
+    rgba(6, 182, 212, 0.08)
+  ) !important;
+}
+
+/* Glass ribbon tints: keep the white-frost look in light mode,
+   shift to soft violet/cyan glows in dark mode so the ribbons
+   stay visible without washing out the dark surface. */
+.dark-theme .themed-section-bg .bg-white\/10,
+.dark-theme .themed-section-bg .bg-white\/15,
+.dark-theme .themed-section-bg .bg-white\/20 {
+  background-color: rgba(167, 139, 250, 0.1) !important;
+  border-color: rgba(167, 139, 250, 0.18) !important;
+}
+
+.dark-theme .themed-section-bg .border-white\/20,
+.dark-theme .themed-section-bg .border-white\/25,
+.dark-theme .themed-section-bg .border-white\/30,
+.dark-theme .themed-section-bg .border-white\/35,
+.dark-theme .themed-section-bg .border-white\/40 {
+  border-color: rgba(34, 211, 238, 0.18) !important;
+}
+
+/* Frosted content cards inside themed sections (bg-white/30, /40, /50)
+   become deep violet-tinted glass in dark mode so foreground text
+   stays readable against the new dark gradient. */
+.dark-theme .themed-section-bg .bg-white\/30,
+.dark-theme .themed-section-bg .bg-white\/40,
+.dark-theme .themed-section-bg .bg-white\/50 {
+  background-color: rgba(17, 17, 17, 0.55) !important;
+  backdrop-filter: blur(20px) !important;
+  border-color: rgba(139, 92, 246, 0.25) !important;
+}
+
+.dark-theme .themed-section-bg .border-white\/50,
+.dark-theme .themed-section-bg .border-white\/60 {
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+/* slate-600 has no global dark override; ensure body copy inside
+   themed sections remains legible on the dark gradient. */
+.dark-theme .themed-section-bg .text-slate-600 {
+  color: #b6bdc8 !important;
+}
+
+/* ==========================================
+   PREMIUM DARK THEME — Canvas-Studio Style
+   Activated via .dark-theme class on <html> (global)
+   or on a scoped container <div> (studio/chat only)
+   Near-black base with violet↔cyan gradient accents
+   ========================================== */
+
+/* ── Base ─────────────────────────────────── */
+.dark-theme body {
+  background: #0a0a0a !important;
+  color: #d1d5db !important;
+}
+
+/* Scoped dark-theme: when .dark-theme is the container itself */
+div.dark-theme {
+  background: #0a0a0a !important;
+  color: #d1d5db !important;
+}
+
+/* ── Container / Page Backgrounds ──────────── */
+.dark-theme .bg-gray-50,
+.dark-theme .bg-gray-100 {
+  background-color: #0a0a0a !important;
+}
+
+.dark-theme .bg-gradient-to-br,
+.dark-theme .from-slate-50,
+.dark-theme .via-blue-50,
+.dark-theme .to-indigo-50 {
+  background: #0a0a0a !important;
+}
+
+/* ── Cards / Surfaces ─────────────────────── */
+.dark-theme .bg-white {
+  background-color: #111111 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow:
+    0 4px 25px -5px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
+}
+
+.dark-theme .bg-white:hover {
+  box-shadow:
+    0 8px 40px -8px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(139, 92, 246, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  transform: none;
+}
+
+/* White with opacity */
+.dark-theme .bg-white\/80,
+.dark-theme .bg-white\/90,
+.dark-theme .bg-white\/95 {
+  background-color: rgba(17, 17, 17, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+/* ── Text Colors ──────────────────────────── */
+.dark-theme .text-slate-500 {
+  color: #8b95a5 !important;
+}
+.dark-theme .text-slate-500 {
+  color: #c9d1d9 !important;
+}
+.dark-theme .text-slate-700 {
+  color: #d1d5db !important;
+}
+.dark-theme .text-slate-800 {
+  color: #e5e7eb !important;
+}
+.dark-theme .text-slate-900 {
+  color: #f3f4f6 !important;
+}
+.dark-theme .text-slate-400 {
+  color: #6b7280 !important;
+}
+
+.dark-theme .text-gray-900 {
+  color: #f3f4f6 !important;
+}
+.dark-theme .text-gray-800 {
+  color: #e5e7eb !important;
+}
+.dark-theme .text-gray-700 {
+  color: #d1d5db !important;
+}
+.dark-theme .text-gray-600 {
+  color: #9ca3af !important;
+}
+.dark-theme .text-gray-500 {
+  color: #6b7280 !important;
+}
+.dark-theme .text-gray-400 {
+  color: #4b5563 !important;
+}
+
+/* ── Borders ──────────────────────────────── */
+.dark-theme .border-slate-100,
+.dark-theme .border-slate-200,
+.dark-theme .border-gray-100,
+.dark-theme .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ── Header / Nav ─────────────────────────── */
+.dark-theme header.bg-white,
+.dark-theme header {
+  background-color: rgba(10, 10, 10, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ── Hover States ─────────────────────────── */
+.dark-theme .hover\:bg-blue-50:hover {
+  background-color: rgba(139, 92, 246, 0.1) !important;
+}
+
+.dark-theme .hover\:bg-gray-50:hover,
+.dark-theme .hover\:bg-gray-100:hover {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ── Brand Accent Backgrounds ─────────────── */
+.dark-theme .bg-blue-50 {
+  background-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+/* ── Brand gradient accents → violet-to-cyan ── */
+.dark-theme .from-blue-600,
+.dark-theme .from-blue-500 {
+  --tw-gradient-from: #8b5cf6 !important;
+}
+.dark-theme .to-indigo-600,
+.dark-theme .to-indigo-500,
+.dark-theme .via-indigo-500 {
+  --tw-gradient-to: #06b6d4 !important;
+}
+
+/* ── Buttons ──────────────────────────────── */
+.dark-theme .btn-primary {
+  background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 20px -4px rgba(139, 92, 246, 0.35) !important;
+}
+
+.dark-theme .btn-primary:hover {
+  box-shadow:
+    0 6px 30px -4px rgba(139, 92, 246, 0.5),
+    0 0 40px rgba(6, 182, 212, 0.15) !important;
+  transform: translateY(-1px);
+}
+
+.dark-theme .btn-secondary {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #e5e7eb !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-theme .btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+/* ── Dropdown / Popover ───────────────────── */
+.dark-theme .shadow-lg {
+  background-color: #111111 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.8) !important;
+}
+
+.dark-theme .shadow-sm {
+  box-shadow: 0 1px 8px -2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ── Form Elements ────────────────────────── */
+.dark-theme input,
+.dark-theme textarea,
+.dark-theme select {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #d1d5db !important;
+}
+
+.dark-theme input:focus,
+.dark-theme textarea:focus,
+.dark-theme select:focus {
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  box-shadow:
+    0 0 0 2px rgba(139, 92, 246, 0.15),
+    0 0 20px rgba(139, 92, 246, 0.05) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark-theme input::placeholder,
+.dark-theme textarea::placeholder {
+  color: #4b5563 !important;
+}
+
+/* ── Right Sidebar ────────────────────────── */
+.dark-theme .border-l.bg-gray-50 {
+  background-color: #0d0d0d !important;
+  border-left-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ── Left Sidebar ─────────────────────────── */
+.dark-theme aside.bg-white,
+.dark-theme .border-r.bg-white {
+  background-color: #0d0d0d !important;
+  border-right-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ── Chat Input Bar ───────────────────────── */
+.dark-theme .border-t.border-slate-100 {
+  border-top-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ── Quick Actions Panel ──────────────────── */
+.dark-theme .ring-1.ring-slate-200,
+.dark-theme .ring-1.ring-slate-100 {
+  --tw-ring-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ── Active brand buttons → violet gradient ── */
+.dark-theme .bg-gradient-to-r.from-blue-600.to-indigo-600 {
+  background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%) !important;
+  box-shadow: 0 4px 16px -4px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* ── Left sidebar header gradient → violet ── */
+.dark-theme .bg-gradient-to-br.from-blue-600.to-blue-700 {
+  background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%) !important;
+}
+
+/* ── Scrollbar (dark theme) ───────────────── */
+.dark-theme ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dark-theme ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Chat message prose overrides (dark) ──── */
+.dark-theme .prose-p\:text-slate-500,
+.dark-theme .prose p {
+  color: #9ca3af !important;
+}
+
+.dark-theme .prose-headings\:text-slate-800,
+.dark-theme .prose h1,
+.dark-theme .prose h2,
+.dark-theme .prose h3,
+.dark-theme .prose h4 {
+  color: #e5e7eb !important;
+}
+
+.dark-theme .prose-strong\:text-blue-600,
+.dark-theme .prose strong,
+.dark-theme .prose strong.text-blue-600 {
+  color: #a78bfa !important;
+  -webkit-text-fill-color: #a78bfa !important;
+  background: none !important;
+}
+
+.dark-theme .prose-a\:text-blue-600,
+.dark-theme .prose a {
+  color: #22d3ee !important;
+}
+
+.dark-theme .prose-em\:text-slate-500,
+.dark-theme .prose em {
+  color: #b4bcd0 !important;
+}
+
+.dark-theme .prose-li\:text-slate-500,
+.dark-theme .prose li {
+  color: #c9d1d9 !important;
+}
+
+/* ── Code blocks (dark) ───────────────────── */
+.dark-theme .prose code {
+  background-color: rgba(96, 165, 250, 0.15) !important;
+  color: #93c5fd !important;
+  border-color: rgba(96, 165, 250, 0.25) !important;
+}
+
+/* Inline code inside user messages (blue gradient) — white on translucent */
+.dark-theme .prose-invert code,
+.prose-invert code {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.dark-theme .prose pre {
+  background-color: #0a0a0a !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ── Tables (dark) ────────────────────────── */
+.dark-theme table {
+  background-color: #111111 !important;
+}
+
+.dark-theme thead {
+  background-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+.dark-theme th {
+  color: #e5e7eb !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark-theme td {
+  color: #9ca3af !important;
+  border-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+.dark-theme tr:hover {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* ── Typing indicator (dark) ──────────────── */
+.dark-theme .bg-blue-500 {
+  background-color: #a78bfa !important;
+}
+
+/* ── Accent corner glows → violet/cyan ────── */
+.dark-theme .bg-blue-500\/3 {
+  background-color: rgba(139, 92, 246, 0.04) !important;
+}
+
+.dark-theme .bg-indigo-500\/3 {
+  background-color: rgba(6, 182, 212, 0.04) !important;
+}
+
+/* ── Slider ───────────────────────────────── */
+.slider {
+  background: linear-gradient(to right, #e2e8f0 0%, #3b82f6 50%, #e2e8f0 100%);
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+  border: 2px solid white;
+  transition: all 0.2s ease-in-out;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: #2563eb;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+}
+
+.slider::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.slider::-moz-range-thumb:hover {
+  background: #2563eb;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+}
+
+/* Animation for modal entrance */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-content {
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Chat and Search Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes searchHighlight {
+  0% {
+    background-color: rgba(255, 235, 59, 0.8);
+    box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.4);
+  }
+  100% {
+    background-color: rgba(255, 235, 59, 0.3);
+    box-shadow: 0 0 0 0 rgba(255, 235, 59, 0);
+  }
+}
+
+.search-highlight {
+  animation: searchHighlight 2s ease-out;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+/* ============================================
+   Neural/Cyberpunk Theme Styles
+   ============================================ */
+
+/* Matrix-style background */
+.neural-theme {
+  --neural-primary: #00ffff;
+  --neural-secondary: #ff00ff;
+  --neural-accent: #00ff00;
+  --neural-bg-dark: #0a0a0f;
+  --neural-bg-medium: #121218;
+  --neural-bg-light: #1a1a24;
+  --neural-border: rgba(0, 255, 255, 0.2);
+  --neural-glow: rgba(0, 255, 255, 0.4);
+}
+
+.neural-bg {
+  background: linear-gradient(135deg, #0a0a0f 0%, #121218 50%, #0f0f1a 100%);
+  position: relative;
+}
+
+.neural-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(
+      ellipse at 20% 80%,
+      rgba(0, 255, 255, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(255, 0, 255, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+/* Grid overlay effect */
+.neural-grid {
+  background-image:
+    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Neural button styles */
+.neural-btn {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 255, 0.1) 0%,
+    rgba(255, 0, 255, 0.1) 100%
+  );
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  color: #00ffff;
+  transition: all 0.3s ease;
+}
+
+.neural-btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 255, 0.2) 0%,
+    rgba(255, 0, 255, 0.2) 100%
+  );
+  border-color: rgba(0, 255, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+/* Custom scrollbar for all elements */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 120, 0.4);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 120, 0.6);
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Chat Message Color Hierarchy - Override global styles for optimal readability */
+/* Neural theme message text colors with proper contrast */
+.prose-invert.prose-sm {
+  color: #e5e7eb !important;
+  --tw-prose-headings: #ffffff;
+  --tw-prose-invert-headings: #ffffff;
+  --tw-prose-body: #e5e7eb;
+  --tw-prose-invert-body: #e5e7eb;
+  --tw-prose-bold: #7c6cff;
+  --tw-prose-invert-bold: #7c6cff;
+  --tw-prose-links: #7c6cff;
+  --tw-prose-invert-links: #7c6cff;
+  --tw-prose-italic: #9ca3af;
+  --tw-prose-invert-italic: #9ca3af;
+  --tw-prose-list: #e5e7eb;
+  --tw-prose-invert-list: #e5e7eb;
+  --tw-prose-code: #e5e7eb;
+  --tw-prose-invert-code: #e5e7eb;
+}
+
+/* Direct element targeting for maximum specificity */
+.prose-invert.prose-sm,
+.prose-invert.prose-sm * {
+  color: #e5e7eb !important;
+}
+
+.prose-invert.prose-sm p,
+.prose-invert.prose-sm div,
+.prose-invert.prose-sm span:not(strong):not(em):not(code) {
+  color: #e5e7eb !important;
+}
+
+.prose-invert.prose-sm h1,
+.prose-invert.prose-sm h2,
+.prose-invert.prose-sm h3,
+.prose-invert.prose-sm h4,
+.prose-invert.prose-sm h5,
+.prose-invert.prose-sm h6 {
+  color: #ffffff !important;
+}
+
+.prose-invert.prose-sm strong,
+.prose-invert.prose-sm b {
+  color: #7c6cff !important;
+  font-weight: 700;
+}
+
+.prose-invert.prose-sm a {
+  color: #7c6cff !important;
+}
+
+.prose-invert.prose-sm em,
+.prose-invert.prose-sm i {
+  color: #9ca3af !important;
+}
+
+.prose-invert.prose-sm li {
+  color: #e5e7eb !important;
+}
+
+.prose-invert.prose-sm code {
+  color: #e5e7eb !important;
+}
+
+/* Catch all text nodes in neural theme chat messages */
+[class*='bg-[#2B2B2B]'] * {
+  color: #e5e7eb !important;
+}
+
+[class*='bg-[#2B2B2B]'] strong,
+[class*='bg-[#2B2B2B]'] b {
+  color: #7c6cff !important;
+}
+
+[class*='bg-[#2B2B2B]'] h1,
+[class*='bg-[#2B2B2B]'] h2,
+[class*='bg-[#2B2B2B]'] h3,
+[class*='bg-[#2B2B2B]'] h4,
+[class*='bg-[#2B2B2B]'] h5,
+[class*='bg-[#2B2B2B]'] h6 {
+  color: #ffffff !important;
+}
+
+[class*='bg-[#2B2B2B]'] a {
+  color: #7c6cff !important;
+}
+
+/* Chat Message Color Hierarchy — dark-theme upgrade (violet/cyan accents) */
+.dark-theme .prose-invert.prose-sm {
+  color: #d1d5db !important;
+  --tw-prose-headings: #ffffff;
+  --tw-prose-invert-headings: #ffffff;
+  --tw-prose-body: #d1d5db;
+  --tw-prose-invert-body: #d1d5db;
+  --tw-prose-bold: #a78bfa;
+  --tw-prose-invert-bold: #a78bfa;
+  --tw-prose-links: #22d3ee;
+  --tw-prose-invert-links: #22d3ee;
+  --tw-prose-italic: #9ca3af;
+  --tw-prose-invert-italic: #9ca3af;
+  --tw-prose-list: #d1d5db;
+  --tw-prose-invert-list: #d1d5db;
+  --tw-prose-code: #d1d5db;
+  --tw-prose-invert-code: #d1d5db;
+}
+
+.dark-theme .prose-invert.prose-sm,
+.dark-theme .prose-invert.prose-sm * {
+  color: #d1d5db !important;
+}
+
+.dark-theme .prose-invert.prose-sm p,
+.dark-theme .prose-invert.prose-sm div,
+.dark-theme .prose-invert.prose-sm span:not(strong):not(em):not(code) {
+  color: #d1d5db !important;
+}
+
+.dark-theme .prose-invert.prose-sm h1,
+.dark-theme .prose-invert.prose-sm h2,
+.dark-theme .prose-invert.prose-sm h3,
+.dark-theme .prose-invert.prose-sm h4,
+.dark-theme .prose-invert.prose-sm h5,
+.dark-theme .prose-invert.prose-sm h6 {
+  color: #ffffff !important;
+}
+
+.dark-theme .prose-invert.prose-sm strong,
+.dark-theme .prose-invert.prose-sm b {
+  color: #a78bfa !important;
+  font-weight: 700;
+}
+
+.dark-theme .prose-invert.prose-sm a {
+  color: #22d3ee !important;
+}
+
+.dark-theme .prose-invert.prose-sm em,
+.dark-theme .prose-invert.prose-sm i {
+  color: #9ca3af !important;
+}
+
+.dark-theme .prose-invert.prose-sm li {
+  color: #d1d5db !important;
+}
+
+.dark-theme .prose-invert.prose-sm code {
+  color: #22d3ee !important;
+}
+
+/* ==========================================
+   ULTRA HERO SECTION - FLYING PRODUCT CARDS
+   Like watching fast cars pass by - blur, focus, blur
+   ========================================== */
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Float right to left (like passing car from right) */
+@keyframes floatLeft {
+  0% {
+    right: -20%;
+    opacity: 0;
+    transform: scale(0.3) rotate(-5deg);
+    filter: blur(8px);
+  }
+  15% {
+    opacity: 0.5;
+    transform: scale(0.6) rotate(-2deg);
+    filter: blur(4px);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+  85% {
+    opacity: 0.5;
+    transform: scale(0.6) rotate(2deg);
+    filter: blur(4px);
+  }
+  100% {
+    right: 120%;
+    opacity: 0;
+    transform: scale(0.3) rotate(5deg);
+    filter: blur(8px);
+  }
+}
+
+.animate-float-left {
+  animation: floatLeft linear infinite;
+  right: -20%;
+}
+
+/* Float left to right (like passing car from left) */
+@keyframes floatRight {
+  0% {
+    left: -20%;
+    opacity: 0;
+    transform: scale(0.3) rotate(5deg);
+    filter: blur(8px);
+  }
+  15% {
+    opacity: 0.5;
+    transform: scale(0.6) rotate(2deg);
+    filter: blur(4px);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+  85% {
+    opacity: 0.5;
+    transform: scale(0.6) rotate(-2deg);
+    filter: blur(4px);
+  }
+  100% {
+    left: 120%;
+    opacity: 0;
+    transform: scale(0.3) rotate(-5deg);
+    filter: blur(8px);
+  }
+}
+
+.animate-float-right {
+  animation: floatRight linear infinite;
+  left: -20%;
+}
+
+/* Float bottom to top (ascending) */
+@keyframes floatUp {
+  0% {
+    bottom: -20%;
+    opacity: 0;
+    transform: scale(0.3) translateX(-10px);
+    filter: blur(6px);
+  }
+  20% {
+    opacity: 0.6;
+    transform: scale(0.7) translateX(-5px);
+    filter: blur(3px);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+    filter: blur(0px);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+    filter: blur(0px);
+  }
+  80% {
+    opacity: 0.6;
+    transform: scale(0.7) translateX(5px);
+    filter: blur(3px);
+  }
+  100% {
+    bottom: 120%;
+    opacity: 0;
+    transform: scale(0.3) translateX(10px);
+    filter: blur(6px);
+  }
+}
+
+.animate-float-up {
+  animation: floatUp linear infinite;
+  bottom: -20%;
+}
+
+/* Float top to bottom (descending) */
+@keyframes floatDown {
+  0% {
+    top: -20%;
+    opacity: 0;
+    transform: scale(0.3) translateX(10px);
+    filter: blur(6px);
+  }
+  20% {
+    opacity: 0.6;
+    transform: scale(0.7) translateX(5px);
+    filter: blur(3px);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+    filter: blur(0px);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+    filter: blur(0px);
+  }
+  80% {
+    opacity: 0.6;
+    transform: scale(0.7) translateX(-5px);
+    filter: blur(3px);
+  }
+  100% {
+    top: 120%;
+    opacity: 0;
+    transform: scale(0.3) translateX(-10px);
+    filter: blur(6px);
+  }
+}
+
+.animate-float-down {
+  animation: floatDown linear infinite;
+  top: -20%;
+}
+
+/* Zoom pass effect - car coming from far, passing very close, going far again */
+@keyframes zoomPass {
+  0% {
+    left: 50%;
+    transform: translateX(-50%) scale(0.1) perspective(1000px)
+      translateZ(-500px);
+    opacity: 0;
+    filter: blur(15px);
+  }
+  20% {
+    opacity: 0.3;
+    transform: translateX(-50%) scale(0.4) perspective(1000px)
+      translateZ(-200px);
+    filter: blur(8px);
+  }
+  45% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.2) perspective(1000px) translateZ(0px);
+    filter: blur(0px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.2) perspective(1000px) translateZ(0px);
+    filter: blur(0px);
+  }
+  80% {
+    opacity: 0.3;
+    transform: translateX(-50%) scale(0.4) perspective(1000px)
+      translateZ(-200px);
+    filter: blur(8px);
+  }
+  100% {
+    left: 50%;
+    transform: translateX(-50%) scale(0.1) perspective(1000px)
+      translateZ(-500px);
+    opacity: 0;
+    filter: blur(15px);
+  }
+}
+
+.animate-zoom-pass {
+  animation: zoomPass ease-in-out infinite;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ENHANCED Zoom pass - comes MUCH CLOSER to screen, almost fills viewport */
+@keyframes zoomPassClose {
+  0% {
+    left: 50%;
+    transform: translateX(-50%) scale(0.05);
+    opacity: 0;
+    filter: blur(20px);
+  }
+  15% {
+    opacity: 0.3;
+    transform: translateX(-50%) scale(0.2);
+    filter: blur(10px);
+  }
+  35% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(0.8);
+    filter: blur(3px);
+  }
+  45% {
+    opacity: 1;
+    transform: translateX(-50%) scale(2.5);
+    filter: blur(0px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateX(-50%) scale(2.5);
+    filter: blur(0px);
+  }
+  65% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(0.8);
+    filter: blur(3px);
+  }
+  85% {
+    opacity: 0.3;
+    transform: translateX(-50%) scale(0.2);
+    filter: blur(10px);
+  }
+  100% {
+    left: 50%;
+    transform: translateX(-50%) scale(0.05);
+    opacity: 0;
+    filter: blur(20px);
+  }
+}
+
+.animate-zoom-pass-close {
+  animation: zoomPassClose ease-in-out infinite;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Fullscreen pass effect - image slides in, covers full screen, then slides out */
+@keyframes fullscreenPass {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  10% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  85% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+.animate-fullscreen-pass {
+  animation: fullscreenPass ease-in-out infinite;
+  opacity: 0;
+}
+
+/* Fade in up for hero text */
+@keyframes fadeInUpHero {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUpHero 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+/* Neural background colors for dark hero */
+.bg-slate-950 {
+  background-color: #0a0a0f !important;
+}
+
+.bg-slate-900 {
+  background-color: #121218 !important;
+}
+
+.from-slate-950 {
+  --tw-gradient-from: #0a0a0f var(--tw-gradient-from-position);
+}
+
+.via-slate-900 {
+  --tw-gradient-via: #121218 var(--tw-gradient-via-position);
+}
+
+.to-slate-950 {
+  --tw-gradient-to: #0a0a0f var(--tw-gradient-to-position);
+}
+
+/* Snowfall animation */
+@keyframes snowfall {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(110vh) translateX(20px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-snowfall {
+  animation: snowfall linear infinite;
+}
+
+/* Aurora pulse animation for cosmic rays */
+@keyframes auroraPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scaleX(1) translateX(0);
+  }
+  25% {
+    opacity: 0.6;
+    transform: scaleX(1.1) translateX(5px);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scaleX(0.95) translateX(-3px);
+  }
+  75% {
+    opacity: 0.5;
+    transform: scaleX(1.05) translateX(8px);
+  }
+}
+
+.animate-aurora-pulse {
+  animation: auroraPulse 4s ease-in-out infinite;
+}
+
+/* Twinkling stars animation */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.animate-twinkle {
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+/* Canvas App Loading Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-10px) translateX(-5px);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateY(-25px) translateX(15px);
+    opacity: 0.7;
+  }
+}
+
+@keyframes floatDelayed {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.5;
+  }
+  33% {
+    transform: translateY(-15px) translateX(-10px);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translateY(-25px) translateX(5px);
+    opacity: 0.3;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatDelayed 5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Hide scrollbar for marquee/carousel sections */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Message Content (rich markdown in chat) ─── */
+.message-content pre {
+  margin: 0;
+  background: transparent;
+}
+.message-content code.hljs {
+  background: transparent;
+  padding: 0;
+}
+.message-content p:first-child {
+  margin-top: 0;
+}
+.message-content p:last-child {
+  margin-bottom: 0;
+}
+.message-content a {
+  text-decoration-skip-ink: auto;
+}
+
+/* ==========================================
+   HOME PAGE DARK-MODE COVERAGE
+   Standalone home components (HeroSectionGSAP,
+   AgentCardsMarquee, AIShowcaseSection,
+   CommunityStats, NewsletterSection,
+   TestimonialSection) bypass SectionShell, so
+   they rely on these overrides to flip from
+   light → dark when .dark-theme is active.
+   ========================================== */
+
+/* Neumorphic surfaces — dark variants */
+.dark-theme .neu-cta {
+  background: #111111 !important;
+  box-shadow:
+    8px 8px 24px rgba(0, 0, 0, 0.55),
+    -8px -8px 24px rgba(255, 255, 255, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+.dark-theme .neu-cta::before {
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.18) 0%,
+    rgba(6, 182, 212, 0.10) 50%,
+    rgba(16, 185, 129, 0.05) 100%
+  ) !important;
+}
+.dark-theme .neu-cta h2,
+.dark-theme .neu-cta h3 { color: #f3f4f6 !important; }
+.dark-theme .neu-cta p { color: #b6bdc8 !important; }
+
+.dark-theme .neu-page-bg {
+  background:
+    radial-gradient(ellipse at 18% 20%, rgba(139, 92, 246, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 82% 78%, rgba(6, 182, 212, 0.14) 0%, transparent 55%),
+    #0a0a0a !important;
+}
+
+.dark-theme .neu-info {
+  background: #111111 !important;
+  border-color: rgba(139, 92, 246, 0.18) !important;
+  box-shadow:
+    4px 4px 16px rgba(0, 0, 0, 0.5),
+    -4px -4px 16px rgba(255, 255, 255, 0.015) !important;
+}
+
+.dark-theme .neu-icon {
+  background: #111111 !important;
+  box-shadow:
+    4px 4px 12px rgba(0, 0, 0, 0.55),
+    -4px -4px 12px rgba(255, 255, 255, 0.02),
+    inset 0 1px 0 rgba(139, 92, 246, 0.15) !important;
+}
+.dark-theme .neu-icon svg { color: #a78bfa !important; }
+
+/* Slate / neutral surface utilities missed by the
+   existing dark-mode block. Used by AgentCardsMarquee,
+   AIShowcaseSection, NewsletterSection. */
+.dark-theme .bg-slate-100 {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+.dark-theme .bg-slate-200 {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+.dark-theme .bg-slate-300 {
+  background-color: rgba(139, 92, 246, 0.18) !important;
+}
+.dark-theme .bg-neutral-100 {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+.dark-theme .bg-blue-100 {
+  background-color: rgba(139, 92, 246, 0.15) !important;
+}
+.dark-theme .border-slate-300 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.dark-theme .border-blue-200 {
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Hover variants used in those components */
+.dark-theme .hover\:bg-slate-200:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+.dark-theme .hover\:bg-slate-400:hover {
+  background-color: rgba(167, 139, 250, 0.35) !important;
+}
+.dark-theme .hover\:bg-neutral-100:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* NewsletterSection’s “bg-white” submit button —
+   the global rule turns it into a dark card which
+   hides the blue-600 label. Re-tint to keep CTA
+   visible in dark mode. */
+.dark-theme .neu-cta button.bg-white,
+.dark-theme .neu-cta .bg-white {
+  background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 20px -4px rgba(139, 92, 246, 0.4) !important;
+}
+.dark-theme .neu-cta button.bg-white.text-blue-600,
+.dark-theme .neu-cta .text-blue-600 {
+  color: #ffffff !important;
+}
+
+/* TestimonialSection — text-slate-100 used for author
+   name on a transparent card; keep it bright in dark
+   (already light) but ensure body slate-600 / 700
+   stays readable (already covered by global rules). */
+.dark-theme .text-slate-100 {
+  color: #f3f4f6 !important;
+}
+
+/* ==========================================
+   HEADER MOBILE MENU & FOOTER DARK COVERAGE
+   The mobile slide-in menu (Header.tsx) and the
+   <footer> brand area use frosted white-glass
+   surfaces (bg-white/30 → bg-white/70) plus
+   text-slate-600 for nav labels. Without these
+   overrides, the labels turn dark-on-dark and the
+   glass cards stay almost transparent.
+   ========================================== */
+.dark-theme .text-slate-600 {
+  color: #c9d1d9 !important;
+}
+
+.dark-theme .bg-white\/30 {
+  background-color: rgba(255, 255, 255, 0.16) !important;
+}
+.dark-theme .bg-white\/40 {
+  background-color: rgba(255, 255, 255, 0.22) !important;
+}
+.dark-theme .bg-white\/50 {
+  background-color: rgba(255, 255, 255, 0.26) !important;
+}
+.dark-theme .bg-white\/60 {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+.dark-theme .bg-white\/70 {
+  background-color: rgba(255, 255, 255, 0.34) !important;
+}
+
+.dark-theme .hover\:bg-white\/60:hover,
+.dark-theme .hover\:bg-white\/70:hover,
+.dark-theme .hover\:bg-white\/80:hover {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.dark-theme .border-white\/40,
+.dark-theme .border-white\/50,
+.dark-theme .border-white\/60,
+.dark-theme .border-white\/70,
+.dark-theme .border-white\/80 {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+.dark-theme .hover\:border-white\/80:hover {
+  border-color: rgba(139, 92, 246, 0.35) !important;
+}
+
+/* Bare element typography — :where() keeps specificity at 0
+   so explicit utility classes (text-white, text-purple-600,
+   etc.) still beat these defaults. */
+:where(.dark-theme) h1,
+:where(.dark-theme) h2,
+:where(.dark-theme) h3 {
+  color: #f3f4f6;
+}
+:where(.dark-theme) h4 {
+  color: #e5e7eb;
+}
+:where(.dark-theme) p {
+  color: #c9d1d9;
+}
+
+/* neutral-* utilities used by stats blocks and showcase
+   pages — keep dark-mode readable. */
+.dark-theme .text-neutral-900 {
+  color: #f3f4f6 !important;
+}
+.dark-theme .text-neutral-800 {
+  color: #e5e7eb !important;
+}
+.dark-theme .text-neutral-700 {
+  color: #d1d5db !important;
+}
+.dark-theme .text-neutral-600 {
+  color: #c9d1d9 !important;
+}
+.dark-theme .text-neutral-500 {
+  color: #9ca3af !important;
+}
+
+/* Footer Quick Links external links — light green is unreadable
+   on the dark glass card; use violet/cyan instead. */
+.dark-theme footer .text-green-600 {
+  color: #67e8f9 !important;
+}
+.dark-theme footer .hover\:text-emerald-500:hover {
+  color: #a78bfa !important;
+}
+
+/* Footer CTA banner — replace the hard-coded purple
+   inline gradient with a deeper night-violet so it
+   stops glowing bright in dark mode. */
+.dark-theme .footer-cta-banner {
+  background: linear-gradient(
+    135deg,
+    #1a0f2e 0%,
+    #1f1340 30%,
+    #2a1a52 50%,
+    #1f1340 75%,
+    #1a0f2e 100%
+  ) !important;
+}
+.dark-theme .footer-cta-banner button.bg-white {
+  background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%) !important;
+  color: #ffffff !important;
+}
+.dark-theme .footer-cta-banner .text-purple-700 {
+  color: #ffffff !important;
+}
+.dark-theme .footer-cta-banner input[type='email'] {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  color: #f3f4f6 !important;
+}
+.dark-theme .footer-cta-banner input[type='email']::placeholder {
+  color: rgba(243, 244, 246, 0.55) !important;
+}
+
+/* Hero bottom fade — light lavender in light mode,
+   deep charcoal in dark mode (was hardcoded #e8e0f0). */
+.hero-bottom-fade {
+  background: linear-gradient(to top, #e8e0f0 0%, rgba(232, 224, 240, 0) 100%);
+}
+.dark-theme .hero-bottom-fade {
+  background: linear-gradient(to top, #0a0a0a 0%, rgba(10, 10, 10, 0) 100%) !important;
+}
+
+/* Hero orbs — soften the bright purple/indigo/violet
+   blobs in dark mode so the center doesn't look washed
+   out. */
+.dark-theme .bg-purple-300\/25,
+.dark-theme .bg-indigo-300\/25,
+.dark-theme .bg-violet-300\/25 {
+  background-color: rgba(139, 92, 246, 0.15) !important;
+}
