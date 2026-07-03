@@ -446,18 +446,18 @@ router.post('/verify-session', async (req, res) => {
     if (customerEmail) {
       try {
         // Raw SELECT — only needs id + email columns, immune to schema drift
-        const rows = await prisma.$queryRaw`SELECT id FROM users WHERE email = ${customerEmail} LIMIT 1`;
+        const rows = await prisma.$queryRaw`SELECT id FROM "User" WHERE email = ${customerEmail} LIMIT 1`;
         if (rows && rows.length > 0) {
           resolvedUserId = rows[0].id;
         } else {
           const customerName = session.customer_details?.name || customerEmail.split('@')[0];
           await prisma.$executeRaw`
-            INSERT INTO users (id, email, name, "createdAt", "updatedAt")
+            INSERT INTO "User" (id, email, name, "createdAt", "updatedAt")
             VALUES (${userId}, ${customerEmail}, ${customerName}, NOW(), NOW())
             ON CONFLICT (email) DO UPDATE SET "updatedAt" = NOW()
           `;
           // Re-read resolved id in case ON CONFLICT returned existing row
-          const reRows = await prisma.$queryRaw`SELECT id FROM users WHERE email = ${customerEmail} LIMIT 1`;
+          const reRows = await prisma.$queryRaw`SELECT id FROM "User" WHERE email = ${customerEmail} LIMIT 1`;
           if (reRows && reRows.length > 0) resolvedUserId = reRows[0].id;
         }
       } catch (userErr) {
@@ -570,17 +570,17 @@ async function handleCheckoutSessionCompleted(session) {
   let resolvedWebhookUserId = metadata?.userId;
   if (webhookEmail && resolvedWebhookUserId) {
     try {
-      const rows = await prisma.$queryRaw`SELECT id FROM users WHERE email = ${webhookEmail} LIMIT 1`;
+      const rows = await prisma.$queryRaw`SELECT id FROM "User" WHERE email = ${webhookEmail} LIMIT 1`;
       if (rows && rows.length > 0) {
         resolvedWebhookUserId = rows[0].id;
       } else {
         const customerName = session.customer_details?.name || webhookEmail.split('@')[0];
         await prisma.$executeRaw`
-          INSERT INTO users (id, email, name, "createdAt", "updatedAt")
+          INSERT INTO "User" (id, email, name, "createdAt", "updatedAt")
           VALUES (${resolvedWebhookUserId}, ${webhookEmail}, ${customerName}, NOW(), NOW())
           ON CONFLICT (email) DO UPDATE SET "updatedAt" = NOW()
         `;
-        const reRows = await prisma.$queryRaw`SELECT id FROM users WHERE email = ${webhookEmail} LIMIT 1`;
+        const reRows = await prisma.$queryRaw`SELECT id FROM "User" WHERE email = ${webhookEmail} LIMIT 1`;
         if (reRows && reRows.length > 0) resolvedWebhookUserId = reRows[0].id;
       }
     } catch (userErr) {
