@@ -440,27 +440,28 @@ router.post('/verify-session', async (req, res) => {
     });
 
     // Ensure user exists in THIS database (UCB uses its own DB separate from main backend).
-    // Users are created in the main DB; sync/upsert them here using Stripe session details.
+    // Use raw SQL to avoid Prisma schema drift issues (shared client between backends).
     const customerEmail = session.customer_details?.email || session.customer_email;
     let resolvedUserId = userId;
     if (customerEmail) {
-      const existingByEmail = await prisma.user.findUnique({ where: { email: customerEmail } });
-      if (existingByEmail) {
-        resolvedUserId = existingByEmail.id;
-      } else {
-        try {
-          await prisma.user.create({
-            data: {
-              id: userId,
-              email: customerEmail,
-              name: session.customer_details?.name || customerEmail.split('@')[0],
-            },
-          });
-        } catch (_e) {
-          // ID collision edge case — user already exists by id, safe to proceed
-          const existingById = await prisma.user.findUnique({ where: { id: userId } });
-          if (existingById) resolvedUserId = existingById.id;
+      try {
+        // Raw SELECT — only needs id + email columns, immune to schema drift
+        const rows = await prisma.$queryRaw`SELECT id FROM users WHERE email = ${customerEmail} LIMIT 1`;
+        if (rows && rows.length > 0) {
+          resolvedUserId = rows[0].id;
+        } else {
+          const customerName = session.customer_details?.name || customerEmail.split('@')[0];
+          await prisma.$executeRaw`
+            INSERT INTO users (id, email, name, "createdAt", "updatedAt")
+            VALUES (${userId}, ${customerEmail}, ${customerName}, NOW(), NOW())
+            ON CONFLICT (email) DO UPDATE SET "updatedAt" = NOW()
+          `;
+          // Re-read resolved id in case ON CONFLICT returned existing row
+          const reRows = await prisma.$queryRaw`SELECT id FROM users WHERE email = ${customerEmail} LIMIT 1`;
+          if (reRows && reRows.length > 0) resolvedUserId = reRows[0].id;
         }
+      } catch (userErr) {
+        console.warn('⚠️ Could not sync user to UCB DB:', userErr.message, '— proceeding with original userId');
       }
     }
 
@@ -564,26 +565,26 @@ async function handleCheckoutSessionCompleted(session) {
   if (existingByStripeId) return;
 
   // Ensure user exists in UCB's DB (separate from main backend DB).
-  // Use Stripe session email to sync/create the user record here.
+  // Use raw SQL to avoid Prisma schema drift issues with the shared client.
   const webhookEmail = email || session.customer_details?.email;
   let resolvedWebhookUserId = metadata?.userId;
   if (webhookEmail && resolvedWebhookUserId) {
-    const existingByEmail = await prisma.user.findUnique({ where: { email: webhookEmail } });
-    if (existingByEmail) {
-      resolvedWebhookUserId = existingByEmail.id;
-    } else {
-      try {
-        await prisma.user.create({
-          data: {
-            id: resolvedWebhookUserId,
-            email: webhookEmail,
-            name: session.customer_details?.name || webhookEmail.split('@')[0],
-          },
-        });
-      } catch (_e) {
-        const existingById = await prisma.user.findUnique({ where: { id: resolvedWebhookUserId } });
-        if (existingById) resolvedWebhookUserId = existingById.id;
+    try {
+      const rows = await prisma.$queryRaw`SELECT id FROM users WHERE email = ${webhookEmail} LIMIT 1`;
+      if (rows && rows.length > 0) {
+        resolvedWebhookUserId = rows[0].id;
+      } else {
+        const customerName = session.customer_details?.name || webhookEmail.split('@')[0];
+        await prisma.$executeRaw`
+          INSERT INTO users (id, email, name, "createdAt", "updatedAt")
+          VALUES (${resolvedWebhookUserId}, ${webhookEmail}, ${customerName}, NOW(), NOW())
+          ON CONFLICT (email) DO UPDATE SET "updatedAt" = NOW()
+        `;
+        const reRows = await prisma.$queryRaw`SELECT id FROM users WHERE email = ${webhookEmail} LIMIT 1`;
+        if (reRows && reRows.length > 0) resolvedWebhookUserId = reRows[0].id;
       }
+    } catch (userErr) {
+      console.warn('⚠️ Could not sync user to UCB DB (webhook):', userErr.message);
     }
   }
 
