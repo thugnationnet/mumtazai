@@ -439,9 +439,34 @@ router.post('/verify-session', async (req, res) => {
       },
     });
 
+    // Ensure user exists in THIS database (UCB uses its own DB separate from main backend).
+    // Users are created in the main DB; sync/upsert them here using Stripe session details.
+    const customerEmail = session.customer_details?.email || session.customer_email;
+    let resolvedUserId = userId;
+    if (customerEmail) {
+      const existingByEmail = await prisma.user.findUnique({ where: { email: customerEmail } });
+      if (existingByEmail) {
+        resolvedUserId = existingByEmail.id;
+      } else {
+        try {
+          await prisma.user.create({
+            data: {
+              id: userId,
+              email: customerEmail,
+              name: session.customer_details?.name || customerEmail.split('@')[0],
+            },
+          });
+        } catch (_e) {
+          // ID collision edge case — user already exists by id, safe to proceed
+          const existingById = await prisma.user.findUnique({ where: { id: userId } });
+          if (existingById) resolvedUserId = existingById.id;
+        }
+      }
+    }
+
     // Check existing by user+agent
     const existing = await prisma.agentSubscription.findFirst({
-      where: { userId, agentId },
+      where: { userId: resolvedUserId, agentId },
     });
 
     let subscriptionRecord;
@@ -452,7 +477,7 @@ router.post('/verify-session', async (req, res) => {
       });
     } else {
       subscriptionRecord = await prisma.agentSubscription.create({
-        data: { userId, agentId, plan, price, status: 'active', startDate, expiryDate, stripeSubscriptionId: stripeSubId },
+        data: { userId: resolvedUserId, agentId, plan, price, status: 'active', startDate, expiryDate, stripeSubscriptionId: stripeSubId },
       });
     }
 
@@ -538,8 +563,32 @@ async function handleCheckoutSessionCompleted(session) {
   });
   if (existingByStripeId) return;
 
+  // Ensure user exists in UCB's DB (separate from main backend DB).
+  // Use Stripe session email to sync/create the user record here.
+  const webhookEmail = email || session.customer_details?.email;
+  let resolvedWebhookUserId = metadata?.userId;
+  if (webhookEmail && resolvedWebhookUserId) {
+    const existingByEmail = await prisma.user.findUnique({ where: { email: webhookEmail } });
+    if (existingByEmail) {
+      resolvedWebhookUserId = existingByEmail.id;
+    } else {
+      try {
+        await prisma.user.create({
+          data: {
+            id: resolvedWebhookUserId,
+            email: webhookEmail,
+            name: session.customer_details?.name || webhookEmail.split('@')[0],
+          },
+        });
+      } catch (_e) {
+        const existingById = await prisma.user.findUnique({ where: { id: resolvedWebhookUserId } });
+        if (existingById) resolvedWebhookUserId = existingById.id;
+      }
+    }
+  }
+
   const existingSubscription = await prisma.agentSubscription.findFirst({
-    where: { userId: metadata?.userId, agentId: metadata?.agentId },
+    where: { userId: resolvedWebhookUserId, agentId: metadata?.agentId },
   });
 
   if (!existingSubscription && subscription) {
@@ -554,7 +603,7 @@ async function handleCheckoutSessionCompleted(session) {
 
     const agentSub = await prisma.agentSubscription.create({
       data: {
-        userId: metadata?.userId,
+        userId: resolvedWebhookUserId,
         agentId: metadata?.agentId,
         plan: planType,
         price: subscription.items.data[0]?.price?.unit_amount ? subscription.items.data[0].price.unit_amount / 100 : 0,
@@ -569,7 +618,7 @@ async function handleCheckoutSessionCompleted(session) {
     await prisma.transaction.create({
       data: {
         transactionId: `txn_${Date.now()}_${subscription.id}`,
-        userId: metadata?.userId, type: 'subscription',
+        userId: resolvedWebhookUserId, type: 'subscription',
         item: { agentId: metadata?.agentId, agentName: metadata?.agentName, plan: planType },
         amount: agentSub.price, currency: 'USD', status: 'completed',
         stripeSubscriptionId: subscription.id,
@@ -577,7 +626,7 @@ async function handleCheckoutSessionCompleted(session) {
     });
 
     // Send email (non-blocking)
-    const userRecord = await prisma.user.findUnique({ where: { id: metadata?.userId }, select: { email: true, name: true } });
+    const userRecord = await prisma.user.findUnique({ where: { id: resolvedWebhookUserId }, select: { email: true, name: true } });
     if (userRecord?.email) {
       sendPlanPurchaseEmail(userRecord.email, userRecord.name, {
         planName: planType.charAt(0).toUpperCase() + planType.slice(1),
@@ -593,7 +642,7 @@ async function handleCheckoutSessionCompleted(session) {
 
     const agentSub = await prisma.agentSubscription.create({
       data: {
-        userId: metadata?.userId,
+        userId: resolvedWebhookUserId,
         agentId: metadata?.agentId,
         plan: planType, price: amountTotal,
         status: 'active', startDate, expiryDate,
@@ -605,7 +654,7 @@ async function handleCheckoutSessionCompleted(session) {
     await prisma.transaction.create({
       data: {
         transactionId: `txn_${Date.now()}_${session.id}`,
-        userId: metadata?.userId, type: 'subscription',
+        userId: resolvedWebhookUserId, type: 'subscription',
         item: { agentId: metadata?.agentId, agentName: metadata?.agentName, plan: planType },
         amount: amountTotal, currency: 'USD', status: 'completed',
         stripeSubscriptionId: session.id,
