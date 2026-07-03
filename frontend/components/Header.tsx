@@ -176,10 +176,17 @@ export default function Header() {
         {/* Menu content */}
         <div className="flex flex-col flex-1 relative z-10 px-6 pt-6 pb-4 overflow-y-auto">
 
-          {/* Title — ASCII Art style, centered */}
+          {/* Title — Logo + brand name */}
           <div className="flex flex-col items-center w-full mb-1 mt-1">
-            <pre className="text-[7px] sm:text-[8px] leading-[1.2] font-mono text-slate-700 tracking-tighter select-none whitespace-pre" aria-label="Mumtaz AI">{`░█▀█░█▀█░█▀▀░█░░░█▀█░█▀▀░▀█▀░█▀█░▀█▀\n░█░█░█░█░█▀▀░█░░░█▀█░▀▀█░░█░░█▀█░░█░\n░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░░▀░░▀░▀░▀▀▀`}</pre>
-            <p className="text-slate-400 text-[10px] font-semibold tracking-[0.25em] uppercase mt-2">Intelligence Platform</p>
+            <Image
+              src="/images/logos/company-logo.png"
+              alt="Mumtaz AI"
+              width={52}
+              height={52}
+              className="h-13 w-auto object-contain rounded-xl mb-2"
+            />
+            <p className="text-slate-700 text-base font-bold tracking-[0.2em] uppercase">Mumtaz AI</p>
+            <p className="text-slate-400 text-[10px] font-semibold tracking-[0.25em] uppercase mt-1">Intelligence Platform</p>
           </div>
 
           {/* Divider */}

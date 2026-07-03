@@ -1,0 +1,988 @@
+@import "tailwindcss";
+
+/* ============================================
+   MAULA EDITOR — PREMIUM THEME SYSTEM
+   Clean, crisp, zero blur. VS Code quality.
+   ============================================ */
+
+/* Thin horizontal scrollbar for debug tabs */
+.debug-tabs-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(128,128,128,0.3) transparent;
+}
+.debug-tabs-scroll::-webkit-scrollbar { height: 3px; }
+.debug-tabs-scroll::-webkit-scrollbar-track { background: transparent; }
+.debug-tabs-scroll::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.35); border-radius: 3px; }
+.debug-tabs-scroll::-webkit-scrollbar-thumb:hover { background: rgba(128,128,128,0.6); }
+
+/* ============================================
+   BASE THEME — Charcoal Aurora (Default)
+   ============================================ */
+:root {
+  --vscode-bg: #1a1b26;
+  --vscode-sidebar: #16171f;
+  --vscode-activitybar: #13141b;
+  --vscode-editor: #1a1b26;
+  --vscode-panel: #16171f;
+  --vscode-border: #2a2d3a;
+  --vscode-accent: #41d7c0;
+  --vscode-accent-hover: #5ee3d0;
+  --vscode-text: #c8cdd5;
+  --vscode-text-muted: #6b7280;
+  --vscode-icon: #41d7c0;
+  --vscode-icon-inactive: #505868;
+  --vscode-selection: #264258;
+  --vscode-hover: #1f2130;
+  --vscode-active: #252838;
+  --vscode-success: #4ade80;
+  --vscode-warning: #fbbf24;
+  --vscode-error: #f87171;
+  --icon-default: #505868;
+  --icon-hover: #8892a0;
+  --icon-active: #41d7c0;
+  --text-inactive: #505868;
+  --text-active: #41d7c0;
+}
+
+/* ============================================
+   RAZER BLACK — Electric Blue on Deep Black
+   ============================================ */
+.dark:not(.theme-github-dark):not(.theme-dracula):not(.theme-nord):not(.theme-monokai):not(.theme-solarized-dark):not(.theme-one-dark):not(.theme-steel):not(.theme-charcoal-aurora):not(.high-contrast) {
+  --vscode-bg: #0c0d14;
+  --vscode-sidebar: #0a0b10;
+  --vscode-activitybar: #08090e;
+  --vscode-editor: #0c0d14;
+  --vscode-panel: #0a0b10;
+  --vscode-border: #1c1f2e;
+  --vscode-accent: #2979ff;
+  --vscode-accent-hover: #448aff;
+  --vscode-text: #b0b8c8;
+  --vscode-text-muted: #5a6378;
+  --vscode-icon: #2979ff;
+  --vscode-icon-inactive: #384058;
+  --vscode-selection: #13294d;
+  --vscode-hover: #10111a;
+  --vscode-active: #141622;
+  --vscode-success: #00e676;
+  --vscode-warning: #ffab00;
+  --vscode-error: #ff5252;
+}
+
+/* ============================================
+   LIGHT THEME
+   ============================================ */
+.light, [data-theme="light"] {
+  --vscode-bg: #ffffff;
+  --vscode-sidebar: #f5f5f5;
+  --vscode-activitybar: #eaeaeb;
+  --vscode-editor: #ffffff;
+  --vscode-panel: #f5f5f5;
+  --vscode-border: #e1e4e8;
+  --vscode-accent: #0078d4;
+  --vscode-accent-hover: #106ebe;
+  --vscode-text: #24292e;
+  --vscode-text-muted: #6a737d;
+  --vscode-selection: #b4d6fa;
+  --vscode-hover: #ebedef;
+  --vscode-active: #e0e2e6;
+  --vscode-success: #22863a;
+  --vscode-warning: #e36209;
+  --vscode-error: #cb2431;
+}
+
+/* ============================================
+   HIGH CONTRAST
+   ============================================ */
+.high-contrast {
+  --vscode-bg: #000000;
+  --vscode-sidebar: #000000;
+  --vscode-activitybar: #000000;
+  --vscode-editor: #000000;
+  --vscode-panel: #000000;
+  --vscode-border: #6fc3df;
+  --vscode-accent: #ffd700;
+  --vscode-accent-hover: #ffe44d;
+  --vscode-text: #ffffff;
+  --vscode-text-muted: #d4d4d4;
+  --vscode-selection: #264f78;
+  --vscode-hover: #0a2d4d;
+  --vscode-active: #0d3a63;
+  --vscode-success: #89d185;
+  --vscode-warning: #cca700;
+  --vscode-error: #f48771;
+}
+
+/* ============================================
+   CYBER NEON (github-dark)
+   ============================================ */
+.theme-github-dark {
+  --vscode-bg: #0d1117;
+  --vscode-sidebar: #0c1015;
+  --vscode-activitybar: #090d12;
+  --vscode-editor: #0d1117;
+  --vscode-panel: #0c1015;
+  --vscode-border: #21262d;
+  --vscode-accent: #58a6ff;
+  --vscode-accent-hover: #79c0ff;
+  --vscode-text: #c9d1d9;
+  --vscode-text-muted: #7d8590;
+  --vscode-selection: #1c3552;
+  --vscode-hover: #111820;
+  --vscode-active: #161b22;
+  --vscode-success: #3fb950;
+  --vscode-warning: #d29922;
+  --vscode-error: #f85149;
+}
+
+/* ============================================
+   NEON VAMPIRE (dracula)
+   ============================================ */
+.theme-dracula {
+  --vscode-bg: #282a36;
+  --vscode-sidebar: #21222c;
+  --vscode-activitybar: #1c1d26;
+  --vscode-editor: #282a36;
+  --vscode-panel: #21222c;
+  --vscode-border: #44475a;
+  --vscode-accent: #bd93f9;
+  --vscode-accent-hover: #d4b3ff;
+  --vscode-text: #f8f8f2;
+  --vscode-text-muted: #8890a0;
+  --vscode-selection: #44475a;
+  --vscode-hover: #2c2e3a;
+  --vscode-active: #343746;
+  --vscode-success: #50fa7b;
+  --vscode-warning: #f1fa8c;
+  --vscode-error: #ff5555;
+}
+
+/* ============================================
+   FROZEN AURORA (nord)
+   ============================================ */
+.theme-nord {
+  --vscode-bg: #2e3440;
+  --vscode-sidebar: #292e38;
+  --vscode-activitybar: #242830;
+  --vscode-editor: #2e3440;
+  --vscode-panel: #292e38;
+  --vscode-border: #3b4252;
+  --vscode-accent: #88c0d0;
+  --vscode-accent-hover: #8fbcbb;
+  --vscode-text: #d8dee9;
+  --vscode-text-muted: #7b88a0;
+  --vscode-selection: #3b5070;
+  --vscode-hover: #323846;
+  --vscode-active: #38404e;
+  --vscode-success: #a3be8c;
+  --vscode-warning: #ebcb8b;
+  --vscode-error: #bf616a;
+}
+
+/* ============================================
+   TOXIC NEON (monokai)
+   ============================================ */
+.theme-monokai {
+  --vscode-bg: #272822;
+  --vscode-sidebar: #22231d;
+  --vscode-activitybar: #1d1e18;
+  --vscode-editor: #272822;
+  --vscode-panel: #22231d;
+  --vscode-border: #3e3d32;
+  --vscode-accent: #a6e22e;
+  --vscode-accent-hover: #b8f040;
+  --vscode-text: #f8f8f2;
+  --vscode-text-muted: #88846f;
+  --vscode-selection: #49483e;
+  --vscode-hover: #2c2d26;
+  --vscode-active: #34352c;
+  --vscode-success: #a6e22e;
+  --vscode-warning: #e6db74;
+  --vscode-error: #f92672;
+}
+
+/* ============================================
+   DEEP SEA (solarized-dark)
+   ============================================ */
+.theme-solarized-dark {
+  --vscode-bg: #002b36;
+  --vscode-sidebar: #002530;
+  --vscode-activitybar: #00202a;
+  --vscode-editor: #002b36;
+  --vscode-panel: #002530;
+  --vscode-border: #094959;
+  --vscode-accent: #2aa198;
+  --vscode-accent-hover: #35bcb2;
+  --vscode-text: #93a1a1;
+  --vscode-text-muted: #657b83;
+  --vscode-selection: #073642;
+  --vscode-hover: #003340;
+  --vscode-active: #003e4c;
+  --vscode-success: #859900;
+  --vscode-warning: #b58900;
+  --vscode-error: #dc322f;
+}
+
+/* ============================================
+   PLASMA BLUE (one-dark)
+   ============================================ */
+.theme-one-dark {
+  --vscode-bg: #282c34;
+  --vscode-sidebar: #21252b;
+  --vscode-activitybar: #1c1f26;
+  --vscode-editor: #282c34;
+  --vscode-panel: #21252b;
+  --vscode-border: #3e4452;
+  --vscode-accent: #61afef;
+  --vscode-accent-hover: #7cc4ff;
+  --vscode-text: #abb2bf;
+  --vscode-text-muted: #636d83;
+  --vscode-selection: #3a4450;
+  --vscode-hover: #2c3039;
+  --vscode-active: #333842;
+  --vscode-success: #98c379;
+  --vscode-warning: #e5c07b;
+  --vscode-error: #e06c75;
+}
+
+/* ============================================
+   STEEL — Industrial Metallic
+   ============================================ */
+.theme-steel {
+  --vscode-bg: #1c1f26;
+  --vscode-sidebar: #181b22;
+  --vscode-activitybar: #14171d;
+  --vscode-editor: #1c1f26;
+  --vscode-panel: #181b22;
+  --vscode-border: #2e333d;
+  --vscode-accent: #8899b0;
+  --vscode-accent-hover: #9fb0c8;
+  --vscode-text: #b0b8c4;
+  --vscode-text-muted: #606a78;
+  --vscode-selection: #283040;
+  --vscode-hover: #20242c;
+  --vscode-active: #262b34;
+  --vscode-success: #7fb380;
+  --vscode-warning: #c0a860;
+  --vscode-error: #c07070;
+}
+
+/* ============================================
+   CHARCOAL AURORA (explicit class)
+   ============================================ */
+.theme-charcoal-aurora {
+  --vscode-bg: #1a1b26;
+  --vscode-sidebar: #16171f;
+  --vscode-activitybar: #13141b;
+  --vscode-editor: #1a1b26;
+  --vscode-panel: #16171f;
+  --vscode-border: #2a2d3a;
+  --vscode-accent: #41d7c0;
+  --vscode-accent-hover: #5ee3d0;
+  --vscode-text: #c8cdd5;
+  --vscode-text-muted: #6b7280;
+  --vscode-icon: #41d7c0;
+  --vscode-icon-inactive: #505868;
+  --vscode-selection: #264258;
+  --vscode-hover: #1f2130;
+  --vscode-active: #252838;
+  --vscode-success: #4ade80;
+  --vscode-warning: #fbbf24;
+  --vscode-error: #f87171;
+  --icon-default: #505868;
+  --icon-hover: #8892a0;
+  --icon-active: #41d7c0;
+  --text-inactive: #505868;
+  --text-active: #41d7c0;
+}
+
+/* ============================================
+   DARK THEME FALLBACK (no specific theme class)
+   ============================================ */
+.dark:not([class*="theme-"]):not(.high-contrast) {
+  --vscode-bg: #1e1e1e;
+  --vscode-sidebar: #252526;
+  --vscode-activitybar: #333333;
+  --vscode-editor: #1e1e1e;
+  --vscode-panel: #1e1e1e;
+  --vscode-border: #3c3c3c;
+  --vscode-accent: #0078d4;
+  --vscode-accent-hover: #1c8ae0;
+  --vscode-text: #cccccc;
+  --vscode-text-muted: #858585;
+  --vscode-selection: #264f78;
+  --vscode-hover: #2a2d2e;
+  --vscode-active: #37373d;
+  --vscode-success: #4caf50;
+  --vscode-warning: #ff9800;
+  --vscode-error: #f44336;
+}
+
+/* ============================================
+   PER-THEME SCROLLBARS
+   ============================================ */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) ::-webkit-scrollbar-track {
+  background: var(--vscode-sidebar);
+}
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) ::-webkit-scrollbar-thumb {
+  background: var(--vscode-active);
+  border-radius: 4px;
+}
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) ::-webkit-scrollbar-thumb:hover {
+  background: var(--vscode-text-muted);
+}
+
+.light ::-webkit-scrollbar { width: 8px; height: 8px; }
+.light ::-webkit-scrollbar-track { background: #f5f5f5; }
+.light ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+.light ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+
+.high-contrast ::-webkit-scrollbar { width: 10px; height: 10px; }
+.high-contrast ::-webkit-scrollbar-track { background: #000; border: 1px solid #6fc3df; }
+.high-contrast ::-webkit-scrollbar-thumb { background: #6fc3df; }
+.high-contrast ::-webkit-scrollbar-thumb:hover { background: #ffd700; }
+
+/* ============================================
+   PER-THEME SELECTION
+   ============================================ */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) ::selection {
+  background: var(--vscode-selection);
+  color: var(--vscode-text);
+}
+.light ::selection { background: #b4d6fa; color: #24292e; }
+.high-contrast ::selection { background: #264f78; color: #ffffff; }
+
+/* ============================================
+   PER-THEME INPUT / TEXTAREA / SELECT
+   ============================================ */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) input,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) textarea,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) select {
+  background: var(--vscode-sidebar);
+  border: 1px solid var(--vscode-border);
+  color: var(--vscode-text);
+}
+
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) input:focus,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) textarea:focus,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) select:focus {
+  border-color: var(--vscode-accent);
+  outline: none;
+  box-shadow: 0 0 0 1px var(--vscode-accent);
+}
+
+.light input, .light textarea, .light select {
+  background: #ffffff; border: 1px solid #d1d5db; color: #24292e;
+}
+.light input:focus, .light textarea:focus, .light select:focus {
+  border-color: #0078d4; outline: none; box-shadow: 0 0 0 1px #0078d4;
+}
+.high-contrast input, .high-contrast textarea, .high-contrast select {
+  background: #000; border: 2px solid #6fc3df; color: #fff;
+}
+.high-contrast input:focus, .high-contrast textarea:focus, .high-contrast select:focus {
+  border-color: #ffd700; outline: none; box-shadow: 0 0 0 2px #ffd700;
+}
+.high-contrast button:focus { outline: 2px solid #ffd700; outline-offset: 2px; }
+
+/* ============================================
+   DARK THEME UTILITY CLASS OVERRIDES
+   Single consolidated block using :is()
+   ============================================ */
+
+/* White backgrounds → sidebar */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora,
+    .high-contrast) :is(.bg-white, [class*="bg-white"]) {
+  background: var(--vscode-sidebar) !important;
+}
+
+/* Light gray backgrounds → panel */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora,
+    .high-contrast) :is(.bg-gray-50, .bg-gray-100, .bg-gray-200, .bg-gray-300) {
+  background: var(--vscode-panel) !important;
+}
+
+/* Dark gray backgrounds → bg */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) :is(.bg-gray-700, .bg-gray-800, .bg-gray-900) {
+  background: var(--vscode-bg) !important;
+}
+
+/* Slate backgrounds */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) :is(.bg-slate-50, .bg-slate-100, .bg-slate-200) {
+  background: var(--vscode-panel) !important;
+}
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) :is(.bg-slate-700, .bg-slate-800, .bg-slate-900) {
+  background: var(--vscode-bg) !important;
+}
+
+/* Dark text → theme text */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora,
+    .high-contrast) :is(.text-gray-900, .text-gray-800, .text-gray-700) {
+  color: var(--vscode-text) !important;
+}
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) :is(.text-gray-600, .text-gray-500) {
+  color: var(--vscode-text-muted) !important;
+}
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) :is(.text-gray-400, .text-gray-300) {
+  color: var(--vscode-text) !important;
+}
+
+/* White text → theme text */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) .text-white {
+  color: var(--vscode-text) !important;
+}
+
+/* Border overrides */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora,
+    .high-contrast) :is(.border-gray-200, .border-gray-300, .border-gray-400) {
+  border-color: var(--vscode-border) !important;
+}
+
+/* Slate text overrides */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) :is(.text-slate-800, .text-slate-900, .text-slate-700) {
+  color: var(--vscode-text) !important;
+}
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) :is(.text-slate-500, .text-slate-400) {
+  color: var(--vscode-text-muted) !important;
+}
+
+/* Slate borders */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) :is(.border-slate-200, .border-slate-300, .border-slate-700) {
+  border-color: var(--vscode-border) !important;
+}
+
+/* Modal/dialog backgrounds */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora,
+    .high-contrast) .fixed.inset-0 > div:not([class*="bg-black"]) {
+  background: var(--vscode-sidebar) !important;
+}
+
+/* Hardcoded hex bg overrides */
+:is(.theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel) :is(
+    [class*="bg-[#0"], [class*="bg-[#1"], [class*="bg-[#2"]) {
+  background: var(--vscode-sidebar) !important;
+}
+
+/* Hardcoded hex border overrides */
+:is(.theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel) [class*="border-[#"] {
+  border-color: var(--vscode-border) !important;
+}
+
+/* Blue utility → accent */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) :is(.bg-blue-500, .bg-blue-600) {
+  background: var(--vscode-accent) !important;
+}
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) :is(.text-blue-500, .text-blue-600, .text-blue-400) {
+  color: var(--vscode-accent) !important;
+}
+
+/* Green utility (preserve but theme-ize) */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) .bg-green-500 {
+  background: var(--vscode-success) !important;
+}
+
+/* Hover states */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) :is(
+    [class*="hover:bg-[#"]:hover, .hover\:bg-gray-100:hover, .hover\:bg-gray-200:hover) {
+  background: var(--vscode-hover) !important;
+}
+
+/* ============================================
+   CHARCOAL AURORA — ACCENT LINE
+   ============================================ */
+.theme-charcoal-aurora::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--vscode-accent);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ============================================
+   STEEL — SUBTLE METALLIC EFFECTS
+   ============================================ */
+.theme-steel .bg-vscode-sidebar,
+.theme-steel .bg-vscode-activitybar,
+.theme-steel .bg-vscode-panel {
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+}
+
+.theme-steel button:not([disabled]):hover,
+.theme-steel .hover\:bg-vscode-hover:hover {
+  background: linear-gradient(180deg, #2a2f38 0%, #252932 100%);
+}
+
+.theme-steel .bg-vscode-accent {
+  background: linear-gradient(180deg, #8899ad 0%, #6b7a8f 100%);
+}
+
+/* ============================================
+   GLOBAL ELEMENT STYLES
+   ============================================ */
+
+/* Placeholder text */
+input::placeholder, textarea::placeholder {
+  color: var(--vscode-text-muted);
+  opacity: 0.7;
+}
+
+/* Focus accessibility */
+button:focus-visible {
+  outline: 2px solid var(--vscode-accent);
+  outline-offset: 2px;
+}
+
+/* Links */
+a { color: var(--vscode-accent); }
+a:hover { color: var(--vscode-accent-hover); }
+
+/* Status text utilities */
+.text-success { color: var(--vscode-success); }
+.text-warning { color: var(--vscode-warning); }
+.text-error { color: var(--vscode-error); }
+.bg-success { background-color: var(--vscode-success); }
+.bg-warning { background-color: var(--vscode-warning); }
+.bg-error { background-color: var(--vscode-error); }
+
+/* Smooth theme transitions */
+body, .bg-vscode-bg, .bg-vscode-sidebar, .bg-vscode-panel,
+.text-vscode-text, .border-vscode-border,
+button, input, textarea, select {
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+/* Firefox scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--vscode-active) var(--vscode-sidebar);
+}
+
+/* Code elements */
+code, pre {
+  background: var(--vscode-hover);
+  color: var(--vscode-text);
+  border-radius: 4px;
+}
+pre { padding: 12px; overflow-x: auto; }
+code { padding: 2px 4px; font-size: 0.9em; }
+
+/* Badge */
+.badge {
+  background: var(--vscode-accent);
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.75em;
+  font-weight: 600;
+}
+
+/* Card/Panel */
+.card {
+  background: var(--vscode-sidebar);
+  border: 1px solid var(--vscode-border);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--vscode-border);
+  margin: 8px 0;
+}
+
+/* Tooltip */
+.tooltip {
+  background: var(--vscode-panel);
+  color: var(--vscode-text);
+  border: 1px solid var(--vscode-border);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.85em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Menu/Dropdown */
+.menu {
+  background: var(--vscode-panel);
+  border: 1px solid var(--vscode-border);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.menu-item {
+  padding: 8px 12px;
+  color: var(--vscode-text);
+  cursor: pointer;
+}
+.menu-item:hover { background: var(--vscode-hover); }
+.menu-item.active { background: var(--vscode-selection); }
+
+/* Tab base */
+.tab {
+  padding: 8px 16px;
+  color: var(--vscode-text-muted);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+.tab:hover { color: var(--vscode-text); }
+.tab.active {
+  color: var(--vscode-text);
+  border-bottom-color: var(--vscode-accent);
+}
+
+/* List item */
+.list-item {
+  padding: 8px 12px;
+  color: var(--vscode-text);
+  border-left: 2px solid transparent;
+}
+.list-item:hover { background: var(--vscode-hover); }
+.list-item.active {
+  background: var(--vscode-selection);
+  border-left-color: var(--vscode-accent);
+}
+
+/* Status dots */
+.status-dot { width: 8px; height: 8px; border-radius: 50%; }
+.status-dot.online { background: var(--vscode-success); }
+.status-dot.offline { background: var(--vscode-error); }
+.status-dot.busy { background: var(--vscode-warning); }
+
+/* ============================================
+   SIDEBAR ICON VISIBILITY
+   Clean, crisp icons — no glow, no blur
+   ============================================ */
+
+/* Dark theme activity bar icons */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) aside svg {
+  color: var(--vscode-text-muted);
+  transition: color 0.15s ease;
+}
+
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) aside button:hover svg {
+  color: var(--vscode-text);
+}
+
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) aside button.border-l-vscode-accent svg,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) aside button.active svg,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) aside [aria-selected="true"] svg,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) aside [class*="border-l-2"] svg {
+  color: var(--vscode-accent);
+}
+
+/* Sidebar text */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) aside span {
+  color: var(--vscode-text);
+}
+
+/* Status bar */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) footer {
+  background: var(--vscode-activitybar) !important;
+  border-top: 1px solid var(--vscode-border) !important;
+  color: var(--vscode-text-muted);
+}
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) footer * {
+  color: var(--vscode-text-muted);
+}
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) footer *:hover {
+  color: var(--vscode-accent) !important;
+}
+
+.light footer {
+  background: #eaeaeb !important;
+  border-top: 1px solid #e1e4e8 !important;
+}
+
+/* ============================================
+   CHARCOAL AURORA — SPECIFIC COMPONENT STYLES
+   These are needed because this theme uses detailed
+   component-level selectors in the original
+   ============================================ */
+
+/* Activity bar icons — subtle by default, bright on active */
+.theme-charcoal-aurora .bg-vscode-activitybar button svg {
+  color: var(--icon-default, #505868) !important;
+}
+.theme-charcoal-aurora .bg-vscode-activitybar button:hover svg {
+  color: var(--icon-hover, #8892a0) !important;
+}
+.theme-charcoal-aurora .bg-vscode-activitybar button.active svg,
+.theme-charcoal-aurora .bg-vscode-activitybar [class*="border-l"] svg {
+  color: var(--vscode-accent) !important;
+}
+
+/* Tabs */
+.theme-charcoal-aurora [role="tablist"] button,
+.theme-charcoal-aurora [role="tab"] {
+  color: var(--vscode-text-muted) !important;
+  background: transparent !important;
+  border-bottom: 2px solid transparent !important;
+}
+.theme-charcoal-aurora [role="tablist"] button:hover,
+.theme-charcoal-aurora [role="tab"]:hover {
+  color: var(--vscode-text) !important;
+}
+.theme-charcoal-aurora [role="tablist"] button[aria-selected="true"],
+.theme-charcoal-aurora [role="tab"][aria-selected="true"],
+.theme-charcoal-aurora [role="tablist"] button.active,
+.theme-charcoal-aurora .tab-active {
+  color: var(--vscode-accent) !important;
+  border-bottom-color: var(--vscode-accent) !important;
+  background: transparent !important;
+}
+
+/* Accent buttons */
+.theme-charcoal-aurora .bg-vscode-accent,
+.theme-charcoal-aurora button[class*="bg-vscode-accent"] {
+  background: var(--vscode-accent) !important;
+  color: #000 !important;
+  font-weight: 600;
+}
+.theme-charcoal-aurora .bg-vscode-accent:hover {
+  background: var(--vscode-accent-hover) !important;
+}
+
+/* Accent text — NO text-shadow */
+.theme-charcoal-aurora .text-vscode-accent {
+  color: var(--vscode-accent) !important;
+}
+
+/* kbd / code tags */
+.theme-charcoal-aurora kbd,
+.theme-charcoal-aurora [class*="kbd"] {
+  background: var(--vscode-hover) !important;
+  border: 1px solid var(--vscode-border) !important;
+  color: var(--vscode-text-muted) !important;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+/* Monaco editor */
+.theme-charcoal-aurora .monaco-editor {
+  background: var(--vscode-editor) !important;
+}
+.theme-charcoal-aurora .monaco-editor .margin {
+  background: var(--vscode-editor) !important;
+}
+.theme-charcoal-aurora .monaco-editor .line-numbers {
+  color: var(--vscode-text-muted) !important;
+}
+
+/* Terminal */
+.theme-charcoal-aurora .xterm,
+.theme-charcoal-aurora [class*="terminal"] {
+  background: var(--vscode-bg) !important;
+}
+
+/* Modals */
+.theme-charcoal-aurora .fixed.inset-0[class*="bg-black"],
+.theme-charcoal-aurora [class*="bg-black/50"],
+.theme-charcoal-aurora [class*="bg-black/80"] {
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(4px);
+}
+.theme-charcoal-aurora .fixed.inset-0 > div[class*="bg-"],
+.theme-charcoal-aurora [class*="modal"],
+.theme-charcoal-aurora [class*="dialog"],
+.theme-charcoal-aurora [role="dialog"],
+.theme-charcoal-aurora .fixed.inset-0 .rounded-lg {
+  background: var(--vscode-sidebar) !important;
+  border: 1px solid var(--vscode-border) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5) !important;
+}
+.theme-charcoal-aurora .fixed.inset-0 input,
+.theme-charcoal-aurora .fixed.inset-0 textarea,
+.theme-charcoal-aurora .fixed.inset-0 select,
+.theme-charcoal-aurora [role="dialog"] input,
+.theme-charcoal-aurora [role="dialog"] textarea {
+  background: var(--vscode-bg) !important;
+  border: 1px solid var(--vscode-border) !important;
+  color: var(--vscode-text) !important;
+}
+.theme-charcoal-aurora .fixed.inset-0 input:focus,
+.theme-charcoal-aurora [role="dialog"] input:focus {
+  border-color: var(--vscode-accent) !important;
+  box-shadow: 0 0 0 1px var(--vscode-accent) !important;
+}
+
+/* Rounded cards / AI chat */
+.theme-charcoal-aurora div[class*="rounded-xl"],
+.theme-charcoal-aurora div[class*="border-dashed"] {
+  background: var(--vscode-bg) !important;
+  border-color: var(--vscode-border) !important;
+}
+
+/* File explorer */
+.theme-charcoal-aurora .file-item:hover,
+.theme-charcoal-aurora [class*="tree-item"]:hover {
+  background: var(--vscode-hover) !important;
+}
+.theme-charcoal-aurora .file-item.selected,
+.theme-charcoal-aurora [class*="tree-item"].selected {
+  background: var(--vscode-selection) !important;
+  color: var(--vscode-accent) !important;
+}
+
+/* Status colors preserved */
+.theme-charcoal-aurora .bg-red-500 { background: var(--vscode-error) !important; }
+.theme-charcoal-aurora .text-red-500,
+.theme-charcoal-aurora .text-red-400 { color: var(--vscode-error) !important; }
+.theme-charcoal-aurora .bg-green-500 { background: var(--vscode-success) !important; }
+.theme-charcoal-aurora .text-green-500,
+.theme-charcoal-aurora .text-green-400 { color: var(--vscode-success) !important; }
+.theme-charcoal-aurora .text-yellow-500,
+.theme-charcoal-aurora .text-yellow-400 { color: var(--vscode-warning) !important; }
+
+/* VS Code styled backgrounds */
+.theme-charcoal-aurora [class*="bg-[#1e1e1e]"],
+.theme-charcoal-aurora [class*="bg-[#252526]"],
+.theme-charcoal-aurora [class*="bg-[#2d2d2d]"],
+.theme-charcoal-aurora [class*="bg-[#3c3c3c]"] {
+  background: var(--vscode-sidebar) !important;
+}
+
+/* Links */
+.theme-charcoal-aurora a:not(button) { color: var(--vscode-accent) !important; }
+.theme-charcoal-aurora a:not(button):hover { color: var(--vscode-accent-hover) !important; }
+
+/* HR */
+.theme-charcoal-aurora hr { border-color: var(--vscode-border) !important; }
+
+/* ============================================
+   RAZER BLACK — SPECIFIC STYLES
+   ============================================ */
+.dark:not([class*="theme-"]):not(.high-contrast) .bg-vscode-accent {
+  background: linear-gradient(135deg, #2979ff 0%, #1565c0 100%);
+}
+
+/* ============================================
+   CLEAN UP — Remove any inherited glow/blur
+   Zero text-shadow anywhere, zero filter on icons
+   ============================================ */
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) h1,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) h2,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) h3,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) h4,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) p,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) span,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) a,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) button,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) label,
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) div {
+  text-shadow: none !important;
+}
+
+:is(.dark, .theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel, .theme-charcoal-aurora) svg {
+  filter: none !important;
+}
+
+/* ============================================
+   STEEL THEME — Tab & Terminal specifics
+   ============================================ */
+.theme-steel .tab-active {
+  background: linear-gradient(180deg, #252932 0%, #1e2128 100%);
+}
+.theme-steel .xterm {
+  background: #14171d;
+}
+.theme-steel .monaco-editor .margin {
+  background: linear-gradient(90deg, #181b22 0%, #1c1f26 100%) !important;
+}
+
+/* ============================================
+   COMPREHENSIVE HARDCODED BG OVERRIDES
+   (for bg-[#xxx] Tailwind arbitrary values)
+   ============================================ */
+:is(.theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel) :is(
+    .bg-\[\#252526\], .bg-\[\#3c3c3c\], .bg-\[\#2a2d2e\],
+    .bg-\[\#1a1a1a\], .bg-\[\#094771\]) {
+  background: var(--vscode-panel) !important;
+}
+
+:is(.theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel) .border-\[\#3c3c3c\] {
+  border-color: var(--vscode-border) !important;
+}
+
+/* Hover text */
+:is(.theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel) .hover\:text-white:hover {
+  color: var(--vscode-text) !important;
+}
+
+/* ============================================
+   COMPREHENSIVE STYLE OVERRIDES (REPLACES old
+   theme-specific [style*="background"] rules)
+   ============================================ */
+
+/* Inline style background override - ONLY for actual themed wrappers */
+:is(.theme-github-dark, .theme-dracula, .theme-nord, .theme-monokai,
+    .theme-solarized-dark, .theme-one-dark, .theme-steel) > [style*="background"]:not([style*="linear-gradient"]):not([style*="background-image"]) {
+  background: var(--vscode-sidebar) !important;
+}
+
+/* ============================================
+   END OF THEME SYSTEM
+   ============================================ */

@@ -198,6 +198,75 @@ app.post('/api/billing/webhook', express.raw({ type: 'application/json' }), asyn
   res.json({ received: true });
 });
 
+// ============================================================================
+// INTERNAL WEBHOOK — called by universal-chat-backend for canvas credit events
+// No Stripe signature check; protected by internal shared secret
+// ============================================================================
+app.post('/api/internal/canvas-payment', express.json(), async (req, res) => {
+  const internalSecret = req.headers['x-internal-secret'];
+  if (!internalSecret || internalSecret !== (process.env.INTERNAL_WEBHOOK_SECRET || 'mumtaz-internal-2026')) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
+  const { userId, appId, credits, sessionId, paymentIntentId, customerId, amountTotal, currency, priceId } = req.body;
+
+  if (!userId || !credits) {
+    return res.status(400).json({ error: 'Missing userId or credits' });
+  }
+
+  try {
+    const creditsToAdd = parseFloat(credits) || 0;
+    if (creditsToAdd <= 0) return res.json({ received: true });
+
+    await prisma.userCredits.upsert({
+      where: { userId_appId: { userId, appId: appId || 'canvas-studio' } },
+      update: {
+        balance: { increment: creditsToAdd },
+        lifetimeEarned: { increment: creditsToAdd },
+      },
+      create: {
+        userId, appId: appId || 'canvas-studio',
+        balance: creditsToAdd, lifetimeEarned: creditsToAdd, freeCreditsMax: 5,
+      },
+    });
+
+    await prisma.billingHistory.create({
+      data: {
+        userId,
+        stripePaymentId: paymentIntentId || sessionId,
+        stripeCustomerId: customerId,
+        amount: (amountTotal || 0) / 100,
+        currency: currency || 'usd',
+        creditsAdded: creditsToAdd,
+        status: 'SUCCEEDED',
+        description: `${creditsToAdd} credits purchased via Stripe`,
+        metadata: { sessionId, appId, priceId: priceId || '' },
+      },
+    });
+
+    const creditRecord = await prisma.userCredits.findUnique({
+      where: { userId_appId: { userId, appId: appId || 'canvas-studio' } },
+    });
+    if (creditRecord) {
+      await prisma.creditTransaction.create({
+        data: {
+          userCreditsId: creditRecord.id,
+          type: 'PURCHASE', amount: creditsToAdd,
+          balanceAfter: creditRecord.balance,
+          description: `Stripe purchase: ${creditsToAdd} credits`,
+          referenceId: paymentIntentId || sessionId,
+          referenceType: 'stripe',
+        },
+      });
+    }
+    console.log(`[Internal] Added ${creditsToAdd} credits to user ${userId} (app: ${appId})`);
+    return res.json({ received: true, creditsAdded: creditsToAdd });
+  } catch (err) {
+    console.error('[Internal] Error processing canvas payment:', err.message);
+    return res.status(500).json({ error: 'Processing failed' });
+  }
+});
+
 // Body parsing
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));

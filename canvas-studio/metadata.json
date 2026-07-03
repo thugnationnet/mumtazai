@@ -1,0 +1,9 @@
+{
+  "name": "GenCraft",
+  "description": "An advanced AI-powered web application builder that generates complete, functional, and responsive web applications using multiple AI providers. Features real-time preview, code editing, deployment to 5 platforms, and prompt-driven development.",
+  "version": "2.0.0",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

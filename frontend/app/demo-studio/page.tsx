@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default function DemoStudioPage() {
-  redirect('https://demo.mumtaz.ai');
+  redirect('https://demo.mumtaz.ai/neural-chat');
 }

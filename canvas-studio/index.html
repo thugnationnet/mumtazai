@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="One Last AI Studio — AI-powered app builder. Build and deploy full-stack apps with AI.">
+  <title>One Last AI Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#8B5CF6" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="One Last AI Studio" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="application-name" content="One Last AI Studio" />
+  <meta name="msapplication-TileColor" content="#8B5CF6" />
+  <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background-color: #0A0A0A;
+      color: #D1D5DB;
+      overflow: hidden;
+    }
+    #root {
+      height: 100vh;
+      overflow: hidden;
+    }
+    .matrix-bg {
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(74, 222, 128, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(34, 211, 238, 0.08) 0%, transparent 40%),
+        linear-gradient(135deg, #0A0A0A 0%, #111111 100%);
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #111; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #22d3ee; border-radius: 10px; }
+    
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+    .scanline-effect::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: rgba(34, 211, 238, 0.1);
+      animation: scanline 4s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 5px rgba(34, 211, 238, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.8); }
+    }
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes border-flow {
+      0% { border-color: rgba(34, 211, 238, 0.3); }
+      50% { border-color: rgba(74, 222, 128, 0.3); }
+      100% { border-color: rgba(34, 211, 238, 0.3); }
+    }
+    .border-flow {
+      animation: border-flow 3s ease-in-out infinite;
+    }
+    
+    .glow-cyan { text-shadow: 0 0 10px rgba(34, 211, 238, 0.6); }
+    .glow-green { text-shadow: 0 0 10px rgba(74, 222, 128, 0.6); }
+
+    @keyframes shrink {
+      from { width: 100%; }
+      to { width: 0%; }
+    }
+  </style>
+</head>
+<body class="bg-[#0A0A0A] text-gray-300 matrix-bg antialiased">
+  <div id="root"></div>
+  <script>
+    // Recovery: catch stale-cache dynamic import failures after deploys
+    (function() {
+      var KEY = '__studio_cache_reload';
+      function recover() {
+        if (sessionStorage.getItem(KEY)) return;
+        sessionStorage.setItem(KEY, '1');
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            Promise.all(regs.map(function(r) { return r.unregister(); })).then(function() {
+              window.location.reload();
+            });
+          });
+        } else {
+          window.location.reload();
+        }
+      }
+      window.addEventListener('load', function() { sessionStorage.removeItem(KEY); });
+      window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('dynamically imported module')) recover();
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        var m = e.reason && (e.reason.message || String(e.reason));
+        if (m && m.includes('dynamically imported module')) recover();
+      });
+    })();
+  </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

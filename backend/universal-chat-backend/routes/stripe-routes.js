@@ -483,6 +483,36 @@ async function handleCheckoutSessionCompleted(session) {
   const { client_reference_id: userId, customer_email: email, subscription: subscriptionId, payment_status: paymentStatus, mode } = session;
   const metadata = session.metadata;
 
+  // ── Canvas credit purchase — forward to canvas-backend internally ──
+  if (metadata?.appId || metadata?.credits) {
+    console.log('🎨 Canvas credit event — forwarding to canvas-backend');
+    try {
+      const fetch = (await import('node-fetch')).default;
+      const resp = await fetch('http://localhost:3202/api/internal/canvas-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-internal-secret': process.env.INTERNAL_WEBHOOK_SECRET || 'mumtaz-internal-2026',
+        },
+        body: JSON.stringify({
+          userId: metadata.userId || userId,
+          appId: metadata.appId,
+          credits: metadata.credits,
+          sessionId: session.id,
+          paymentIntentId: session.payment_intent,
+          customerId: session.customer,
+          amountTotal: session.amount_total,
+          currency: session.currency,
+          priceId: metadata.priceId,
+        }),
+      });
+      console.log('🎨 Canvas-backend response:', resp.status);
+    } catch (err) {
+      console.error('❌ Failed to forward to canvas-backend:', err.message);
+    }
+    return;
+  }
+
   if (!metadata || !userId || !email) {
     console.error('❌ Missing required session data');
     return;

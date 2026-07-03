@@ -1,0 +1,8 @@
+{
+  "name": "Canvas Build - AI App Builder",
+  "description": "An advanced AI-powered web application builder by One Last AI. Features real-time preview, code inspection, multi-file projects, and prompt-driven design.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

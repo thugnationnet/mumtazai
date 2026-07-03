@@ -1,0 +1,636 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* shadcn/ui CSS Variables — Crystal Flow */
+@layer base {
+  :root {
+    --background: 260 30% 95%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 271 81% 56%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 260 30% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 260 20% 94%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 239 84% 67%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 260 20% 88%;
+    --input: 260 20% 88%;
+    --ring: 271 81% 56%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 270 30% 7%;
+    --foreground: 210 40% 98%;
+    --card: 270 30% 9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 270 30% 9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 263 70% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 270 20% 15%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 270 20% 15%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 263 70% 50%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 270 15% 18%;
+    --input: 270 15% 18%;
+    --ring: 263 70% 50%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar — Crystal Flow */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.15);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.3);
+}
+
+/* Highlight.js override */
+.hljs {
+  background: transparent !important;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: ease;
+  transition-duration: 150ms;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Prevent layout shift */
+html, body, #__next {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ==========================================
+   GLOBAL CRYSTAL FLOW THEME — Glassmorphism
+   Always applied — soft lavender/purple base
+   ========================================== */
+
+/* Crystal Flow Global Background */
+body {
+  background: linear-gradient(
+    135deg,
+    #e8e0f0 0%,
+    #d5d0e8 25%,
+    #c8bfdd 50%,
+    #ddd8ec 75%,
+    #eae5f3 100%
+  ) !important;
+  background-attachment: fixed;
+  color: #334155 !important;
+}
+
+/* Override gradient backgrounds to Crystal Flow */
+.bg-gradient-to-br,
+.from-slate-50,
+.via-blue-50,
+.to-indigo-50 {
+  background: linear-gradient(
+    135deg,
+    #e8e0f0 0%,
+    #d5d0e8 25%,
+    #c8bfdd 50%,
+    #ddd8ec 75%,
+    #eae5f3 100%
+  ) !important;
+  background-attachment: fixed;
+}
+
+/* Glass cards */
+.bg-white {
+  background: rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: blur(20px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 20px 25px -5px rgba(0, 0, 0, 0.03),
+    inset 0 2px 4px rgba(255, 255, 255, 0.8) !important;
+}
+
+.bg-white:hover {
+  background: rgba(255, 255, 255, 0.6) !important;
+  box-shadow:
+    0 30px 50px -12px rgba(139, 92, 246, 0.15),
+    inset 0 0 10px rgba(255, 255, 255, 1) !important;
+  transform: translateY(-2px);
+}
+
+/* Gray backgrounds → crystal lavender */
+.bg-gray-50,
+.bg-gray-100 {
+  background-color: rgba(232, 224, 240, 0.5) !important;
+}
+
+/* Crystal theme text colors */
+.text-neural-600 {
+  color: #475569 !important;
+}
+
+.text-neural-700 {
+  color: #334155 !important;
+}
+
+.text-neural-800 {
+  color: #1e293b !important;
+}
+
+.text-neural-500 {
+  color: #64748b !important;
+}
+
+.text-neural-900 {
+  color: #0f172a !important;
+}
+
+/* Glass borders */
+.border-neural-100 {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.border-neural-200 {
+  border-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Crystal header */
+header.bg-white {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(20px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Hover states — purple tint */
+.hover\:bg-brand-50:hover {
+  background-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+.hover\:bg-gray-50:hover,
+.hover\:bg-gray-100:hover {
+  background-color: rgba(139, 92, 246, 0.05) !important;
+}
+
+/* Crystal Flow buttons */
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    #9333ea 0%,
+    #4f46e5 100%
+  ) !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 4px 20px -4px rgba(139, 92, 246, 0.35) !important;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(
+    135deg,
+    #7e22ce 0%,
+    #4338ca 100%
+  ) !important;
+  box-shadow:
+    0 8px 40px rgba(139, 92, 246, 0.25),
+    0 0 20px rgba(99, 102, 241, 0.15) !important;
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.5) !important;
+  color: #334155 !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Glass dropdowns */
+.shadow-lg {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(20px) saturate(150%) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 10px 40px -10px rgba(139, 92, 246, 0.12) !important;
+}
+
+/* Glass form elements */
+input,
+textarea,
+select {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(10px) !important;
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  color: #334155 !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15) !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* White with opacity → glass */
+.bg-white\/80,
+.bg-white\/90,
+.bg-white\/95 {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(20px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+}
+
+/* ==========================================
+   CRYSTAL FLOW DARK — Deep Purple Glass
+   Activated via .dark-theme class on a scoped container <div>
+   Deep plum base with violet↔indigo gradient accents
+   ========================================== */
+
+/* ── Base ─────────────────────────────────── */
+.dark-theme body {
+  background: linear-gradient(135deg, #110d1a 0%, #150d20 25%, #0f0a18 50%, #1a1028 75%, #110d1a 100%) !important;
+  color: #d1d5db !important;
+}
+
+/* Scoped dark-theme: when .dark-theme is the container itself */
+div.dark-theme {
+  background: linear-gradient(135deg, #110d1a 0%, #150d20 25%, #0f0a18 50%, #1a1028 75%, #110d1a 100%) !important;
+  color: #d1d5db !important;
+}
+
+/* ── Container / Page Backgrounds ──────────── */
+.dark-theme .bg-gray-50,
+.dark-theme .bg-gray-100 {
+  background-color: #110d1a !important;
+}
+
+.dark-theme .bg-gradient-to-br,
+.dark-theme .from-slate-50,
+.dark-theme .via-blue-50,
+.dark-theme .to-indigo-50 {
+  background: linear-gradient(135deg, #110d1a 0%, #150d20 50%, #0f0a18 100%) !important;
+}
+
+/* ── Cards / Surfaces — Dark Glass ────────── */
+.dark-theme .bg-white {
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(20px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(120%) !important;
+  border-color: rgba(139, 92, 246, 0.1) !important;
+  box-shadow:
+    0 4px 25px -5px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
+}
+
+.dark-theme .bg-white:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  box-shadow:
+    0 8px 40px -8px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(139, 92, 246, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  transform: none;
+}
+
+/* White with opacity — dark glass */
+.dark-theme .bg-white\/80,
+.dark-theme .bg-white\/90,
+.dark-theme .bg-white\/95 {
+  background: rgba(17, 13, 26, 0.9) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+/* ── Text Colors ──────────────────────────── */
+.dark-theme .text-neural-500 {
+  color: #8b95a5 !important;
+}
+.dark-theme .text-neural-600 {
+  color: #c9d1d9 !important;
+}
+.dark-theme .text-neural-700 {
+  color: #d1d5db !important;
+}
+.dark-theme .text-neural-800 {
+  color: #e5e7eb !important;
+}
+.dark-theme .text-neural-900 {
+  color: #f3f4f6 !important;
+}
+.dark-theme .text-neural-400 {
+  color: #6b7280 !important;
+}
+
+.dark-theme .text-gray-900 {
+  color: #f3f4f6 !important;
+}
+.dark-theme .text-gray-800 {
+  color: #e5e7eb !important;
+}
+.dark-theme .text-gray-700 {
+  color: #d1d5db !important;
+}
+.dark-theme .text-gray-600 {
+  color: #9ca3af !important;
+}
+.dark-theme .text-gray-500 {
+  color: #6b7280 !important;
+}
+.dark-theme .text-gray-400 {
+  color: #4b5563 !important;
+}
+
+/* ── Borders ──────────────────────────────── */
+.dark-theme .border-neural-100,
+.dark-theme .border-neural-200,
+.dark-theme .border-gray-100,
+.dark-theme .border-gray-200 {
+  border-color: rgba(139, 92, 246, 0.1) !important;
+}
+
+/* ── Header / Nav ─────────────────────────── */
+.dark-theme header.bg-white,
+.dark-theme header {
+  background: rgba(17, 13, 26, 0.9) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+/* ── Hover States ─────────────────────────── */
+.dark-theme .hover\:bg-brand-50:hover {
+  background-color: rgba(139, 92, 246, 0.1) !important;
+}
+
+.dark-theme .hover\:bg-gray-50:hover,
+.dark-theme .hover\:bg-gray-100:hover {
+  background-color: rgba(139, 92, 246, 0.06) !important;
+}
+
+/* ── Brand Accent Backgrounds ─────────────── */
+.dark-theme .bg-brand-50 {
+  background-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+/* ── Brand gradient accents → violet-to-indigo ── */
+.dark-theme .from-brand-600,
+.dark-theme .from-brand-500 {
+  --tw-gradient-from: #8b5cf6 !important;
+}
+.dark-theme .to-accent-600,
+.dark-theme .to-accent-500,
+.dark-theme .via-accent-500 {
+  --tw-gradient-to: #6366f1 !important;
+}
+
+/* ── Buttons ──────────────────────────────── */
+.dark-theme .btn-primary {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 20px -4px rgba(139, 92, 246, 0.35) !important;
+}
+
+.dark-theme .btn-primary:hover {
+  box-shadow:
+    0 6px 30px -4px rgba(139, 92, 246, 0.5),
+    0 0 40px rgba(99, 102, 241, 0.15) !important;
+  transform: translateY(-1px);
+}
+
+.dark-theme .btn-secondary {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #e5e7eb !important;
+  border-color: rgba(139, 92, 246, 0.15) !important;
+}
+
+.dark-theme .btn-secondary:hover {
+  background-color: rgba(139, 92, 246, 0.1) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+/* ── Dropdown / Popover ───────────────────── */
+.dark-theme .shadow-lg {
+  background: rgba(17, 13, 26, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-color: rgba(139, 92, 246, 0.1) !important;
+  box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.8) !important;
+}
+
+.dark-theme .shadow-sm {
+  box-shadow: 0 1px 8px -2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ── Form Elements — Dark Glass ───────────── */
+.dark-theme input,
+.dark-theme textarea,
+.dark-theme select {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(10px) !important;
+  border-color: rgba(139, 92, 246, 0.12) !important;
+  color: #d1d5db !important;
+}
+
+.dark-theme input:focus,
+.dark-theme textarea:focus,
+.dark-theme select:focus {
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  box-shadow:
+    0 0 0 2px rgba(139, 92, 246, 0.15),
+    0 0 20px rgba(139, 92, 246, 0.05) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark-theme input::placeholder,
+.dark-theme textarea::placeholder {
+  color: #4b5563 !important;
+}
+
+/* ── Right Sidebar — Dark Glass ───────────── */
+.dark-theme .border-l.bg-gray-50 {
+  background: rgba(17, 13, 26, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  border-left-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+/* ── Left Sidebar — Dark Glass ────────────── */
+.dark-theme aside.bg-white,
+.dark-theme .border-r.bg-white {
+  background: rgba(17, 13, 26, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  border-right-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+/* ── Chat Input Bar ───────────────────────── */
+.dark-theme .border-t.border-neural-100 {
+  border-top-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+/* ── Quick Actions Panel ──────────────────── */
+.dark-theme .ring-1.ring-neural-200,
+.dark-theme .ring-1.ring-neural-100 {
+  --tw-ring-color: rgba(139, 92, 246, 0.12) !important;
+}
+
+/* ── Active brand buttons → violet gradient ── */
+.dark-theme .bg-gradient-to-r.from-brand-600.to-accent-600 {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%) !important;
+  box-shadow: 0 4px 16px -4px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* ── Left sidebar header gradient → violet ── */
+.dark-theme .bg-gradient-to-br.from-brand-600.to-brand-700 {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%) !important;
+}
+
+/* ── Scrollbar (dark theme) ───────────────── */
+.dark-theme ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dark-theme ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.12);
+  border-radius: 3px;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.25);
+}
+
+/* ── Chat message prose overrides (dark) ──── */
+.dark-theme .prose-p\:text-neural-600,
+.dark-theme .prose p {
+  color: #9ca3af !important;
+}
+
+.dark-theme .prose-headings\:text-neural-800,
+.dark-theme .prose h1,
+.dark-theme .prose h2,
+.dark-theme .prose h3,
+.dark-theme .prose h4 {
+  color: #e5e7eb !important;
+}
+
+.dark-theme .prose-strong\:text-brand-600,
+.dark-theme .prose strong,
+.dark-theme .prose strong.text-brand-600 {
+  color: #a78bfa !important;
+  -webkit-text-fill-color: #a78bfa !important;
+  background: none !important;
+}
+
+.dark-theme .prose-a\:text-brand-600,
+.dark-theme .prose a {
+  color: #a78bfa !important;
+}
+
+.dark-theme .prose-em\:text-neural-500,
+.dark-theme .prose em {
+  color: #b4bcd0 !important;
+}
+
+.dark-theme .prose-li\:text-neural-600,
+.dark-theme .prose li {
+  color: #c9d1d9 !important;
+}
+
+/* ── Code blocks (dark) ───────────────────── */
+.dark-theme .prose code {
+  background-color: rgba(139, 92, 246, 0.12) !important;
+  color: #c4b5fd !important;
+  border-color: rgba(139, 92, 246, 0.2) !important;
+}
+
+/* Inline code inside user messages (blue gradient) — white on translucent */
+.dark-theme .prose-invert code,
+.prose-invert code {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.dark-theme .prose pre {
+  background-color: #0f0a18 !important;
+  border-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+/* ── Tables (dark) ────────────────────────── */
+.dark-theme table {
+  background: rgba(17, 13, 26, 0.8) !important;
+}
+
+.dark-theme thead {
+  background-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+.dark-theme th {
+  color: #e5e7eb !important;
+  border-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+.dark-theme td {
+  color: #9ca3af !important;
+  border-color: rgba(139, 92, 246, 0.05) !important;
+}
+
+.dark-theme tr:hover {
+  background-color: rgba(139, 92, 246, 0.05) !important;
+}
+
+/* ── Typing indicator (dark) ──────────────── */
+.dark-theme .bg-brand-500 {
+  background-color: #a78bfa !important;
+}
+
+/* ── Accent corner glows → violet/cyan ────── */
+.dark-theme .bg-brand-500\/3 {
+  background-color: rgba(139, 92, 246, 0.04) !important;
+}
+
+.dark-theme .bg-accent-500\/3 {
+  background-color: rgba(6, 182, 212, 0.04) !important;
+}
