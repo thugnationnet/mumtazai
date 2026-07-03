@@ -9,6 +9,9 @@
 # Deployment & infrastructure scripts (contain server IPs, credentials, Redis URLs)
 deploy.sh
 deploy-nginx.sh
+# Allow scripts/ directory deploy helpers
+!scripts/deploy.sh
+!scripts/sync-envs.sh
 .deploy.env
 ecosystem.config.cjs
 ecosystem.config.*.js
@@ -562,3 +565,4 @@ backend/scripts/.stripe-test-prices-recurring.json
 backend/scripts/.stripe-test-prices-recurring.env
 backend/scripts/.stripe-test-prices-recurring-apps.json
 backend/scripts/.stripe-test-prices-recurring-apps.env
+scripts/.github-token
