@@ -107,7 +107,7 @@ export default function DeploymentPanel({
   onClearError,
   className = '',
 }: DeploymentPanelProps) {
-  const [selectedProvider, setSelectedProvider] = useState<DeployProvider>('onelastai');
+  const [selectedProvider, setSelectedProvider] = useState<DeployProvider>('mumtazai');
   const [showLogs, setShowLogs] = useState(false);
   const [showErrors, setShowErrors] = useState(true);
   const [showHistory, setShowHistory] = useState(false);
@@ -128,7 +128,7 @@ export default function DeploymentPanel({
   // Available providers (connected + onelastai)
   const availableProviders = DEPLOY_PROVIDERS.filter(
     (p) =>
-      p.provider === 'onelastai' ||
+      p.provider === 'mumtazai' ||
       credentials.some((c) => c.provider === p.provider && c.isValid)
   );
 
@@ -247,7 +247,7 @@ export default function DeploymentPanel({
 
         {/* Subdomain / Project Name */}
         <div className="p-4 border-b border-slate-200 dark:border-white/5 space-y-3">
-          {selectedProvider === 'onelastai' && (
+          {selectedProvider === 'mumtazai' && (
             <div>
               <label className="text-xs font-medium text-gray-400 mb-1 block">Subdomain</label>
               <div className="flex items-center gap-1">
@@ -259,7 +259,7 @@ export default function DeploymentPanel({
                   className="flex-1 bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 rounded px-2.5 py-1.5 text-xs text-slate-900 dark:text-white placeholder-gray-500 outline-none focus:border-cyan-500/50 transition-colors"
                   disabled={isDeploying}
                 />
-                <span className="text-xs text-gray-500">.apps.onelastai.co</span>
+                <span className="text-xs text-gray-500">.apps.mumtaz.ai</span>
               </div>
             </div>
           )}

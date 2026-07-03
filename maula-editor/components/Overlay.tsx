@@ -141,11 +141,11 @@ const Overlay: React.FC<OverlayProps> = ({ active, onActivate }) => {
         {/* Navigation */}
         <div className="flex flex-wrap justify-center gap-2.5 ov-stagger-5">
           {[
-            { label: 'Canvas Studio', icon: '🎨', href: 'https://studio.onelastai.co', color: 'border-cyan-500/40 text-cyan-400 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)]' },
-            { label: 'AI Space', icon: '🚀', href: 'https://apps.onelastai.co', color: 'border-violet-500/40 text-violet-400 hover:border-violet-400 hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]' },
-            { label: 'Tools', icon: '🔧', href: 'https://onelastai.co/tools', color: 'border-amber-500/40 text-amber-400 hover:border-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.15)]' },
-            { label: 'AI Lab', icon: '🧪', href: 'https://onelastai.co/lab', color: 'border-emerald-500/40 text-emerald-400 hover:border-emerald-400 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]' },
-            { label: 'Agents', icon: '🤖', href: 'https://onelastai.co/agents', color: 'border-pink-500/40 text-pink-400 hover:border-pink-400 hover:shadow-[0_0_20px_rgba(236,72,153,0.15)]' },
+            { label: 'Canvas Studio', icon: '🎨', href: 'https://studio.mumtaz.ai', color: 'border-cyan-500/40 text-cyan-400 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)]' },
+            { label: 'AI Space', icon: '🚀', href: 'https://apps.mumtaz.ai', color: 'border-violet-500/40 text-violet-400 hover:border-violet-400 hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]' },
+            { label: 'Tools', icon: '🔧', href: 'https://mumtaz.ai/tools', color: 'border-amber-500/40 text-amber-400 hover:border-amber-400 hover:shadow-[0_0_20px_rgba(245,158,11,0.15)]' },
+            { label: 'AI Lab', icon: '🧪', href: 'https://mumtaz.ai/lab', color: 'border-emerald-500/40 text-emerald-400 hover:border-emerald-400 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]' },
+            { label: 'Agents', icon: '🤖', href: 'https://mumtaz.ai/agents', color: 'border-pink-500/40 text-pink-400 hover:border-pink-400 hover:shadow-[0_0_20px_rgba(236,72,153,0.15)]' },
           ].map((nav) => (
             <a
               key={nav.label}

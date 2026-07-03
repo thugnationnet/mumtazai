@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => {
     preview: {
       port: 3001,
       host: '0.0.0.0',
-      allowedHosts: ['studio.onelastai.co', 'localhost'],
+      allowedHosts: ['studio.mumtaz.ai', 'localhost'],
       headers: {
         'Permissions-Policy': 'microphone=(self), camera=()',
       },

@@ -35,8 +35,8 @@ export default function RealtimeVoiceChat({
           <p className="text-slate-600 text-sm">
             Live voice communication is not available in the demo version.
             Sign up at{' '}
-            <a href="https://onelastai.co" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">
-              onelastai.co
+            <a href="https://mumtaz.ai" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">
+              mumtaz.ai
             </a>{' '}
             for full voice chat access.
           </p>

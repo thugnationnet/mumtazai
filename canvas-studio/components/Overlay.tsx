@@ -68,28 +68,28 @@ const Overlay: React.FC<OverlayProps> = ({ active, onActivate }) => {
           {/* Secondary buttons — 2-col grid on mobile, single row on sm+ */}
           <div className="grid grid-cols-2 sm:flex sm:flex-row gap-3 w-full sm:w-auto">
             <a
-              href="https://onelastai.co/"
+              href="https://mumtaz.ai/"
               className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm border border-violet-500/30 bg-slate-300 dark:bg-black/40 text-violet-400 text-xs font-bold uppercase tracking-[0.25em] hover:border-violet-400 hover:bg-violet-500/10 hover:text-violet-300 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] transition-all duration-300 active:scale-95"
             >
               <Home className="w-3.5 h-3.5" />
               Home
             </a>
             <a
-              href="https://onelastai.co/agents"
+              href="https://mumtaz.ai/agents"
               className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm border border-violet-500/30 bg-slate-300 dark:bg-black/40 text-violet-400 text-xs font-bold uppercase tracking-[0.25em] hover:border-violet-400 hover:bg-violet-500/10 hover:text-violet-300 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] transition-all duration-300 active:scale-95"
             >
               <Bot className="w-3.5 h-3.5" />
               Agents
             </a>
             <a
-              href="https://build.onelastai.co/"
+              href="https://build.mumtaz.ai/"
               className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm border border-violet-500/30 bg-slate-300 dark:bg-black/40 text-violet-400 text-xs font-bold uppercase tracking-[0.25em] hover:border-violet-400 hover:bg-violet-500/10 hover:text-violet-300 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] transition-all duration-300 active:scale-95"
             >
               <MessageSquare className="w-3.5 h-3.5" />
               Canvas
             </a>
             <a
-              href="https://onelastai.co/dashboard/apps"
+              href="https://mumtaz.ai/dashboard/apps"
               className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm border border-violet-500/30 bg-slate-300 dark:bg-black/40 text-violet-400 text-xs font-bold uppercase tracking-[0.25em] hover:border-violet-400 hover:bg-violet-500/10 hover:text-violet-300 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] transition-all duration-300 active:scale-95"
             >
               <Bot className="w-3.5 h-3.5" />

@@ -81,7 +81,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
 
       // Fallback to the central domain. This recovers sessions that still exist only
-      // as host-only cookies on onelastai.co from older auth flows.
+      // as host-only cookies on mumtaz.ai from older auth flows.
       const centralRes = await fetch('https://mumtaz.ai/api/auth/session', {
         credentials: 'include',
         cache: 'no-store',

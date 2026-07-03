@@ -16,14 +16,14 @@ const demoAgentConfig: AgentChatConfig = {
 - Be friendly but professional
 - Help users explore and learn new topics
 
-IMPORTANT: This is a DEMO with limited features. If users ask about advanced features (voice chat, image generation, canvas builder, etc.), let them know these are available in the full version at onelastai.co.
+IMPORTANT: This is a DEMO with limited features. If users ask about advanced features (voice chat, image generation, canvas builder, etc.), let them know these are available in the full version at mumtaz.ai.
 
 You are a general-purpose assistant that can help with a wide variety of tasks.`,
   welcomeMessage: `✨ **Welcome to AI Studio Demo!**
 
 I'm your free AI assistant — here to help with **coding**, **writing**, **research**, and **problem solving**.
 
-> 💡 **Demo Mode**: You have **20 messages** per session. Refresh to start fresh. For unlimited access, visit [onelastai.co](https://onelastai.co).
+> 💡 **Demo Mode**: You have **20 messages** per session. Refresh to start fresh. For unlimited access, visit [mumtaz.ai](https://mumtaz.ai).
 
 *What would you like to explore today?*`,
   specialties: [

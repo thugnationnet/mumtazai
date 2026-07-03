@@ -9,7 +9,7 @@ import { dbStorage } from '../services/dbStorage';
 export interface Deployment {
   id: string;
   projectId: string;
-  platform: 'onelastai-s3' | 'vercel' | 'netlify' | 'railway' | 'cloudflare';
+  platform: 'mumtazai-s3' | 'vercel' | 'netlify' | 'railway' | 'cloudflare';
   status: 'queued' | 'deploying' | 'live' | 'failed' | 'rolled-back';
   url?: string;
   customDomain?: string;
@@ -81,7 +81,7 @@ export const useDeployStore = create<DeployStoreState & DeployStoreActions>()(
     deployLogs: [],
     domains: [],
     metrics: null,
-    selectedPlatform: 'onelastai-s3',
+    selectedPlatform: 'mumtazai-s3',
 
     startDeployment: (projectId, platform) => {
       const id = `deploy_${++deployCounter}_${Date.now()}`;

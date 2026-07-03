@@ -1,8 +1,8 @@
 /**
  * DeployPanel - One Last AI Subdomain Hosting
- * Deploy projects to {your-site}.onelastai.co — free SSL, CDN, instant shareable links
+ * Deploy projects to {your-site}.mumtaz.ai — free SSL, CDN, instant shareable links
  * 
- * This is the canvas-studio version (onelastai.co/canvas-studio) — One Last AI hosting ONLY.
+ * This is the canvas-studio version (mumtaz.ai/canvas-studio) — One Last AI hosting ONLY.
  * For 3rd-party deploys (Vercel, Railway, etc.), see the deploy routes.
  */
 
@@ -36,7 +36,7 @@ interface DeployPanelProps {
   projectName: string;
   files: Record<string, string>;
   onClose: () => void;
-  onDeployComplete?: (url: string, platform: 'onelastai') => void;
+  onDeployComplete?: (url: string, platform: 'mumtazai') => void;
   onFixBuildError?: (error: string, buildLogs: string[]) => void;
 }
 
@@ -64,7 +64,7 @@ const DeployPanel: React.FC<DeployPanelProps> = ({
     setDeployStatus({ state: 'preparing', message: 'Preparing...', logs: [] });
 
     const config: DeploymentConfig = {
-      platform: 'onelastai',
+      platform: 'mumtazai',
       projectName: projectName || 'canvas-project',
       framework: 'static',
     };
@@ -80,7 +80,7 @@ const DeployPanel: React.FC<DeployPanelProps> = ({
 
     if (result.success && result.url) {
       setDeployUrl(result.url);
-      onDeployComplete?.(result.url, 'onelastai');
+      onDeployComplete?.(result.url, 'mumtazai');
     }
     deploymentService.getDeploymentHistory().then(setHistory);
   };
@@ -159,7 +159,7 @@ const DeployPanel: React.FC<DeployPanelProps> = ({
                         <div>
                           <p className="text-lg font-bold text-slate-800 dark:text-slate-200">Publish Your App</p>
                           <p className="text-xs text-slate-600 dark:text-slate-400">
-                            Get a live link at <span className="text-purple-400 font-semibold">{(projectName || 'my-app').toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 20)}.onelastai.co</span>
+                            Get a live link at <span className="text-purple-400 font-semibold">{(projectName || 'my-app').toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 20)}.mumtaz.ai</span>
                           </p>
                         </div>
                       </div>

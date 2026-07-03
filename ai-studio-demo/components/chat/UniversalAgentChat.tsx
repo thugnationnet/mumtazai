@@ -2706,7 +2706,7 @@ export default function UniversalAgentChat({ agent }: UniversalAgentChatProps) {
         const limitMsg: Message = {
           id: `limit-${Date.now()}`,
           role: 'assistant',
-          content: `🚫 **Demo Limit Reached**\n\nYou've used all ${DEMO_MESSAGE_LIMIT} messages in this session.\n\n**To continue chatting:**\n- Refresh the page to start a new session\n- Or sign up at [onelastai.co](https://onelastai.co) for unlimited access\n\n*Chat history is not saved in demo mode.*`,
+          content: `🚫 **Demo Limit Reached**\n\nYou've used all ${DEMO_MESSAGE_LIMIT} messages in this session.\n\n**To continue chatting:**\n- Refresh the page to start a new session\n- Or sign up at [mumtaz.ai](https://mumtaz.ai) for unlimited access\n\n*Chat history is not saved in demo mode.*`,
           timestamp: new Date(),
         };
         setSessions((prev) =>
@@ -3313,7 +3313,7 @@ export default function UniversalAgentChat({ agent }: UniversalAgentChatProps) {
       settings={settings}
       onUpdateSettings={handleUpdateSettings}
       onResetSettings={handleResetSettings}
-      externalUrl="https://onelastai.co/dashboard/overview"
+      externalUrl="https://mumtaz.ai/dashboard/overview"
     >
       <div className="flex flex-col h-full">
         {/* Pinned & Saved Messages Panel */}

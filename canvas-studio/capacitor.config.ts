@@ -1,12 +1,12 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'co.onelastai.gencraft',
+  appId: 'ai.mumtaz.gencraft',
   appName: 'GenCraft',
   webDir: 'dist',
   bundledWebRuntime: false,
   server: {
-    url: 'https://studio.onelastai.co',
+    url: 'https://studio.mumtaz.ai',
     cleartext: false,
   },
   plugins: {

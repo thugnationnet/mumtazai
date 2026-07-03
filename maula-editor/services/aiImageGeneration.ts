@@ -1,6 +1,6 @@
 import { fetchWithCredentials } from '../fetchUtil';
 // AI Image Generation Service - Generate images using AI models
-const API_URL = import.meta.env.VITE_API_URL || 'https://editor.onelastai.co';
+const API_URL = import.meta.env.VITE_API_URL || 'https://editor.mumtaz.ai';
 
 export interface ImageGenerationRequest {
   prompt: string;

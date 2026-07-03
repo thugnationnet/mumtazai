@@ -63,10 +63,10 @@ const Overlay: React.FC<OverlayProps> = ({ active, onActivate }) => {
         {/* Navigation Buttons — 4 in a row */}
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           {[
-            { label: 'AI CHAT', icon: '💬', href: 'https://demo.onelastai.co', color: 'border-emerald-500/40 text-emerald-400 hover:border-emerald-400 hover:shadow-[0_0_20px_rgba(16,185,129,0.2)]' },
-            { label: 'CANVAS', icon: '⚡', href: 'https://studio.onelastai.co', color: 'border-violet-500/40 text-violet-400 hover:border-violet-400 hover:shadow-[0_0_20px_rgba(139,92,246,0.2)]' },
-            { label: 'DASHBOARD', icon: '📊', href: 'https://onelastai.co/dashboard/canvas-app', color: 'border-orange-500/40 text-orange-400 hover:border-orange-400 hover:shadow-[0_0_20px_rgba(249,115,22,0.2)]' },
-            { label: 'HOME', icon: '🏠', href: 'https://onelastai.co', color: 'border-gray-500/40 text-slate-500 dark:text-slate-400 hover:border-gray-400 hover:shadow-[0_0_20px_rgba(161,161,170,0.15)]' },
+            { label: 'AI CHAT', icon: '💬', href: 'https://demo.mumtaz.ai', color: 'border-emerald-500/40 text-emerald-400 hover:border-emerald-400 hover:shadow-[0_0_20px_rgba(16,185,129,0.2)]' },
+            { label: 'CANVAS', icon: '⚡', href: 'https://studio.mumtaz.ai', color: 'border-violet-500/40 text-violet-400 hover:border-violet-400 hover:shadow-[0_0_20px_rgba(139,92,246,0.2)]' },
+            { label: 'DASHBOARD', icon: '📊', href: 'https://mumtaz.ai/dashboard/canvas-app', color: 'border-orange-500/40 text-orange-400 hover:border-orange-400 hover:shadow-[0_0_20px_rgba(249,115,22,0.2)]' },
+            { label: 'HOME', icon: '🏠', href: 'https://mumtaz.ai', color: 'border-gray-500/40 text-slate-500 dark:text-slate-400 hover:border-gray-400 hover:shadow-[0_0_20px_rgba(161,161,170,0.15)]' },
           ].map((nav) => (
             <a
               key={nav.label}

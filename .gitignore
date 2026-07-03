@@ -566,3 +566,10 @@ backend/scripts/.stripe-test-prices-recurring.env
 backend/scripts/.stripe-test-prices-recurring-apps.json
 backend/scripts/.stripe-test-prices-recurring-apps.env
 scripts/.github-token
+
+# Server backups — never commit (large files, may contain credentials)
+backup-*/
+backup-2026-04-02-133755/
+
+# macOS editor lock files
+.!*!

@@ -299,7 +299,7 @@ export default function DeployCredentialsPanel({
           ) : (
             /* Provider grid */
             <div className="grid grid-cols-2 gap-2">
-              {DEPLOY_PROVIDERS.filter(p => p.provider !== 'onelastai').map(provider => {
+              {DEPLOY_PROVIDERS.filter(p => p.provider !== 'mumtazai').map(provider => {
                 const isConnected = connectedProviders.has(provider.provider);
                 return (
                   <button
@@ -351,7 +351,7 @@ export default function DeployCredentialsPanel({
             <span className="text-[10px] px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400">Free</span>
           </div>
           <p className="text-xs text-gray-500">
-            Deploy to apps.onelastai.co instantly — no credentials needed!
+            Deploy to apps.mumtaz.ai instantly — no credentials needed!
           </p>
         </div>
       </div>

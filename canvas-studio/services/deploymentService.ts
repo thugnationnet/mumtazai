@@ -1,5 +1,5 @@
 /**
- * Deployment Service — Deploy projects to onelastai.co and 3rd-party platforms
+ * Deployment Service — Deploy projects to mumtaz.ai and 3rd-party platforms
  *
  * Primary: POST /api/canvas/deploy (One Last AI hosting, free for all users)
  * Also supports: Vercel, Railway, Netlify, Cloudflare via backend routes
@@ -140,7 +140,7 @@ function prepareDeploymentFiles(
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// Deploy to onelastai.co (primary) via backend
+// Deploy to mumtaz.ai (primary) via backend
 // ═══════════════════════════════════════════════════════════════════
 
 async function deployProject(
@@ -154,7 +154,7 @@ async function deployProject(
     // Step 1: Preparing
     onStatus({
       state: 'preparing',
-      platform: config.platform || 'onelastai',
+      platform: config.platform || 'mumtazai',
       progress: 10,
       message: 'Packaging files for deployment...',
       logs: ['Preparing files...'],
@@ -163,9 +163,9 @@ async function deployProject(
     // Step 2: Uploading
     onStatus({
       state: 'uploading',
-      platform: config.platform || 'onelastai',
+      platform: config.platform || 'mumtazai',
       progress: 30,
-      message: 'Uploading to onelastai.co...',
+      message: 'Uploading to mumtaz.ai...',
       logs: ['Preparing files...', `Uploading ${files.length} files...`],
     });
 
@@ -174,7 +174,7 @@ async function deployProject(
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        provider: config.platform || 'onelastai',
+        provider: config.platform || 'mumtazai',
         projectName: config.projectName,
         source: 'canvas-studio',
         files: files.map((f) => ({
@@ -194,7 +194,7 @@ async function deployProject(
     // Step 3: Building
     onStatus({
       state: 'building',
-      platform: config.platform || 'onelastai',
+      platform: config.platform || 'mumtazai',
       progress: 60,
       message: 'Building project...',
       logs: [
@@ -210,7 +210,7 @@ async function deployProject(
 
       const failResult: DeploymentResult = {
         success: false,
-        platform: config.platform || 'onelastai',
+        platform: config.platform || 'mumtazai',
         error: errorMsg,
         errorType: res.status === 401 ? 'auth' : 'build',
         buildLogs: [errorMsg],
@@ -219,7 +219,7 @@ async function deployProject(
 
       onStatus({
         state: 'error',
-        platform: config.platform || 'onelastai',
+        platform: config.platform || 'mumtazai',
         message: errorMsg,
         error: errorMsg,
         logs: [errorMsg],
@@ -228,7 +228,7 @@ async function deployProject(
       await addHistoryEntry({
         id: historyId,
         projectName: config.projectName,
-        platform: config.platform || 'onelastai',
+        platform: config.platform || 'mumtazai',
         status: 'failed',
         error: errorMsg,
         timestamp: Date.now(),
@@ -243,7 +243,7 @@ async function deployProject(
     // Step 4: Success
     onStatus({
       state: 'ready',
-      platform: config.platform || 'onelastai',
+      platform: config.platform || 'mumtazai',
       progress: 100,
       message: 'Deployed successfully!',
       url: deployUrl,
@@ -258,7 +258,7 @@ async function deployProject(
     await addHistoryEntry({
       id: historyId,
       projectName: config.projectName,
-      platform: config.platform || 'onelastai',
+      platform: config.platform || 'mumtazai',
       status: 'success',
       url: deployUrl,
       timestamp: Date.now(),
@@ -266,7 +266,7 @@ async function deployProject(
 
     return {
       success: true,
-      platform: config.platform || 'onelastai',
+      platform: config.platform || 'mumtazai',
       url: deployUrl,
       deploymentId: data.deploymentId || data.id,
       timestamp: Date.now(),
@@ -276,7 +276,7 @@ async function deployProject(
 
     onStatus({
       state: 'error',
-      platform: config.platform || 'onelastai',
+      platform: config.platform || 'mumtazai',
       message: errorMsg,
       error: errorMsg,
       logs: [errorMsg],
@@ -285,7 +285,7 @@ async function deployProject(
     await addHistoryEntry({
       id: historyId,
       projectName: config.projectName,
-      platform: config.platform || 'onelastai',
+      platform: config.platform || 'mumtazai',
       status: 'failed',
       error: errorMsg,
       timestamp: Date.now(),
@@ -293,7 +293,7 @@ async function deployProject(
 
     return {
       success: false,
-      platform: config.platform || 'onelastai',
+      platform: config.platform || 'mumtazai',
       error: errorMsg,
       errorType: 'network',
       timestamp: Date.now(),

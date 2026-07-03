@@ -36,7 +36,7 @@ const PLANS: PricingPlan[] = [
       'Unlimited AI generations',
       'All AI models access',
       'Multi-page site builder',
-      'One-click deploy to onelastai.co',
+      'One-click deploy to mumtaz.ai',
       'Export & download code',
       'Auto-renews daily',
     ],
@@ -56,7 +56,7 @@ const PLANS: PricingPlan[] = [
       'Unlimited AI generations',
       'All AI models access',
       'Multi-page site builder',
-      'One-click deploy to onelastai.co',
+      'One-click deploy to mumtaz.ai',
       'Export & download code',
       'Auto-renews weekly',
     ],
@@ -124,7 +124,7 @@ const PricingPaywall: React.FC<PricingPaywallProps> = ({ userId, userEmail, onCl
   const handlePurchase = async (planId: string) => {
     if (!userId || !userEmail) {
       // Redirect to login
-      window.location.href = 'https://onelastai.co/auth/login?redirect=https%3A%2F%2Fstudio.onelastai.co';
+      window.location.href = 'https://mumtaz.ai/auth/login?redirect=https%3A%2F%2Fstudio.mumtaz.ai';
       return;
     }
 

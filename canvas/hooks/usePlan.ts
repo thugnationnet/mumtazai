@@ -52,7 +52,7 @@ export function usePlan() {
   const startCheckout = useCallback(
     async (planType: 'weekly' | 'monthly' | 'yearly') => {
       if (!user) {
-        window.location.href = `https://onelastai.co/auth/login?redirect=${encodeURIComponent(window.location.href)}`;
+        window.location.href = `https://mumtaz.ai/auth/login?redirect=${encodeURIComponent(window.location.href)}`;
         return;
       }
       try {

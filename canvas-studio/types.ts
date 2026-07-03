@@ -118,7 +118,7 @@ export interface EditorCursor {
 // ==================== DEPLOYMENT TYPES ====================
 
 export type DeploymentPlatform =
-  | 'onelastai'
+  | 'mumtazai'
   | 'vercel'
   | 'railway'
   | 'netlify'

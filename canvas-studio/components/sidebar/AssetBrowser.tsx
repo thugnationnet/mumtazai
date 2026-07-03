@@ -856,7 +856,7 @@ const AssetBrowser: React.FC<AssetBrowserProps> = ({ projectId, onInsertUrl, cla
               <label className="block text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">CDN Base URL</label>
               <div className="flex items-center gap-2">
                 <div className="flex-1 px-3 py-2 bg-slate-200 dark:bg-black/20 border border-slate-200 dark:border-white/[0.08] rounded-lg text-xs text-zinc-300 font-mono">
-                  https://cdn.studio.onelastai.co/assets/
+                  https://cdn.studio.mumtaz.ai/assets/
                 </div>
                 <button className="p-2 rounded-lg bg-slate-100 dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-white/[0.08] text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                   <Copy size={14} />

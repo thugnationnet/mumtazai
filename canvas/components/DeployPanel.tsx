@@ -35,7 +35,7 @@ import { fetchWithCredentials } from '../fetchUtil';
 // ============================================================================
 
 export type CloudProvider =
-  | 'onelastai'
+  | 'mumtazai'
   | 'vercel'
   | 'netlify'
   | 'railway'
@@ -54,7 +54,7 @@ interface ProviderConfig {
 
 const cloudProviders: ProviderConfig[] = [
   {
-    id: 'onelastai',
+    id: 'mumtazai',
     name: 'OneLastAI Hosting',
     icon: '⚡',
     color: 'bg-gradient-to-br from-cyan-500 to-purple-500',
@@ -123,7 +123,7 @@ interface ServerCredential {
 
 // Map cloudDeploy provider IDs → server credential provider IDs
 const PROVIDER_MAP: Record<string, string> = {
-  onelastai: 'ONELASTAI',
+  mumtazai: 'MUMTAZAI',
   vercel: 'VERCEL',
   netlify: 'NETLIFY',
   railway: 'RAILWAY',
@@ -239,7 +239,7 @@ const DeployPanel: React.FC<DeployPanelProps> = ({
 
   // Check if a cloud provider has a valid credential
   const hasCredential = (provider: CloudProvider): boolean => {
-    if (provider === 'onelastai') return true;
+    if (provider === 'mumtazai') return true;
     const serverKey = PROVIDER_MAP[provider];
     return !!(serverKey && serverCredentials[serverKey]?.isValid);
   };
@@ -281,7 +281,7 @@ const DeployPanel: React.FC<DeployPanelProps> = ({
       }, {} as Record<string, string>);
 
       // For OneLast AI built-in, use the old flow
-      if (selectedProvider === 'onelastai') {
+      if (selectedProvider === 'mumtazai') {
         const result = await deployToProvider(code, files || null, language, {
           provider: selectedProvider,
           projectName,
@@ -483,7 +483,7 @@ const DeployPanel: React.FC<DeployPanelProps> = ({
                   setSelectedProvider(p.id);
                   setActiveTab('deploy');
                 }}
-                className={`flex items-start gap-4 p-4 rounded-lg border transition-all text-left group ${p.id === 'onelastai'
+                className={`flex items-start gap-4 p-4 rounded-lg border transition-all text-left group ${p.id === 'mumtazai'
                   ? 'bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border-indigo-500/30 hover:border-cyan-400'
                   : 'bg-slate-50 dark:bg-[#0d0d0d] border-[#1c1c1c] hover:border-indigo-500/50'
                   }`}
@@ -506,7 +506,7 @@ const DeployPanel: React.FC<DeployPanelProps> = ({
                       }`}>
                       {p.category === 'builtin' ? 'FREE' : p.category}
                     </span>
-                    {hasCredential(p.id) && p.id !== 'onelastai' && (
+                    {hasCredential(p.id) && p.id !== 'mumtazai' && (
                       <CheckCircle className="w-4 h-4 text-violet-600 dark:text-violet-400" />
                     )}
                   </div>
@@ -596,7 +596,7 @@ const DeployPanel: React.FC<DeployPanelProps> = ({
         {activeTab === 'deploy' && (
           <div className="space-y-4">
             {/* Credential Status (for external providers) */}
-            {provider && provider.id !== 'onelastai' && (
+            {provider && provider.id !== 'mumtazai' && (
               <div className={`p-4 rounded-lg border ${hasCredential(selectedProvider)
                 ? 'border-violet-500/30 bg-green-500/5'
                 : 'border-yellow-500/30 bg-yellow-500/5'
@@ -867,7 +867,7 @@ const DeployPanel: React.FC<DeployPanelProps> = ({
             disabled={isDeploying || !hasCredential(selectedProvider)}
             className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium text-sm transition-all ${isDeploying
               ? 'bg-gray-600 text-slate-700 dark:text-slate-300 cursor-not-allowed'
-              : provider?.id === 'onelastai'
+              : provider?.id === 'mumtazai'
                 ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-slate-900 dark:text-white hover:from-cyan-400 hover:to-purple-400'
                 : 'bg-cyan-500 text-slate-900 dark:text-white hover:bg-cyan-400'
               }`}

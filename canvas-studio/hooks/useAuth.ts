@@ -74,7 +74,7 @@ export function useAuth(): UseAuthReturn {
       }
 
       // Fallback path: check central domain directly to recover legacy host-only cookies.
-      const centralRes = await fetch('https://onelastai.co/api/auth/session', {
+      const centralRes = await fetch('https://mumtaz.ai/api/auth/session', {
         credentials: 'include',
         cache: 'no-store',
       });
@@ -125,12 +125,12 @@ export function useAuth(): UseAuthReturn {
     }
   }, [user]);
 
-  const login = useCallback((redirect = 'https://studio.onelastai.co') => {
-    window.location.href = `https://onelastai.co/auth/login?redirect=${encodeURIComponent(redirect)}`;
+  const login = useCallback((redirect = 'https://studio.mumtaz.ai') => {
+    window.location.href = `https://mumtaz.ai/auth/login?redirect=${encodeURIComponent(redirect)}`;
   }, []);
 
-  const signup = useCallback((redirect = 'https://studio.onelastai.co') => {
-    window.location.href = `https://onelastai.co/auth/signup?redirect=${encodeURIComponent(redirect)}`;
+  const signup = useCallback((redirect = 'https://studio.mumtaz.ai') => {
+    window.location.href = `https://mumtaz.ai/auth/signup?redirect=${encodeURIComponent(redirect)}`;
   }, []);
 
   const logout = useCallback(async () => {

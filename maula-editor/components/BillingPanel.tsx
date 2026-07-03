@@ -24,7 +24,7 @@ interface BillingPanelProps {
   userId?: string;
 }
 
-const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://editor.onelastai.co/api' : 'http://localhost:3204/api');
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://editor.mumtaz.ai/api' : 'http://localhost:3204/api');
 const APP_ID = 'maula-editor';
 
 export const BillingPanel: React.FC<BillingPanelProps> = ({ isOpen, onClose, userId }) => {

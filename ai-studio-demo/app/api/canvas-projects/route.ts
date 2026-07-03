@@ -8,6 +8,6 @@ export async function GET() {
 export async function POST() {
   return NextResponse.json({
     success: false,
-    message: 'Canvas Builder is available in the full version. Sign up at onelastai.co',
+    message: 'Canvas Builder is available in the full version. Sign up at mumtaz.ai',
   }, { status: 403 });
 }

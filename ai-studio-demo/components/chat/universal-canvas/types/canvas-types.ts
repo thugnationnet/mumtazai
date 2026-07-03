@@ -169,7 +169,7 @@ export type DeployProvider =
   | 'vercel'
   | 'railway'
   | 'netlify'
-  | 'onelastai'
+  | 'mumtazai'
   | 'cloudflare';
 
 export type DeploymentStatus =
@@ -340,11 +340,11 @@ export const DEPLOY_PROVIDERS: ProviderConfig[] = [
     ],
   },
   {
-    provider: 'onelastai',
+    provider: 'mumtazai',
     name: 'One Last AI Apps',
     icon: '🧠',
     color: '#06B6D4',
-    description: 'Deploy to your own subdomain at *.onelastai.co — no credentials needed! Free SSL included.',
+    description: 'Deploy to your own subdomain at *.mumtaz.ai — no credentials needed! Free SSL included.',
     tokenUrl: '',
     tokenLabel: '',
     supportsPreview: true,

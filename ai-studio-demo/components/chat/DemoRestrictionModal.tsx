@@ -49,12 +49,12 @@ export default function DemoRestrictionModal({
           <p className="text-slate-600 mb-8">
             Visit{' '}
             <a
-              href="https://www.onelastai.co"
+              href="https://www.mumtaz.ai"
               target="_blank"
               rel="noopener noreferrer"
               className="text-purple-600 hover:text-purple-500 underline font-semibold"
             >
-              www.onelastai.co
+              www.mumtaz.ai
             </a>{' '}
             and sign up for full access.
           </p>
@@ -67,7 +67,7 @@ export default function DemoRestrictionModal({
               Got it
             </button>
             <a
-              href="https://www.onelastai.co"
+              href="https://www.mumtaz.ai"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold hover:from-purple-700 hover:to-indigo-700 transition-all text-center shadow-lg shadow-purple-500/20"

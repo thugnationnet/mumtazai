@@ -285,7 +285,7 @@ const BuildPanel: React.FC<BuildPanelProps> = ({ projectId, onDeployReady, class
   const handleCreateShareLink = useCallback((_buildId: string, isPublic: boolean) => {
     const link: ShareLink = {
       id: Math.random().toString(36).slice(2, 10),
-      url: `https://studio.onelastai.co/builds/${_buildId}`,
+      url: `https://studio.mumtaz.ai/builds/${_buildId}`,
       expiresAt: new Date(Date.now() + 7 * 86400000).toISOString(),
       accessCount: 0,
       isPublic,

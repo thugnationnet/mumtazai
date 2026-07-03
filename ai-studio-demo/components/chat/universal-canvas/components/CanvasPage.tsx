@@ -2477,17 +2477,17 @@ export default function CanvasMode({
             <p className="text-gray-300 text-sm text-center mb-5">
               Visit{' '}
               <a
-                href="https://www.onelastai.co"
+                href="https://www.mumtaz.ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300 underline font-semibold"
               >
-                www.onelastai.co
+                www.mumtaz.ai
               </a>{' '}
               and sign up for full access.
             </p>
             <a
-              href="https://www.onelastai.co"
+              href="https://www.mumtaz.ai"
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-slate-900 dark:text-white font-semibold hover:from-purple-600 hover:to-pink-600 transition-all text-center text-sm"

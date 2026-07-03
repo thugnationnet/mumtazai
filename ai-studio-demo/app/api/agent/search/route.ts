@@ -4,6 +4,6 @@ import { NextResponse } from 'next/server';
 export async function POST() {
   return NextResponse.json({
     success: false,
-    error: 'Web search is not available in the demo. Sign up for full access at onelastai.co',
+    error: 'Web search is not available in the demo. Sign up for full access at mumtaz.ai',
   });
 }

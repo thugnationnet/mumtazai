@@ -431,7 +431,7 @@ export function parseTextToActions(fullResponse: string): {
         actions.push({
           type: 'deploy.start',
           payload: {
-            provider: (paramMap.provider as DeployProvider) || 'onelastai',
+            provider: (paramMap.provider as DeployProvider) || 'mumtazai',
             projectName: paramMap.projectName || 'canvas-project',
             autoFix: paramMap.autoFix === 'true',
           },

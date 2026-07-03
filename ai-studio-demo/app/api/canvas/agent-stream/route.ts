@@ -7,7 +7,7 @@ export async function POST() {
     start(controller) {
       controller.enqueue(
         encoder.encode(
-          `data: ${JSON.stringify({ token: '🚫 Canvas build is not available in the demo version. Visit [onelastai.co](https://onelastai.co) and sign up for full access to the AI Canvas Builder.' })}\n\n`
+          `data: ${JSON.stringify({ token: '🚫 Canvas build is not available in the demo version. Visit [mumtaz.ai](https://mumtaz.ai) and sign up for full access to the AI Canvas Builder.' })}\n\n`
         )
       );
       controller.enqueue(encoder.encode(`data: ${JSON.stringify({ done: true })}\n\n`));

@@ -182,7 +182,7 @@ function useAppDemo(shouldRun: boolean) {
       color: '#a78bfa',
       icon: '⟨/⟩',
       steps: [
-        { type: 'cmd', text: '$ onelastai create my-saas-app --template fullstack-pro' },
+        { type: 'cmd', text: '$ mumtazai create my-saas-app --template fullstack-pro' },
         { type: 'info', text: '  Scaffolding project...  14 directories • 47 files\n  Installing 847 packages from registry...' },
         { type: 'code', text: '  writing src/app/layout.tsx          42 lines  ✓\n  writing src/app/page.tsx           187 lines  ✓\n  writing src/components/Hero.tsx    156 lines  ✓\n  writing src/components/Pricing.tsx 234 lines  ✓\n  writing src/lib/auth.ts             89 lines  ✓\n  writing src/lib/stripe.ts          112 lines  ✓\n  writing src/app/api/webhook/route   78 lines  ✓' },
         { type: 'info', text: '  TypeScript compilation ████████████████████ done\n  Lint check 47/47 files  •  0 errors  •  0 warnings' },
@@ -194,11 +194,11 @@ function useAppDemo(shouldRun: boolean) {
       color: '#a78bfa',
       icon: '▲',
       steps: [
-        { type: 'cmd', text: '$ npm run build && onelastai deploy --production' },
+        { type: 'cmd', text: '$ npm run build && mumtazai deploy --production' },
         { type: 'build', text: '  Compiling TypeScript    ████████████████████ done  3.2s\n  Optimizing bundles      ████████████████████ done  1.8s\n  Generating static pages ████████████████████ done  0.9s' },
         { type: 'success', text: '✓ Build complete — 312kb gzipped  •  47 routes  •  0 warnings' },
         { type: 'deploy', text: '  Deploying to edge network...\n  ├─ us-east-1 ✓  eu-west-1 ✓  ap-south-1 ✓\n  ├─ us-west-2 ✓  eu-central ✓  ap-northeast ✓\n  SSL provisioned ✓  CDN propagation ✓  12 regions' },
-        { type: 'success', text: '✓ Live → https://my-saas-app.onelastai.co  •  TTFB 48ms  •  Score 98' },
+        { type: 'success', text: '✓ Live → https://my-saas-app.mumtaz.ai  •  TTFB 48ms  •  Score 98' },
       ]
     },
     {
@@ -206,7 +206,7 @@ function useAppDemo(shouldRun: boolean) {
       color: '#10b981',
       icon: '⟳',
       steps: [
-        { type: 'cmd', text: '$ onelastai edit "Add OAuth login + dashboard analytics"' },
+        { type: 'cmd', text: '$ mumtazai edit "Add OAuth login + dashboard analytics"' },
         { type: 'code', text: '  Δ src/lib/auth.ts              +34 -8  lines\n  Δ src/app/dashboard/page.tsx   +89 -12 lines\n  + src/components/Chart.tsx      142 lines\n  + src/app/api/analytics/route    67 lines\n  Δ src/middleware.ts             +18 -3  lines' },
         { type: 'info', text: '  Test suite  24/24 passing  ✓  Coverage 94.2%\n  Type check  0 errors  ✓  Lint  0 warnings' },
         { type: 'deploy', text: '  Incremental build  0.8s ✓\n  Deploying changes  ████████████████████  100%  12 regions' },
@@ -544,9 +544,9 @@ const Overlay: React.FC<OverlayProps> = ({ active, onActivate }) => {
           <div className={`flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 ${compact ? 'mt-1' : 'mt-2 sm:mt-4'} transition-all duration-700 ${phase >= 6 ? 'opacity-100' : 'opacity-0'}`}>
             {/* Left 3 buttons */}
             {[
-              { label: 'HOME', href: 'https://onelastai.co/home', icon: '⌂' },
-              { label: '18 AGENTS', href: 'https://onelastai.co/agents', icon: '◉' },
-              { label: 'CANVAS', href: 'https://build.onelastai.co/', icon: '◧' },
+              { label: 'HOME', href: 'https://mumtaz.ai/home', icon: '⌂' },
+              { label: '18 AGENTS', href: 'https://mumtaz.ai/agents', icon: '◉' },
+              { label: 'CANVAS', href: 'https://build.mumtaz.ai/', icon: '◧' },
             ].map(item => (
               <a
                 key={item.label}
@@ -605,9 +605,9 @@ const Overlay: React.FC<OverlayProps> = ({ active, onActivate }) => {
 
             {/* Right 3 buttons */}
             {[
-              { label: 'LAB', href: 'https://onelastai.co/lab', icon: '⚗' },
-              { label: 'TOOLS', href: 'https://onelastai.co/tools', icon: '⚙' },
-              { label: 'STUDIO', href: 'https://studio.onelastai.co/', icon: '◩' },
+              { label: 'LAB', href: 'https://mumtaz.ai/lab', icon: '⚗' },
+              { label: 'TOOLS', href: 'https://mumtaz.ai/tools', icon: '⚙' },
+              { label: 'STUDIO', href: 'https://studio.mumtaz.ai/', icon: '◩' },
             ].map(item => (
               <a
                 key={item.label}

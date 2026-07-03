@@ -1,12 +1,12 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'co.onelastai.canvasbuild',
+  appId: 'ai.mumtaz.canvasbuild',
   appName: 'AI Canvas Pro',
   webDir: 'dist',
   bundledWebRuntime: false,
   server: {
-    url: 'https://build.onelastai.co',
+    url: 'https://build.mumtaz.ai',
     cleartext: false,
   },
   plugins: {

@@ -147,8 +147,8 @@ const Dashboard: React.FC<DashboardProps> = ({ isDarkMode, onClose }) => {
           Sign in to access your dashboard and track usage analytics.
         </p>
         <div className="flex flex-col gap-2 w-full max-w-[200px]">
-          <a href="https://onelastai.co/auth/login" className={`w-full py-2.5 text-xs font-bold rounded-lg text-center transition-all ${isDarkMode ? 'bg-cyan-500 hover:bg-cyan-400 text-black' : 'bg-cyan-600 hover:bg-cyan-700 text-slate-900 dark:text-white'}`}>Sign In</a>
-          <a href="https://onelastai.co/auth/signup" className={`w-full py-2.5 text-xs font-bold rounded-lg text-center border transition-all ${isDarkMode ? 'border-indigo-500/30 text-indigo-600 dark:text-indigo-400 hover:bg-cyan-500/10' : 'border-cyan-300 text-cyan-700 hover:bg-cyan-50'}`}>Create Account</a>
+          <a href="https://mumtaz.ai/auth/login" className={`w-full py-2.5 text-xs font-bold rounded-lg text-center transition-all ${isDarkMode ? 'bg-cyan-500 hover:bg-cyan-400 text-black' : 'bg-cyan-600 hover:bg-cyan-700 text-slate-900 dark:text-white'}`}>Sign In</a>
+          <a href="https://mumtaz.ai/auth/signup" className={`w-full py-2.5 text-xs font-bold rounded-lg text-center border transition-all ${isDarkMode ? 'border-indigo-500/30 text-indigo-600 dark:text-indigo-400 hover:bg-cyan-500/10' : 'border-cyan-300 text-cyan-700 hover:bg-cyan-50'}`}>Create Account</a>
         </div>
       </div>
     );
@@ -388,7 +388,7 @@ const Dashboard: React.FC<DashboardProps> = ({ isDarkMode, onClose }) => {
               </div>
 
               <div className="space-y-2">
-                <a href="https://onelastai.co/dashboard/overview"
+                <a href="https://mumtaz.ai/dashboard/overview"
                   className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${isDarkMode ? 'border-indigo-500/30 hover:border-cyan-400 bg-cyan-500/5 hover:bg-cyan-500/10' : 'border-cyan-200 hover:border-cyan-400 bg-cyan-50 hover:bg-cyan-100'}`}>
                   <span className="text-lg">\U0001f4cb</span>
                   <div>
@@ -396,7 +396,7 @@ const Dashboard: React.FC<DashboardProps> = ({ isDarkMode, onClose }) => {
                     <div className={`text-[8px] ${isDarkMode ? 'text-gray-600' : 'text-slate-500 dark:text-slate-400'}`}>Manage plan & account</div>
                   </div>
                 </a>
-                <a href="https://onelastai.co/overview"
+                <a href="https://mumtaz.ai/overview"
                   className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${isDarkMode ? 'border-slate-200 dark:border-slate-800 hover:border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10' : 'border-gray-200 hover:border-emerald-300 bg-emerald-50 hover:bg-emerald-100'}`}>
                   <span className="text-lg">\U0001f680</span>
                   <div>
