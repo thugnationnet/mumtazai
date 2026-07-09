@@ -93,7 +93,7 @@ async function ensureTempDir() {
  */
 export async function generateImage(prompt, options = {}) {
   const {
-    model = 'dall-e-3',
+    model = 'gpt-image-1',
     size = '1024x1024',
     quality = 'standard',
     style = 'vivid',

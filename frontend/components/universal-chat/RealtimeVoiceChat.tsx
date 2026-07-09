@@ -251,8 +251,13 @@ export default function RealtimeVoiceChat({
       });
       streamRef.current = micStream;
 
-      // 2. Create RTCPeerConnection
-      const pc = new RTCPeerConnection();
+      // 2. Create RTCPeerConnection with STUN servers for ICE gathering
+      const pc = new RTCPeerConnection({
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:stun1.l.google.com:19302' },
+        ],
+      });
       pcRef.current = pc;
 
       // 3. DataChannel for OpenAI control events (MUST be created before createOffer)
@@ -301,8 +306,10 @@ export default function RealtimeVoiceChat({
         playbackAnalyserRef.current = analyser;
       };
 
-      // 5. Add microphone track
+      // 5. Add microphone track + explicit sendrecv audio transceiver for OpenAI
       micStream.getTracks().forEach(track => pc.addTrack(track, micStream));
+      // Ensure we also receive audio from OpenAI (required for WHIP SDP exchange)
+      pc.addTransceiver('audio', { direction: 'sendrecv' });
 
       // Wire mic analyser for user audio visualization
       audioContextRef.current = new AudioContext({ sampleRate: 24000 });

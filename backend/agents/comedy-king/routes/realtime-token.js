@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
   if (offer) {
     // Client sent an SDP offer — forward it to OpenAI and return the SDP answer
     try {
-      const url = `https://api.openai.com/v1/realtime?model=${REALTIME_MODEL}&voice=${voice}`;
+      const url = `https://api.openai.com/v1/realtime?model=${REALTIME_MODEL}`;
       const sdpRes = await fetch(url, {
         method: 'POST',
         headers: {
@@ -61,11 +61,11 @@ router.post('/', async (req, res) => {
       if (!sdpRes.ok) {
         const errText = await sdpRes.text();
         console.error(`[${agentId}/realtime] OpenAI SDP error (${sdpRes.status}):`, errText);
-        return res.status(sdpRes.status).json({ error: 'Failed to create WebRTC session with OpenAI' });
+        return res.status(sdpRes.status).json({ error: `OpenAI SDP error: ${errText.slice(0, 200)}` });
       }
 
       const answerSdp = await sdpRes.text();
-      console.log(`[${agentId}/realtime] WebRTC session created`);
+      console.log(`[${agentId}/realtime] WebRTC session created, answer length: ${answerSdp.length}`);
       return res.json({ answer: answerSdp, voice, agentId });
     } catch (err) {
       console.error(`[${agentId}/realtime] SDP proxy error:`, err.message);
