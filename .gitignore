@@ -573,3 +573,8 @@ backup-2026-04-02-133755/
 
 # macOS editor lock files
 .!*!
+
+# PM2 ecosystem config with env vars (may contain secrets)
+"ecosystem 2.config.cjs"
+ecosystem\ 2.config.cjs
+ecosystem[\ ]2.config.cjs
