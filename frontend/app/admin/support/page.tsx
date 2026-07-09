@@ -97,12 +97,12 @@ const categoryLabels: Record<string, string> = {
 
 // Support team members (in production, fetch from database)
 const supportAgents = [
-  { id: 'agent1', name: 'Support Team', email: 'support@onelastai.co' },
-  { id: 'agent2', name: 'Technical Support', email: 'tech@onelastai.co' },
-  { id: 'agent3', name: 'Billing Support', email: 'billing@onelastai.co' },
+  { id: 'agent1', name: 'Support Team', email: 'support@mumtaz.ai' },
+  { id: 'agent2', name: 'Technical Support', email: 'tech@mumtaz.ai' },
+  { id: 'agent3', name: 'Billing Support', email: 'billing@mumtaz.ai' },
 ];
 
-const ADMIN_EMAILS = ['admin@onelastai.co', 'admin@onelast.ai', 'admin@maula.ai'];
+const ADMIN_EMAILS = ['admin@mumtaz.ai', 'admin@onelast.ai', 'admin@maula.ai'];
 
 export default function AdminSupportPage() {
   const router = useRouter();

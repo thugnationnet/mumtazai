@@ -66,7 +66,7 @@ function SuccessContent() {
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href={`https://chat.onelastai.co/agents/${agentName.toLowerCase().replace(/\s+/g, '-')}`}
+              href={`https://chat.mumtaz.ai/agents/${agentName.toLowerCase().replace(/\s+/g, '-')}`}
               className="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-semibold transition-colors"
             >
               Start Chatting with {agentName}

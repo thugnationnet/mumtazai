@@ -397,10 +397,10 @@ Enforcement & Penalties:
               we collect, use, disclose, and safeguard your information when you
               use our platform at{' '}
               <a
-                href="https://onelastai.co"
+                href="https://mumtaz.ai"
                 className="text-blue-600 hover:text-blue-700 underline"
               >
-                onelastai.co
+                mumtaz.ai
               </a>{' '}
               and its sub-site applications, including Canvas App, Canvas Studio,
               GenCraft Pro, and Maula Editor ({' '}
@@ -1003,8 +1003,8 @@ Enforcement & Penalties:
               <ul className="list-disc pl-6 text-neural-700 space-y-1">
                 <li>
                   <strong>Email:</strong>{' '}
-                  <a href="mailto:privacy@onelastai.co" className="text-blue-600 hover:text-blue-700 underline">
-                    privacy@onelastai.co
+                  <a href="mailto:privacy@mumtaz.ai" className="text-blue-600 hover:text-blue-700 underline">
+                    privacy@mumtaz.ai
                   </a>
                 </li>
                 <li>
@@ -1208,7 +1208,7 @@ Enforcement & Penalties:
                 </ul>
                 <p className="text-neural-500 text-sm mt-2">
                   You may request a copy of the applicable SCCs by contacting{' '}
-                  <a href="mailto:privacy@onelastai.co" className="text-blue-600 underline">privacy@onelastai.co</a>.
+                  <a href="mailto:privacy@mumtaz.ai" className="text-blue-600 underline">privacy@mumtaz.ai</a>.
                 </p>
               </div>
 
@@ -1219,8 +1219,8 @@ Enforcement & Penalties:
                 </h3>
                 <p className="text-neural-700">
                   You may reach our Data Protection Officer at{' '}
-                  <a href="mailto:dpo@onelastai.co" className="text-blue-600 hover:text-blue-700 underline">
-                    dpo@onelastai.co
+                  <a href="mailto:dpo@mumtaz.ai" className="text-blue-600 hover:text-blue-700 underline">
+                    dpo@mumtaz.ai
                   </a>.
                 </p>
               </div>
@@ -1433,8 +1433,8 @@ Enforcement & Penalties:
                 <ul className="list-disc pl-6 text-neural-700 space-y-1">
                   <li>
                     Emailing{' '}
-                    <a href="mailto:privacy@onelastai.co" className="text-blue-600 underline">
-                      privacy@onelastai.co
+                    <a href="mailto:privacy@mumtaz.ai" className="text-blue-600 underline">
+                      privacy@mumtaz.ai
                     </a>{' '}
                     with subject &quot;CCPA Request&quot;
                   </li>
@@ -1504,7 +1504,7 @@ Enforcement & Penalties:
                 <p className="text-neural-700">
                   This Privacy Policy is conspicuously posted and accessible via the
                   &quot;Privacy Policy&quot; link in the footer of every page on{' '}
-                  <a href="https://onelastai.co" className="text-blue-600 underline">onelastai.co</a>,
+                  <a href="https://mumtaz.ai" className="text-blue-600 underline">mumtaz.ai</a>,
                   as well as from the account registration page and account settings.
                   The link uses the word &quot;Privacy&quot; as required by § 22577(b)(1).
                 </p>
@@ -1533,7 +1533,7 @@ Enforcement & Penalties:
                 </p>
                 <ul className="list-disc pl-6 text-neural-700 space-y-1 mt-2">
                   <li>Logging into your account and visiting Dashboard → Profile</li>
-                  <li>Emailing <a href="mailto:privacy@onelastai.co" className="text-blue-600 underline">privacy@onelastai.co</a></li>
+                  <li>Emailing <a href="mailto:privacy@mumtaz.ai" className="text-blue-600 underline">privacy@mumtaz.ai</a></li>
                 </ul>
                 <p className="text-neural-700 mt-2 text-sm">
                   We will process your request within 30 days.
@@ -2019,7 +2019,7 @@ Enforcement & Penalties:
               </li>
               <li>
                 <strong className="text-neural-900">Access Controls:</strong>{' '}
-                Role-based access control (RBAC), principle of least privilege, CORS restricted to onelastai.co and app domains
+                Role-based access control (RBAC), principle of least privilege, CORS restricted to mumtaz.ai and app domains
               </li>
               <li>
                 <strong className="text-neural-900">Monitoring &amp; Lockout:</strong>{' '}
@@ -2098,10 +2098,10 @@ Enforcement & Penalties:
                 If you are a parent or guardian and believe your child has provided
                 us with personal information, please contact us immediately at{' '}
                 <a
-                  href="mailto:privacy@onelastai.co"
+                  href="mailto:privacy@mumtaz.ai"
                   className="text-blue-600 hover:text-blue-700 underline"
                 >
-                  privacy@onelastai.co
+                  privacy@mumtaz.ai
                 </a>
                 . We will delete such information within 48 hours of verification.
               </p>
@@ -2210,8 +2210,8 @@ Enforcement & Penalties:
                 <p className="text-white font-semibold mb-1">Data Protection Officer (GDPR):</p>
                 <p>
                   Email:{' '}
-                  <a href="mailto:dpo@onelastai.co" className="text-white hover:text-blue-200 underline">
-                    dpo@onelastai.co
+                  <a href="mailto:dpo@mumtaz.ai" className="text-white hover:text-blue-200 underline">
+                    dpo@mumtaz.ai
                   </a>
                 </p>
               </div>
@@ -2219,8 +2219,8 @@ Enforcement & Penalties:
                 <p className="text-white font-semibold mb-1">Privacy Team (General / CCPA Requests):</p>
                 <p>
                   Email:{' '}
-                  <a href="mailto:privacy@onelastai.co" className="text-white hover:text-blue-200 underline">
-                    privacy@onelastai.co
+                  <a href="mailto:privacy@mumtaz.ai" className="text-white hover:text-blue-200 underline">
+                    privacy@mumtaz.ai
                   </a>
                 </p>
               </div>
@@ -2228,16 +2228,16 @@ Enforcement & Penalties:
                 <p className="text-white font-semibold mb-1">General Support:</p>
                 <p>
                   Email:{' '}
-                  <a href="mailto:support@onelastai.co" className="text-white hover:text-blue-200 underline">
-                    support@onelastai.co
+                  <a href="mailto:support@mumtaz.ai" className="text-white hover:text-blue-200 underline">
+                    support@mumtaz.ai
                   </a>
                 </p>
               </div>
               <div>
                 <p className="text-white font-semibold mb-1">Website:</p>
                 <p>
-                  <a href="https://onelastai.co" className="text-white hover:text-blue-200 underline">
-                    https://onelastai.co
+                  <a href="https://mumtaz.ai" className="text-white hover:text-blue-200 underline">
+                    https://mumtaz.ai
                   </a>
                 </p>
               </div>
@@ -2247,35 +2247,35 @@ Enforcement & Penalties:
                   <strong className="text-white">EU/EEA Representative (GDPR Art. 27):</strong>{' '}
                   For users in the European Union / EEA, you may contact our EU
                   representative regarding data protection matters at{' '}
-                  <a href="mailto:eu-rep@onelastai.co" className="text-white underline">eu-rep@onelastai.co</a>.
+                  <a href="mailto:eu-rep@mumtaz.ai" className="text-white underline">eu-rep@mumtaz.ai</a>.
                 </p>
                 <p className="text-sm text-blue-100">
                   <strong className="text-white">UK Representative (UK GDPR):</strong>{' '}
                   For users in the United Kingdom, please contact{' '}
-                  <a href="mailto:uk-rep@onelastai.co" className="text-white underline">uk-rep@onelastai.co</a>.
+                  <a href="mailto:uk-rep@mumtaz.ai" className="text-white underline">uk-rep@mumtaz.ai</a>.
                 </p>
                 <p className="text-sm text-blue-100">
                   <strong className="text-white">California Residents:</strong>{' '}
                   To exercise CCPA/CPRA rights, email{' '}
-                  <a href="mailto:privacy@onelastai.co" className="text-white underline">privacy@onelastai.co</a>{' '}
+                  <a href="mailto:privacy@mumtaz.ai" className="text-white underline">privacy@mumtaz.ai</a>{' '}
                   with subject &quot;CCPA Request&quot; or use in-app Privacy Controls.
                 </p>
                 <p className="text-sm text-blue-100">
                   <strong className="text-white">Thailand PDPA Representative:</strong>{' '}
                   For users in Thailand, please contact our PDPA representative at{' '}
-                  <a href="mailto:pdpa-th@onelastai.co" className="text-white underline">pdpa-th@onelastai.co</a>{' '}
+                  <a href="mailto:pdpa-th@mumtaz.ai" className="text-white underline">pdpa-th@mumtaz.ai</a>{' '}
                   with subject &quot;PDPA Thailand Request&quot;.
                 </p>
                 <p className="text-sm text-blue-100">
                   <strong className="text-white">Singapore PDPA Representative:</strong>{' '}
                   For users in Singapore, please contact our Data Protection Officer at{' '}
-                  <a href="mailto:pdpa-sg@onelastai.co" className="text-white underline">pdpa-sg@onelastai.co</a>{' '}
+                  <a href="mailto:pdpa-sg@mumtaz.ai" className="text-white underline">pdpa-sg@mumtaz.ai</a>{' '}
                   with subject &quot;PDPA Singapore Request&quot;.
                 </p>
                 <p className="text-sm text-blue-100">
                   <strong className="text-white">UAE PDPL Representative:</strong>{' '}
                   For users in the United Arab Emirates, please contact our UAE data protection representative at{' '}
-                  <a href="mailto:pdpl-uae@onelastai.co" className="text-white underline">pdpl-uae@onelastai.co</a>{' '}
+                  <a href="mailto:pdpl-uae@mumtaz.ai" className="text-white underline">pdpl-uae@mumtaz.ai</a>{' '}
                   with subject &quot;UAE PDPL Request&quot;.
                 </p>
               </div>
@@ -2346,7 +2346,7 @@ Enforcement & Penalties:
                 <p className="text-neural-700 text-sm">
                   To revoke consent after registering, clear your browser&apos;s localStorage (key: <code className="bg-neural-100 px-1 py-0.5 rounded text-xs">sct_opted</code>, <code className="bg-neural-100 px-1 py-0.5 rounded text-xs">st_device_token</code>)
                   and contact us at{' '}
-                  <a href="mailto:privacy@onelastai.co" className="text-blue-600 underline">privacy@onelastai.co</a>{' '}
+                  <a href="mailto:privacy@mumtaz.ai" className="text-blue-600 underline">privacy@mumtaz.ai</a>{' '}
                   to request deletion of your device record.
                 </p>
               </div>

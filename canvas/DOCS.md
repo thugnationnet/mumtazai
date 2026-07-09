@@ -354,7 +354,7 @@ frontend/canvas-studio/                  (~15,074 lines source)
 └── public/
     ├── logo.png
     ├── logo.svg
-    └── onelastai-logo.jpg
+    └── mumtazai-logo.jpg
 ```
 
 ---

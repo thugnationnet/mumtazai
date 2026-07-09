@@ -20,7 +20,7 @@ import {
 import Link from 'next/link'
 
 // Get API base URL - use main domain for analytics
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://onelastai.co'
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://mumtaz.ai'
 
 interface ExperimentStat {
   id: string

@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
           
           // Set both cookie names for compatibility
           // Set cookies WITH domain to match backend and prevent duplicate cookies
-          const cookieDomain = isProduction ? '.onelastai.co' : undefined;
+          const cookieDomain = isProduction ? '.mumtaz.ai' : undefined;
           nextResponse.cookies.set('sessionId', sessionId, {
             httpOnly: true,
             secure: isProduction,

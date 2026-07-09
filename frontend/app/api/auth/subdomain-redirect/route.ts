@@ -7,7 +7,7 @@ const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3005';
 
 /**
  * SSO Redirect Endpoint
- * Called by subdomain apps (e.g., maula.onelastai.co) to authenticate users
+ * Called by subdomain apps (e.g., maula.mumtaz.ai) to authenticate users
  * If user is logged in on main site, generates a token and redirects back
  * If not logged in, redirects to login page with return URL
  */
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
 
     // Validate return URL (only allow known subdomains)
     const allowedOrigins = [
-      'https://maula.onelastai.co',
+      'https://maula.mumtaz.ai',
       'http://localhost:5173',
       'http://localhost:3200',
     ];
@@ -91,8 +91,8 @@ export async function GET(request: NextRequest) {
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
       .setExpirationTime('5m') // Short-lived token
-      .setIssuer('onelastai.co')
-      .setAudience('maula.onelastai.co')
+      .setIssuer('mumtaz.ai')
+      .setAudience('maula.mumtaz.ai')
       .sign(secret);
 
     // Redirect back to subdomain with token

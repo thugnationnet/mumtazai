@@ -111,7 +111,7 @@ export default function DocumentationPage() {
           <div>
             <h4 className="text-xl font-bold text-neural-900 mb-3">Base URL</h4>
             <div className="bg-gray-900 p-4 rounded-xl font-mono text-sm text-green-400">
-              https://api.onelastai.co/v1
+              https://api.mumtaz.ai/v1
             </div>
           </div>
 
@@ -181,7 +181,7 @@ export default function DocumentationPage() {
           <div>
             <h4 className="text-xl font-bold text-neural-900 mb-3">Example Request</h4>
             <div className="bg-gray-900 p-4 rounded-xl font-mono text-sm text-green-400 overflow-x-auto">
-              <pre>{`curl -X GET https://api.onelastai.co/v1/agents \\
+              <pre>{`curl -X GET https://api.mumtaz.ai/v1/agents \\
   -H "Authorization: Bearer YOUR_API_KEY"`}</pre>
             </div>
           </div>
@@ -210,7 +210,7 @@ export default function DocumentationPage() {
             <h4 className="text-xl font-bold text-neural-900 mb-3">Web Integration</h4>
             <p className="text-neural-600 mb-3">Add a chat widget to your website:</p>
             <div className="bg-gray-900 p-4 rounded-xl font-mono text-sm text-blue-400 overflow-x-auto">
-              <pre>{`<script src="https://cdn.onelastai.co/widget.js"></script>
+              <pre>{`<script src="https://cdn.mumtaz.ai/widget.js"></script>
 <script>
   OnelastAI.init({
     apiKey: 'YOUR_API_KEY',
@@ -375,7 +375,7 @@ export default function DocumentationPage() {
             </div>
           </div>
 
-          <Link href="https://build.onelastai.co" className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white rounded-xl font-semibold transition shadow-lg shadow-purple-500/25">
+          <Link href="https://build.mumtaz.ai" className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white rounded-xl font-semibold transition shadow-lg shadow-purple-500/25">
             Open Canvas Builder
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -491,13 +491,13 @@ export default function DocumentationPage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
-            <Link href="https://studio.onelastai.co" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white rounded-xl font-semibold transition shadow-lg shadow-violet-500/25">
+            <Link href="https://studio.mumtaz.ai" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white rounded-xl font-semibold transition shadow-lg shadow-violet-500/25">
               Open Canvas Studio
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Link>
-            <Link href="https://build.onelastai.co" className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-neural-200 text-neural-700 rounded-xl font-semibold hover:bg-neural-50 transition">
+            <Link href="https://build.mumtaz.ai" className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-neural-200 text-neural-700 rounded-xl font-semibold hover:bg-neural-50 transition">
               Open Canvas Builder
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -601,7 +601,7 @@ export default function DocumentationPage() {
             </ul>
           </div>
 
-          <Link href={`https://chat.onelastai.co/agents/${agentId}`} className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold transition shadow-lg shadow-blue-500/25">
+          <Link href={`https://chat.mumtaz.ai/agents/${agentId}`} className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold transition shadow-lg shadow-blue-500/25">
             Try {agent.name} Now
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -716,7 +716,7 @@ export default function DocumentationPage() {
             Browse our collection of 18 specialized AI agents or dive into our API documentation to start building.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="https://onelastai.co/agents" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold transition shadow-lg shadow-blue-500/25">
+            <Link href="https://mumtaz.ai/agents" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold transition shadow-lg shadow-blue-500/25">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>

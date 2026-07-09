@@ -699,7 +699,7 @@ function CanvasPricingContent() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                href="https://build.onelastai.co"
+                href="https://build.mumtaz.ai"
                 className="btn-primary border-2 border-white bg-transparent hover:bg-white hover:text-orange-600 inline-flex items-center gap-2"
               >
                 Try Canvas Build

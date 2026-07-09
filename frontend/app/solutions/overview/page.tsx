@@ -108,7 +108,7 @@ export default function SolutionsOverview() {
             Join thousands of companies already using our AI solutions to drive growth and innovation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="https://onelastai.co/agents" className="bg-white text-brand-600 px-8 py-4 rounded-lg font-medium hover:bg-brand-50 transition-colors">
+            <Link href="https://mumtaz.ai/agents" className="bg-white text-brand-600 px-8 py-4 rounded-lg font-medium hover:bg-brand-50 transition-colors">
               Explore AI Agents
             </Link>
             <Link href="/support/contact-us" className="border-2 border-white text-white px-8 py-4 rounded-lg font-medium hover:bg-white hover:text-brand-600 transition-colors">

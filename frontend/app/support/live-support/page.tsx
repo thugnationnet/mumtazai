@@ -178,7 +178,7 @@ const SOCIAL_LINKS = [
   },
   {
     icon: Instagram,
-    href: 'https://instagram.com/onelastai',
+    href: 'https://instagram.com/mumtazai',
     label: 'Instagram',
     color: 'bg-pink-600 hover:bg-pink-700 text-white',
   },
@@ -190,25 +190,25 @@ const SOCIAL_LINKS = [
   },
   {
     icon: X,
-    href: 'https://x.com/onelastai',
+    href: 'https://x.com/mumtazai',
     label: 'X (Twitter)',
     color: 'bg-black hover:bg-gray-900 text-white',
   },
   {
     icon: MessageSquare,
-    href: 'https://line.me/ti/p/@onelastai',
+    href: 'https://line.me/ti/p/@mumtazai',
     label: 'LINE',
     color: 'bg-green-500 hover:bg-green-600 text-white',
   },
   {
     icon: MessageCircle,
-    href: 'https://t.me/onelastai',
+    href: 'https://t.me/mumtazai',
     label: 'Telegram',
     color: 'bg-cyan-500 hover:bg-cyan-600 text-white',
   },
   {
     icon: MessageCircle,
-    href: 'https://tiktok.com/@onelastai',
+    href: 'https://tiktok.com/@mumtazai',
     label: 'TikTok',
     color: 'bg-black hover:bg-gray-900 text-white',
   },
@@ -523,7 +523,7 @@ export default function LiveSupportPage() {
       const errorMessage: Message = {
         id: Date.now().toString(),
         role: 'system',
-        content: '⚠️ Failed to create support ticket. Please try again or contact us directly at support@onelastai.co',
+        content: '⚠️ Failed to create support ticket. Please try again or contact us directly at support@mumtaz.ai',
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);

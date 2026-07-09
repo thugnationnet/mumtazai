@@ -219,7 +219,7 @@ export default function CanvasAppDashboard() {
               </div>
               <div className="flex flex-wrap gap-3">
                 <a
-                  href="https://build.onelastai.co"
+                  href="https://build.mumtaz.ai"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-white text-teal-700 font-semibold rounded-xl hover:bg-slate-100 transition text-sm shadow-lg"
@@ -386,7 +386,7 @@ export default function CanvasAppDashboard() {
                     </span>
                   </h3>
                   <a
-                    href="https://build.onelastai.co"
+                    href="https://build.mumtaz.ai"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm text-teal-600 hover:text-teal-700 font-medium hover:underline"
@@ -400,7 +400,7 @@ export default function CanvasAppDashboard() {
                     <p className="text-slate-500 font-medium mb-1">No projects yet</p>
                     <p className="text-slate-400 text-sm mb-4">Start building your first AI-powered app in Canvas.</p>
                     <a
-                      href="https://build.onelastai.co"
+                      href="https://build.mumtaz.ai"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-teal-600 hover:text-teal-700 font-semibold text-sm"
@@ -457,7 +457,7 @@ export default function CanvasAppDashboard() {
                             </a>
                           ) : (
                             <a
-                              href={`https://build.onelastai.co`}
+                              href={`https://build.mumtaz.ai`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="mt-auto inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-teal-600 font-medium transition-colors"
@@ -478,7 +478,7 @@ export default function CanvasAppDashboard() {
                 <h3 className="text-base font-semibold text-slate-800 mb-4">Quick Links</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <a
-                    href="https://build.onelastai.co"
+                    href="https://build.mumtaz.ai"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 p-4 bg-teal-50 rounded-xl hover:bg-teal-100 transition-colors group"

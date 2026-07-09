@@ -217,9 +217,9 @@ export default function AgentManagementPage() {
 
   const handleChatWithAgent = (agentId: string) => {
     if (agentId === 'gencraft-pro') {
-      window.location.href = 'https://studio.onelastai.co/';
+      window.location.href = 'https://studio.mumtaz.ai/';
     } else {
-      window.location.href = `https://chat.onelastai.co/agents/${agentId}`;
+      window.location.href = `https://chat.mumtaz.ai/agents/${agentId}`;
     }
   };
 

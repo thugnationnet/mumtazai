@@ -196,7 +196,7 @@ export default function CanvasStudioDocsPage() {
             <div className="relative z-10">
               <h2 className="text-2xl font-bold mb-4">Ready to Build?</h2>
               <p className="text-neural-300 mb-6">Jump into the full IDE and start creating with AI-powered code generation.</p>
-              <Link href="https://studio.onelastai.co" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition">
+              <Link href="https://studio.mumtaz.ai" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition">
                 <Rocket className="w-5 h-5" />
                 Launch Canvas Studio
               </Link>
@@ -326,7 +326,7 @@ export default function CanvasStudioDocsPage() {
               Create full-stack applications with AI assistance in your browser.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="https://studio.onelastai.co" className="btn-primary bg-white text-purple-600 hover:bg-neural-50">
+              <Link href="https://studio.mumtaz.ai" className="btn-primary bg-white text-purple-600 hover:bg-neural-50">
                 Open Canvas Studio
               </Link>
               <Link href="/docs/canvas" className="btn-primary border-2 border-white bg-transparent hover:bg-white hover:text-purple-600">

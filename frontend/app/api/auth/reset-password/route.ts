@@ -9,7 +9,7 @@ const SMTP_CONFIG = {
   port: parseInt(process.env.SMTP_PORT || '587'),
   secure: false,
   auth: {
-    user: process.env.SMTP_USER || 'noreply@onelastai.co',
+    user: process.env.SMTP_USER || 'noreply@mumtaz.ai',
     pass: process.env.SMTP_PASS || '',
   },
 };
@@ -192,7 +192,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Build reset URL
-    const baseUrl = process.env.NEXTAUTH_URL || 'https://onelastai.co';
+    const baseUrl = process.env.NEXTAUTH_URL || 'https://mumtaz.ai';
     const resetUrl = `${baseUrl}/auth/reset-password/confirm?token=${resetToken}`;
 
     // Send email
@@ -200,7 +200,7 @@ export async function POST(request: NextRequest) {
     if (transporter) {
       try {
         await transporter.sendMail({
-          from: 'One Last AI <noreply@onelastai.co>',
+          from: 'One Last AI <noreply@mumtaz.ai>',
           to: user.email,
           subject: '🔐 Reset Your Password - One Last AI',
           html: getPasswordResetEmailTemplate(user.name || 'User', resetUrl),

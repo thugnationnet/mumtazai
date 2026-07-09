@@ -307,7 +307,7 @@ const { data } = await response.json();
               Our AI can generate custom data schemas tailored to your specific needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="https://demo.onelastai.co" className="btn-primary bg-white text-blue-600 hover:bg-neural-50">
+              <Link href="https://demo.mumtaz.ai" className="btn-primary bg-white text-blue-600 hover:bg-neural-50">
                 Open Studio
               </Link>
               <Link href="/support/contact-us" className="btn-primary border-2 border-white bg-transparent hover:bg-white hover:text-blue-600">

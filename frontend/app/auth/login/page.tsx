@@ -41,9 +41,9 @@ function LoginPageContent() {
     if (state.isAuthenticated) {
       const isAdmin = state.user?.role === 'admin';
       const redirectParam = searchParams.get('redirect');
-      // Validate redirect: only allow *.onelastai.co domains or relative paths
+      // Validate redirect: only allow *.mumtaz.ai domains or relative paths
       const isSafeRedirect = redirectParam && (
-        /^https:\/\/([a-z0-9-]+\.)*onelastai\.co(\/.*)?\??$/i.test(redirectParam) ||
+        /^https:\/\/([a-z0-9-]+\.)*mumtazai\.co(\/.*)?\??$/i.test(redirectParam) ||
         (redirectParam.startsWith('/') && !redirectParam.startsWith('//'))
       );
       const redirectTo = isSafeRedirect

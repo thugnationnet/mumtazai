@@ -696,7 +696,7 @@ function PricingContent() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                href="https://onelastai.co/agents"
+                href="https://mumtaz.ai/agents"
                 className="btn-primary border-2 border-white bg-transparent hover:bg-white hover:text-brand-600 inline-flex items-center gap-2"
               >
                 Explore AI Agents

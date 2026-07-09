@@ -226,7 +226,7 @@ export default function CommunityOverviewPage() {
               <ExternalLink className="w-4 h-4" />
             </Link>
             <Link 
-              href="https://onelastai.co/agents" 
+              href="https://mumtaz.ai/agents" 
               className="inline-flex items-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-xl font-semibold hover:bg-white/30 transition-all"
             >
               Explore AI Agents

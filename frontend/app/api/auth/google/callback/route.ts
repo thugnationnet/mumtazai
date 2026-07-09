@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
         Cookie: cookieHeader,
         'X-Forwarded-Proto': 'https',
         'X-Forwarded-For': request.headers.get('x-forwarded-for') || '',
-        Host: request.headers.get('host') || 'onelastai.co',
+        Host: request.headers.get('host') || 'mumtaz.ai',
       },
       redirect: 'manual', // Don't follow redirects — we need to capture Set-Cookie headers
     });

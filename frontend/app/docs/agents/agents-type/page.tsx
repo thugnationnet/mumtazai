@@ -359,7 +359,7 @@ export default function AgentTypesPage() {
               <p className="text-neural-600 text-sm">Customize agents</p>
             </Link>
             <Link 
-              href="https://onelastai.co/agents"
+              href="https://mumtaz.ai/agents"
               className="p-4 bg-white hover:bg-gray-50 rounded-xl shadow-sm border border-neural-100 transition-colors"
             >
               <h3 className="font-semibold text-brand-600 mb-2">All Agents →</h3>

@@ -5,7 +5,7 @@ import {
 } from '../../../../../lib/validateAuth';
 
 const BACKEND_BASE =
-  process.env.NEXT_PUBLIC_BACKEND_URL || 'https://onelastai.co:3005';
+  process.env.NEXT_PUBLIC_BACKEND_URL || 'https://mumtaz.ai:3005';
 
 export async function GET(
   request: NextRequest,

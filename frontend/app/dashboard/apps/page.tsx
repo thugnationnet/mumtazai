@@ -469,7 +469,7 @@ export default function AppsDashboardPage() {
               </div>
               <div className="flex flex-wrap gap-3">
                 <Link
-                  href="https://studio.onelastai.co/"
+                  href="https://studio.mumtaz.ai/"
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-brand-700 font-semibold rounded-xl shadow-lg shadow-brand-900/20 hover:bg-slate-100 transition text-sm"
                 >
                   <Sparkles className="h-4 w-4" />
@@ -719,7 +719,7 @@ export default function AppsDashboardPage() {
                                   {cfg.label}
                                 </span>
                                 <span className="text-sm text-slate-700 truncate">
-                                  {dep.subdomain}.apps.onelastai.co
+                                  {dep.subdomain}.apps.mumtaz.ai
                                 </span>
                               </div>
                               <div className="flex items-center gap-4 text-xs text-slate-400 flex-shrink-0">
@@ -747,7 +747,7 @@ export default function AppsDashboardPage() {
                   {/* Quick Actions */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <Link
-                      href="https://studio.onelastai.co/"
+                      href="https://studio.mumtaz.ai/"
                       className="group bg-white rounded-xl border border-slate-200 p-6 shadow-sm hover:shadow-md hover:border-brand-200 transition-all"
                     >
                       <Sparkles className="h-6 w-6 text-violet-600" />
@@ -817,7 +817,7 @@ export default function AppsDashboardPage() {
                       </p>
                     </div>
                     <Link
-                      href="https://studio.onelastai.co/"
+                      href="https://studio.mumtaz.ai/"
                       className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition text-sm"
                     >
                       <Sparkles className="h-4 w-4" />
@@ -836,7 +836,7 @@ export default function AppsDashboardPage() {
                         agent will create, edit, and deploy it.
                       </p>
                       <Link
-                        href="https://studio.onelastai.co/"
+                        href="https://studio.mumtaz.ai/"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition"
                       >
                         <Sparkles className="h-4 w-4" />
@@ -851,7 +851,7 @@ export default function AppsDashboardPage() {
                         const url =
                           project.deploymentUrl ||
                           (project.subdomain
-                            ? `https://${project.subdomain}.apps.onelastai.co`
+                            ? `https://${project.subdomain}.apps.mumtaz.ai`
                             : null);
                         const dep = project.latestDeployment;
 
@@ -908,7 +908,7 @@ export default function AppsDashboardPage() {
                               </div>
                               <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
                                 <Link
-                                  href="https://studio.onelastai.co/"
+                                  href="https://studio.mumtaz.ai/"
                                   className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-brand-600 border border-brand-200 rounded-lg hover:bg-brand-50 transition"
                                 >
                                   <Layers className="h-4 w-4" />

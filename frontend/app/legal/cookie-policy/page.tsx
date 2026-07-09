@@ -134,10 +134,10 @@ The California Privacy Protection Agency (CPPA) can impose fines of up to $7,500
                   "us") uses cookies and similar tracking technologies on our
                   websites at{' '}
                   <a
-                    href="https://onelastai.co"
+                    href="https://mumtaz.ai"
                     className="text-blue-600 hover:text-blue-700 underline"
                   >
-                    onelastai.co
+                    mumtaz.ai
                   </a>{' '}
                   and{' '}
                   <a
@@ -651,7 +651,7 @@ The California Privacy Protection Agency (CPPA) can impose fines of up to $7,500
                 </thead>
                 <tbody className="text-neural-700">
                   <tr>
-                    <td className="p-3 border border-neural-200 font-mono text-xs">onelastai_user_id</td>
+                    <td className="p-3 border border-neural-200 font-mono text-xs">mumtazai_user_id</td>
                     <td className="p-3 border border-neural-200">All apps</td>
                     <td className="p-3 border border-neural-200">UUID string</td>
                     <td className="p-3 border border-neural-200">Link anonymous analytics</td>
@@ -915,37 +915,37 @@ The California Privacy Protection Agency (CPPA) can impose fines of up to $7,500
               <p>
                 Privacy:{' '}
                 <a
-                  href="mailto:privacy@onelastai.co"
+                  href="mailto:privacy@mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  privacy@onelastai.co
+                  privacy@mumtaz.ai
                 </a>
               </p>
               <p>
                 Data Protection Officer:{' '}
                 <a
-                  href="mailto:dpo@onelastai.co"
+                  href="mailto:dpo@mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  dpo@onelastai.co
+                  dpo@mumtaz.ai
                 </a>
               </p>
               <p>
                 Support:{' '}
                 <a
-                  href="mailto:support@onelastai.co"
+                  href="mailto:support@mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  support@onelastai.co
+                  support@mumtaz.ai
                 </a>
               </p>
               <p>
                 Websites:{' '}
                 <a
-                  href="https://onelastai.co"
+                  href="https://mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  onelastai.co
+                  mumtaz.ai
                 </a>
                 {' '}•{' '}
                 <a

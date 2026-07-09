@@ -155,7 +155,7 @@ export default function DocsAgents() {
           <h2 className="text-3xl font-bold text-neural-900 mb-8 text-center">Available Agents</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {availableAgents.map((agent, index) => (
-              <Link key={index} href={`https://chat.onelastai.co/agents/${agent.slug}`} className="group bg-white rounded-2xl p-6 shadow-sm border border-neural-100 hover:shadow-lg hover:border-brand-200 transition-all duration-300">
+              <Link key={index} href={`https://chat.mumtaz.ai/agents/${agent.slug}`} className="group bg-white rounded-2xl p-6 shadow-sm border border-neural-100 hover:shadow-lg hover:border-brand-200 transition-all duration-300">
                 <div className="text-3xl mb-3">{agent.emoji}</div>
                 <h3 className="text-lg font-bold text-neural-900 mb-2 group-hover:text-brand-600 transition-colors">
                   {agent.name}
@@ -173,11 +173,11 @@ export default function DocsAgents() {
           <h2 className="text-2xl font-bold text-neural-900 mb-4">Quick Actions</h2>
           <p className="text-neural-600 mb-6">Ready to start building with AI agents?</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="https://onelastai.co/agents" className="inline-flex items-center justify-center gap-2 bg-brand-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-brand-700 transition-colors">
+            <Link href="https://mumtaz.ai/agents" className="inline-flex items-center justify-center gap-2 bg-brand-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-brand-700 transition-colors">
               View All Agents
               <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link href="https://chat.onelastai.co/agents/random" className="inline-flex items-center justify-center gap-2 bg-accent-500 text-white px-6 py-3 rounded-xl font-medium hover:bg-accent-600 transition-colors">
+            <Link href="https://chat.mumtaz.ai/agents/random" className="inline-flex items-center justify-center gap-2 bg-accent-500 text-white px-6 py-3 rounded-xl font-medium hover:bg-accent-600 transition-colors">
               Try Random Agent
             </Link>
             <Link href="/support" className="inline-flex items-center justify-center gap-2 bg-gray-100 text-neural-700 px-6 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors">

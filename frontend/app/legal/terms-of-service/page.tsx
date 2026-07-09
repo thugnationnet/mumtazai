@@ -149,10 +149,10 @@ Many services allow users to opt out of arbitration within a specified period (t
             <p className="text-neural-700 leading-relaxed mb-4">
               Welcome to One Last AI. By accessing or using our platform at{' '}
               <a
-                href="https://onelastai.co"
+                href="https://mumtaz.ai"
                 className="text-blue-600 hover:text-blue-700 underline"
               >
-                onelastai.co
+                mumtaz.ai
               </a>{' '}
               or{' '}
               <a
@@ -207,7 +207,7 @@ Many services allow users to opt out of arbitration within a specified period (t
             </h2>
             <p className="text-neural-700 mb-4">
               One Last AI operates a multi-application AI development platform
-              across <strong>onelastai.co</strong> and <strong>maula.dev</strong>,
+              across <strong>mumtaz.ai</strong> and <strong>maula.dev</strong>,
               offering <strong>268 AI-powered tools</strong> across <strong>39 categories</strong>.
               Our platform includes the following applications:
             </p>
@@ -220,7 +220,7 @@ Many services allow users to opt out of arbitration within a specified period (t
                   for generating, editing, previewing, and deploying full-stack web
                   applications — React, Next.js, HTML/CSS/JS, and more.
                 </p>
-                <p className="text-neural-500 text-xs">Accessible at: onelastai.co → Neural Chat → Canvas</p>
+                <p className="text-neural-500 text-xs">Accessible at: mumtaz.ai → Neural Chat → Canvas</p>
               </div>
               <div className="bg-neural-50 rounded-xl p-5 border border-neural-200">
                 <h3 className="font-semibold text-blue-700 mb-2">🎨 Canvas Studio</h3>
@@ -238,7 +238,7 @@ Many services allow users to opt out of arbitration within a specified period (t
                   audio synthesis (text-to-speech), and multi-model text completion.
                   All AI processing is handled through One Last AI&apos;s own platform API keys.
                 </p>
-                <p className="text-neural-500 text-xs">Accessible at: onelastai.co → /gen-craft-pro/</p>
+                <p className="text-neural-500 text-xs">Accessible at: mumtaz.ai → /gen-craft-pro/</p>
               </div>
               <div className="bg-neural-50 rounded-xl p-5 border border-neural-200">
                 <h3 className="font-semibold text-blue-700 mb-2">✍️ Maula Editor (maula.dev)</h3>
@@ -379,7 +379,7 @@ Many services allow users to opt out of arbitration within a specified period (t
                   </thead>
                   <tbody className="text-neural-700">
                     <tr><td className="p-3 border border-neural-200 font-medium">Neural Chat</td><td className="p-3 border border-neural-200">AI conversational assistant with 18 personalities</td><td className="p-3 border border-neural-200">Chat, voice calls, TTS, image gen, web search, deep research</td></tr>
-                    <tr className="bg-neural-50"><td className="p-3 border border-neural-200 font-medium">Canvas Studio</td><td className="p-3 border border-neural-200">AI app builder &amp; code generator at apps.onelastai.co</td><td className="p-3 border border-neural-200">Code generation, live preview, Sandpack runtime, image-to-code, video gen, deployment</td></tr>
+                    <tr className="bg-neural-50"><td className="p-3 border border-neural-200 font-medium">Canvas Studio</td><td className="p-3 border border-neural-200">AI app builder &amp; code generator at apps.mumtaz.ai</td><td className="p-3 border border-neural-200">Code generation, live preview, Sandpack runtime, image-to-code, video gen, deployment</td></tr>
                     <tr><td className="p-3 border border-neural-200 font-medium">GenCraft Pro</td><td className="p-3 border border-neural-200">AI full-stack app builder with dual editors</td><td className="p-3 border border-neural-200">Full app generation, Monaco/CodeMirror editors, 40+ languages, deploy to 5 platforms</td></tr>
                     <tr className="bg-neural-50"><td className="p-3 border border-neural-200 font-medium">Maula Editor</td><td className="p-3 border border-neural-200">Full cloud IDE at maula.dev with in-browser runtime</td><td className="p-3 border border-neural-200">268 AI tools, AI copilot, terminal, in-browser Node.js, Git, collaboration</td></tr>
                   </tbody>
@@ -757,10 +757,10 @@ Many services allow users to opt out of arbitration within a specified period (t
                 <p className="text-neural-700">
                   To file a copyright infringement notice, email:{' '}
                   <a
-                    href="mailto:dmca@onelastai.co"
+                    href="mailto:dmca@mumtaz.ai"
                     className="text-blue-600 hover:text-blue-700 underline"
                   >
-                    dmca@onelastai.co
+                    dmca@mumtaz.ai
                   </a>
                 </p>
               </div>
@@ -939,10 +939,10 @@ Many services allow users to opt out of arbitration within a specified period (t
                 <p className="text-neural-700">
                   Before filing a claim, please contact us at{' '}
                   <a
-                    href="mailto:legal@onelastai.co"
+                    href="mailto:legal@mumtaz.ai"
                     className="text-blue-600 hover:text-blue-700 underline"
                   >
-                    legal@onelastai.co
+                    legal@mumtaz.ai
                   </a>{' '}
                   to attempt informal resolution.
                 </p>
@@ -1042,55 +1042,55 @@ Many services allow users to opt out of arbitration within a specified period (t
               <p>
                 Legal:{' '}
                 <a
-                  href="mailto:legal@onelastai.co"
+                  href="mailto:legal@mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  legal@onelastai.co
+                  legal@mumtaz.ai
                 </a>
               </p>
               <p>
                 Privacy:{' '}
                 <a
-                  href="mailto:privacy@onelastai.co"
+                  href="mailto:privacy@mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  privacy@onelastai.co
+                  privacy@mumtaz.ai
                 </a>
               </p>
               <p>
                 Data Protection Officer:{' '}
                 <a
-                  href="mailto:dpo@onelastai.co"
+                  href="mailto:dpo@mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  dpo@onelastai.co
+                  dpo@mumtaz.ai
                 </a>
               </p>
               <p>
                 Support:{' '}
                 <a
-                  href="mailto:support@onelastai.co"
+                  href="mailto:support@mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  support@onelastai.co
+                  support@mumtaz.ai
                 </a>
               </p>
               <p>
                 DMCA:{' '}
                 <a
-                  href="mailto:dmca@onelastai.co"
+                  href="mailto:dmca@mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  dmca@onelastai.co
+                  dmca@mumtaz.ai
                 </a>
               </p>
               <p>
                 Websites:{' '}
                 <a
-                  href="https://onelastai.co"
+                  href="https://mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  onelastai.co
+                  mumtaz.ai
                 </a>
                 {' '}•{' '}
                 <a
@@ -1104,15 +1104,15 @@ Many services allow users to opt out of arbitration within a specified period (t
               <div className="mt-6 pt-6 border-t border-white/20 space-y-3">
                 <p className="text-sm text-blue-100">
                   <strong className="text-white">Thailand PDPA:</strong>{' '}
-                  <a href="mailto:pdpa-th@onelastai.co" className="text-white underline">pdpa-th@onelastai.co</a>
+                  <a href="mailto:pdpa-th@mumtaz.ai" className="text-white underline">pdpa-th@mumtaz.ai</a>
                 </p>
                 <p className="text-sm text-blue-100">
                   <strong className="text-white">Singapore PDPA:</strong>{' '}
-                  <a href="mailto:pdpa-sg@onelastai.co" className="text-white underline">pdpa-sg@onelastai.co</a>
+                  <a href="mailto:pdpa-sg@mumtaz.ai" className="text-white underline">pdpa-sg@mumtaz.ai</a>
                 </p>
                 <p className="text-sm text-blue-100">
                   <strong className="text-white">UAE PDPL:</strong>{' '}
-                  <a href="mailto:pdpl-uae@onelastai.co" className="text-white underline">pdpl-uae@onelastai.co</a>
+                  <a href="mailto:pdpl-uae@mumtaz.ai" className="text-white underline">pdpl-uae@mumtaz.ai</a>
                 </p>
               </div>
             </div>
@@ -1147,7 +1147,7 @@ Many services allow users to opt out of arbitration within a specified period (t
                 <p className="mt-2">
                   You may revoke consent at any time by clearing your device token from local storage
                   or contacting support at{' '}
-                  <a href="mailto:privacy@onelastai.co" className="text-blue-600 underline">privacy@onelastai.co</a>.
+                  <a href="mailto:privacy@mumtaz.ai" className="text-blue-600 underline">privacy@mumtaz.ai</a>.
                 </p>
               </div>
 

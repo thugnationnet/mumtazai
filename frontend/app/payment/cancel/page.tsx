@@ -60,7 +60,7 @@ function CancelContent() {
               Try Again
             </Link>
             <Link
-              href="https://onelastai.co/agents"
+              href="https://mumtaz.ai/agents"
               className="px-8 py-4 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold transition-colors"
             >
               Browse All Agents

@@ -13,7 +13,7 @@ export default function Healthcare() {
             for healthcare providers, improving outcomes while reducing costs.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="https://chat.onelastai.co/agents/emma-emotional" className="btn-primary">
+            <Link href="https://chat.mumtaz.ai/agents/emma-emotional" className="btn-primary">
               Try Patient Support Agent
             </Link>
             <Link href="/support/book-consultation" className="btn-secondary">

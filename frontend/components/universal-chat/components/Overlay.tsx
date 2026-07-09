@@ -212,11 +212,11 @@ const Overlay: React.FC<OverlayProps> = ({ active, onActivate }) => {
 
         <div className="mt-3 sm:mt-4 md:mt-5 flex flex-wrap justify-center gap-1.5 sm:gap-2">
           {[
-            { label: 'AI LAB', href: 'https://onelastai.co/lab' },
-            { label: 'AGENTS', href: 'https://onelastai.co/dashboard/agent-management' },
-            { label: 'STUDIO', href: 'https://studio.onelastai.co/' },
-            { label: 'BUILD', href: 'https://build.onelastai.co/' },
-            { label: 'TOOLS', href: 'https://onelastai.co/tools' },
+            { label: 'AI LAB', href: 'https://mumtaz.ai/lab' },
+            { label: 'AGENTS', href: 'https://mumtaz.ai/dashboard/agent-management' },
+            { label: 'STUDIO', href: 'https://studio.mumtaz.ai/' },
+            { label: 'BUILD', href: 'https://build.mumtaz.ai/' },
+            { label: 'TOOLS', href: 'https://mumtaz.ai/tools' },
           ].map(({ label, href }) => (
             <a
               key={label}

@@ -417,7 +417,7 @@ export default function TutorialsPage() {
             {/* CTA */}
             <div className="pt-6 border-t border-neural-100">
               <Link
-                href={`https://chat.onelastai.co/agents/${selectedAgentData.id}`}
+                href={`https://chat.mumtaz.ai/agents/${selectedAgentData.id}`}
                 className={`inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${selectedAgentData.color} text-white rounded-xl font-semibold hover:opacity-90 transition shadow-lg`}
               >
                 Start Using {selectedAgentData.name}
@@ -471,7 +471,7 @@ export default function TutorialsPage() {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="https://build.onelastai.co" className="btn-primary bg-gradient-to-r from-purple-500 to-fuchsia-500 hover:opacity-90">
+                <Link href="https://build.mumtaz.ai" className="btn-primary bg-gradient-to-r from-purple-500 to-fuchsia-500 hover:opacity-90">
                   Try Canvas Builder
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </Link>
@@ -562,7 +562,7 @@ export default function TutorialsPage() {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="https://studio.onelastai.co" className="btn-primary bg-gradient-to-r from-violet-500 to-purple-500 hover:opacity-90">
+                <Link href="https://studio.mumtaz.ai" className="btn-primary bg-gradient-to-r from-violet-500 to-purple-500 hover:opacity-90">
                   Open Canvas Studio
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </Link>
@@ -623,7 +623,7 @@ export default function TutorialsPage() {
               Explore all our AI agents and find the perfect companion for your needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="https://onelastai.co/agents" className="btn-primary bg-white text-brand-600 hover:bg-neural-50">
+              <Link href="https://mumtaz.ai/agents" className="btn-primary bg-white text-brand-600 hover:bg-neural-50">
                 Browse All Agents
               </Link>
               <Link href="/overview/pricing" className="btn-primary border-2 border-white bg-transparent hover:bg-white hover:text-brand-600">

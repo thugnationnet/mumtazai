@@ -325,7 +325,7 @@ export default function ToolsDocsPage() {
               <Link href="/chat" className="btn-primary bg-white text-orange-600 hover:bg-neural-50">
                 Open Chat
               </Link>
-              <Link href="https://studio.onelastai.co" className="btn-primary border-2 border-white bg-transparent hover:bg-white hover:text-orange-600">
+              <Link href="https://studio.mumtaz.ai" className="btn-primary border-2 border-white bg-transparent hover:bg-white hover:text-orange-600">
                 Open Canvas Studio
               </Link>
             </div>

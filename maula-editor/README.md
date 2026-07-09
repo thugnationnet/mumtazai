@@ -7,7 +7,7 @@
 A full-stack AI-powered Web IDE that allows users to create, edit, and deploy code projects directly in the browser with deep AI integration.
 
 **Version:** 2.2.0 | **Last Updated:** February 20, 2026 | **Status:** Production Ready 🚀 · Phase 8 Agentic IDE ✅ · Multi-Language 14 Languages ✅  
-**Live:** [maula.onelastai.co/maula-editor/](https://maula.onelastai.co/maula-editor/)
+**Live:** [maula.mumtaz.ai/maula-editor/](https://maula.mumtaz.ai/maula-editor/)
 
 ## ✨ Features
 
@@ -140,4 +140,4 @@ MIT
 
 ---
 
-*Part of the [OneLast AI Platform](https://maula.onelastai.co)*
+*Part of the [OneLast AI Platform](https://maula.mumtaz.ai)*

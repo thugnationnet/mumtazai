@@ -771,7 +771,7 @@ export default function DataGeneratorPage() {
                     {/* Terminal prompt line */}
                     <div className="flex items-center gap-2 text-xs font-mono mb-3 text-[#6c7086]">
                       <span className="text-[#a6e3a1]">→</span>
-                      <span className="text-[#89dceb]">onelastai</span>
+                      <span className="text-[#89dceb]">mumtazai</span>
                       <span className="text-[#585b70]">$</span>
                       <span className="text-[#bac2de]">
                         generate --template {selectedTemplate} --count{' '}
@@ -869,7 +869,7 @@ export default function DataGeneratorPage() {
                 <Link href="/tools" className="btn-primary bg-white text-brand-600 hover:bg-neural-50">
                   All Tools
                 </Link>
-                <Link href="https://onelastai.co/agents" className="btn-primary border-2 border-white bg-transparent hover:bg-white hover:text-brand-600">
+                <Link href="https://mumtaz.ai/agents" className="btn-primary border-2 border-white bg-transparent hover:bg-white hover:text-brand-600">
                   Explore AI Agents
                 </Link>
               </div>

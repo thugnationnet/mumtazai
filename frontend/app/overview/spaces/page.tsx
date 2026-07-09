@@ -32,7 +32,7 @@ const apps = [
   {
     name: 'Neural Chat',
     tagline: 'AI Conversational Assistant',
-    href: 'https://maula.onelastai.co/neural-chat/',
+    href: 'https://maula.mumtaz.ai/neural-chat/',
     icon: MessageSquare,
     color: 'from-violet-500 to-purple-600',
     bgLight: 'bg-violet-50',
@@ -54,7 +54,7 @@ const apps = [
   {
     name: 'Canvas Studio',
     tagline: 'AI App Builder & Code Generator',
-    href: 'https://maula.onelastai.co/canvas-studio/',
+    href: 'https://maula.mumtaz.ai/canvas-studio/',
     icon: Paintbrush,
     color: 'from-blue-500 to-cyan-500',
     bgLight: 'bg-blue-50',
@@ -76,7 +76,7 @@ const apps = [
   {
     name: 'GenCraft Pro',
     tagline: 'AI Full-Stack App Builder',
-    href: 'https://maula.onelastai.co/gen-craft-pro/',
+    href: 'https://maula.mumtaz.ai/gen-craft-pro/',
     icon: Code2,
     color: 'from-emerald-500 to-teal-500',
     bgLight: 'bg-emerald-50',
@@ -98,7 +98,7 @@ const apps = [
   {
     name: 'Maula Editor',
     tagline: 'Full Cloud IDE',
-    href: 'https://maula.onelastai.co/maula-editor/',
+    href: 'https://maula.mumtaz.ai/maula-editor/',
     icon: Terminal,
     color: 'from-orange-500 to-amber-500',
     bgLight: 'bg-orange-50',
@@ -276,7 +276,7 @@ export default function SpacesPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-sm font-medium mb-6 backdrop-blur-sm border border-white/20">
               <Globe className="w-4 h-4" />
-              4 AI Apps &mdash; maula.onelastai.co
+              4 AI Apps &mdash; maula.mumtaz.ai
             </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               AI Apps &amp; Spaces
@@ -284,12 +284,12 @@ export default function SpacesPage() {
             <p className="text-xl text-emerald-100 max-w-3xl mx-auto mb-8">
               4 powerful AI applications at{' '}
               <a
-                href="https://maula.onelastai.co"
+                href="https://maula.mumtaz.ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline decoration-white/50 hover:decoration-white transition"
               >
-                maula.onelastai.co
+                maula.mumtaz.ai
               </a>
               . Credit-based pay-as-you-go system — no subscriptions. Each app
               has its own credit balance.
@@ -535,7 +535,7 @@ export default function SpacesPage() {
                     </div>
                   </div>
                   <a
-                    href="https://maula.onelastai.co"
+                    href="https://maula.mumtaz.ai"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition ${
@@ -851,13 +851,13 @@ export default function SpacesPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://maula.onelastai.co"
+                href="https://maula.mumtaz.ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-emerald-600 font-semibold rounded-xl hover:bg-neural-50 transition shadow-lg"
               >
                 <Globe className="w-5 h-5" />
-                Visit maula.onelastai.co
+                Visit maula.mumtaz.ai
                 <ExternalLink className="w-4 h-4" />
               </a>
               <Link

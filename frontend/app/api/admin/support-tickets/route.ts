@@ -12,9 +12,9 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 // Admin emails (in production, store in database with roles)
 const ADMIN_EMAILS = [
-  'admin@onelastai.co',
-  'support@onelastai.co',
-  'tech@onelastai.co',
+  'admin@mumtaz.ai',
+  'support@mumtaz.ai',
+  'tech@mumtaz.ai',
   // Add your admin emails here
 ];
 
@@ -399,7 +399,7 @@ export async function PATCH(req: NextRequest) {
             userName: ticket.name || 'Customer',
             userEmail: ticket.email,
             priority: 'urgent'
-          }, 'support@onelastai.co');
+          }, 'support@mumtaz.ai');
         }
       }
     }

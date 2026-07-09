@@ -540,10 +540,10 @@ export default function PaymentsRefundsPage() {
                     <strong className="text-neural-900">Contact Support:</strong>{' '}
                     Email{' '}
                     <a
-                      href="mailto:support@onelastai.co"
+                      href="mailto:support@mumtaz.ai"
                       className="text-blue-600 hover:text-blue-700 underline"
                     >
-                      support@onelastai.co
+                      support@mumtaz.ai
                     </a>{' '}
                     for technical assistance
                   </li>
@@ -562,10 +562,10 @@ export default function PaymentsRefundsPage() {
                     </strong>{' '}
                     Explore guides and tutorials at{' '}
                     <a
-                      href="https://onelastai.co/docs"
+                      href="https://mumtaz.ai/docs"
                       className="text-blue-600 hover:text-blue-700 underline"
                     >
-                      onelastai.co/docs
+                      mumtaz.ai/docs
                     </a>
                   </li>
                 </ul>
@@ -621,10 +621,10 @@ export default function PaymentsRefundsPage() {
                     <p className="text-neural-700 text-sm">
                       Email{' '}
                       <a
-                        href="mailto:support@onelastai.co"
+                        href="mailto:support@mumtaz.ai"
                         className="text-blue-600 hover:text-blue-700 underline"
                       >
-                        support@onelastai.co
+                        support@mumtaz.ai
                       </a>{' '}
                       with your account email, agent name, and "CANCEL ACCESS"
                       in the subject line
@@ -701,10 +701,10 @@ export default function PaymentsRefundsPage() {
                   Before filing a chargeback or payment dispute with your bank,
                   please contact us at{' '}
                   <a
-                    href="mailto:billing@onelastai.co"
+                    href="mailto:billing@mumtaz.ai"
                     className="text-blue-600 hover:text-blue-700 underline"
                   >
-                    billing@onelastai.co
+                    billing@mumtaz.ai
                   </a>
                   . We're committed to resolving billing issues quickly.
                 </p>
@@ -787,28 +787,28 @@ export default function PaymentsRefundsPage() {
               <p>
                 Email:{' '}
                 <a
-                  href="mailto:billing@onelastai.co"
+                  href="mailto:billing@mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  billing@onelastai.co
+                  billing@mumtaz.ai
                 </a>
               </p>
               <p>
                 Support:{' '}
                 <a
-                  href="mailto:support@onelastai.co"
+                  href="mailto:support@mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  support@onelastai.co
+                  support@mumtaz.ai
                 </a>
               </p>
               <p>
                 Website:{' '}
                 <a
-                  href="https://onelastai.co"
+                  href="https://mumtaz.ai"
                   className="text-white hover:text-blue-200 underline"
                 >
-                  https://onelastai.co
+                  https://mumtaz.ai
                 </a>
               </p>
 

@@ -13,7 +13,7 @@ export default function ProcessAutomation() {
             learn, and optimize over time to maximize efficiency and reduce manual work.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="https://onelastai.co/agents" className="btn-primary">
+            <Link href="https://mumtaz.ai/agents" className="btn-primary">
               Try Automation Agents
             </Link>
             <Link href="/resources/tutorials" className="btn-secondary">

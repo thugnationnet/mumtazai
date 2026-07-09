@@ -69,10 +69,10 @@ export default function DocsSDKs() {
   ]
 
   // Code snippets
-  const jsInstallNpm = `npm install @onelastai/sdk`
-  const jsInstallYarn = `yarn add @onelastai/sdk`
+  const jsInstallNpm = `npm install @mumtazai/sdk`
+  const jsInstallYarn = `yarn add @mumtazai/sdk`
   
-  const jsBasicUsage = `import { OnelastAI } from '@onelastai/sdk';
+  const jsBasicUsage = `import { OnelastAI } from '@mumtazai/sdk';
 
 const client = new OnelastAI({
   apiKey: process.env.ONELASTAI_API_KEY
@@ -98,9 +98,9 @@ console.log(response.reply);`
 
 console.log(newAgent.id);`
 
-  const pyInstall = `pip install onelastai-sdk`
+  const pyInstall = `pip install mumtazai-sdk`
   
-  const pyBasicUsage = `from onelastai import OnelastAI
+  const pyBasicUsage = `from mumtazai import OnelastAI
 
 client = OnelastAI(api_key='YOUR_API_KEY')
 
@@ -116,7 +116,7 @@ response = client.conversations.send(
 print(response['reply'])`
 
   const pyAsyncUsage = `import asyncio
-from onelastai import AsyncOnelastAI
+from mumtazai import AsyncOnelastAI
 
 async def main():
   client = AsyncOnelastAI(api_key='YOUR_API_KEY')
@@ -130,17 +130,17 @@ async def main():
 
 asyncio.run(main())`
 
-  const goInstall = `go get github.com/onelastai/sdk-go`
+  const goInstall = `go get github.com/mumtazai/sdk-go`
   
   const goBasicUsage = `package main
 
 import (
   "fmt"
-  "github.com/onelastai/sdk-go"
+  "github.com/mumtazai/sdk-go"
 )
 
 func main() {
-  client := onelastai.NewClient("YOUR_API_KEY")
+  client := mumtazai.NewClient("YOUR_API_KEY")
   
   // List agents
   agents, err := client.Agents.List()
@@ -149,7 +149,7 @@ func main() {
   }
   
   // Send message
-  response, err := client.Conversations.Send(&onelastai.Message{
+  response, err := client.Conversations.Send(&mumtazai.Message{
     AgentID: "agent_123",
     Text:    "Hello!",
   })
@@ -157,7 +157,7 @@ func main() {
   fmt.Println(response.Reply)
 }`
 
-  const phpInstall = `composer require onelastai/sdk-php`
+  const phpInstall = `composer require mumtazai/sdk-php`
   
   const phpBasicUsage = `<?php
 require 'vendor/autoload.php';
@@ -180,9 +180,9 @@ $response = $client->conversations->send([
 echo $response['reply'];
 ?>`
 
-  const rubyInstall = `gem install onelastai-sdk`
+  const rubyInstall = `gem install mumtazai-sdk`
   
-  const rubyBasicUsage = `require 'onelastai'
+  const rubyBasicUsage = `require 'mumtazai'
 
 client = OnelastAI::Client.new(api_key: ENV['ONELASTAI_API_KEY'])
 
@@ -198,13 +198,13 @@ response = client.conversations.send(
 puts response['reply']`
 
   const javaInstall = `<dependency>
-  <groupId>com.onelastai</groupId>
+  <groupId>com.mumtazai</groupId>
   <artifactId>sdk-java</artifactId>
   <version>2.2.0</version>
 </dependency>`
   
-  const javaBasicUsage = `import com.onelastai.sdk.OnelastAI;
-import com.onelastai.sdk.models.Agent;
+  const javaBasicUsage = `import com.mumtazai.sdk.OnelastAI;
+import com.mumtazai.sdk.models.Agent;
 
 public class Main {
   public static void main(String[] args) {

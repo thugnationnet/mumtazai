@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     // ALL must reach the browser for cross-backend auth to work.
     if (response.ok && data.success) {
       // Forward ALL Set-Cookie headers from backend to browser
-      // Backend already sets correct domain (.onelastai.co), path, httpOnly, secure, sameSite
+      // Backend already sets correct domain (.mumtaz.ai), path, httpOnly, secure, sameSite
       const setCookies: string[] = (response.headers as any).getSetCookie?.() || [];
       
       if (setCookies.length > 0) {

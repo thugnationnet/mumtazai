@@ -235,7 +235,7 @@ export default function DeleteAccountPage() {
           <Link href="/support" className="text-indigo-400 hover:text-indigo-300">
             Contact Support
           </Link>{' '}
-          at support@onelastai.co
+          at support@mumtaz.ai
         </p>
       </div>
     </div>

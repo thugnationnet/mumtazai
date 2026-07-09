@@ -29,7 +29,7 @@ function VerifyLoginOtpContent() {
   // Redirect if already authenticated
   useEffect(() => {
     if (state.isAuthenticated) {
-      const dest = redirectTo && /^https:\/\/([a-z0-9-]+\.)*onelastai\.co(\/.*)?\.?$/i.test(redirectTo)
+      const dest = redirectTo && /^https:\/\/([a-z0-9-]+\.)*mumtazai\.co(\/.*)?\.?$/i.test(redirectTo)
         ? redirectTo
         : '/dashboard/overview';
       if (dest.startsWith('http')) {
@@ -171,7 +171,7 @@ function VerifyLoginOtpContent() {
         sessionStorage.removeItem('tempUserId');
         secureAuthStorage.setUser(data.user);
         // Redirect to original destination or dashboard
-        const dest = redirectTo && /^https:\/\/([a-z0-9-]+\.)*onelastai\.co(\/.*)?\.?$/i.test(redirectTo)
+        const dest = redirectTo && /^https:\/\/([a-z0-9-]+\.)*mumtazai\.co(\/.*)?\.?$/i.test(redirectTo)
           ? redirectTo
           : '/dashboard/overview';
         window.location.href = dest;

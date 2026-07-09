@@ -43,7 +43,7 @@ export default function NewsPage() {
       name: a.name,
       emoji: a?.details?.icon || '🤖',
       description: a.description,
-      path: `https://chat.onelastai.co/agents/${a.id}`,
+      path: `https://chat.mumtaz.ai/agents/${a.id}`,
       specialties: a?.personality?.specialties || [],
       details: a?.details?.sections || []
     }))
@@ -570,7 +570,7 @@ export default function NewsPage() {
                     </p>
                     <div className="flex gap-3">
                       <Link href="/overview/pricing" className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-xl text-sm font-semibold shadow-lg shadow-purple-500/25">View Current Plans</Link>
-                      <Link href="https://onelastai.co/agents" className="px-4 py-2 bg-neural-100 hover:bg-neural-200 border border-neural-200 rounded-xl text-sm text-neural-700">Browse Available Agents</Link>
+                      <Link href="https://mumtaz.ai/agents" className="px-4 py-2 bg-neural-100 hover:bg-neural-200 border border-neural-200 rounded-xl text-sm text-neural-700">Browse Available Agents</Link>
                     </div>
                     <p className="text-purple-600 text-sm mt-3">🔔 Sign up for our newsletter to be notified when new agents launch!</p>
                   </div>

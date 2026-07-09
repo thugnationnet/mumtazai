@@ -142,7 +142,7 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <p className="font-medium">Email</p>
-                    <p className="text-neural-600">support@onelastai.co</p>
+                    <p className="text-neural-600">support@mumtaz.ai</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">

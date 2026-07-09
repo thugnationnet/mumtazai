@@ -402,7 +402,7 @@ export class PreferencesLogic {
 
       const link = document.createElement('a');
       link.href = URL.createObjectURL(dataBlob);
-      link.download = `onelastai-preferences-${
+      link.download = `mumtazai-preferences-${
         new Date().toISOString().split('T')[0]
       }.json`;
       link.click();

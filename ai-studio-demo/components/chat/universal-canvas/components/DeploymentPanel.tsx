@@ -125,7 +125,7 @@ export default function DeploymentPanel({
     }
   }, [activeDeployment?.buildLogs, activeDeployment?.deployLogs, showLogs]);
 
-  // Available providers (connected + onelastai)
+  // Available providers (connected + mumtazai)
   const availableProviders = DEPLOY_PROVIDERS.filter(
     (p) =>
       p.provider === 'mumtazai' ||

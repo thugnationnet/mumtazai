@@ -7,7 +7,7 @@ import prisma from '@/lib/prisma';
 const KNOWLEDGE_BASE = `
 ## 🏠 ABOUT ONE LAST AI
 - Platform Name: One Last AI
-- Website: https://onelastai.co
+- Website: https://mumtaz.ai
 - Tagline: "Your AI Companion for Everything"
 - Founded: 2024
 - Mission: Making AI accessible, personal, and delightful for everyone
@@ -34,7 +34,7 @@ const KNOWLEDGE_BASE = `
 - Plans expire after the purchased period (1 day, 1 week, or 1 month)
 - To continue using an agent after expiry, simply purchase again
 - View purchase history at /dashboard/billing
-- Contact: support@onelastai.co for billing questions
+- Contact: support@mumtaz.ai for billing questions
 
 ## 🤖 ALL AVAILABLE AGENTS (18 Specialized AI Friends)
 
@@ -146,7 +146,7 @@ const KNOWLEDGE_BASE = `
 
 ## 📞 SUPPORT CHANNELS
 - 24/7 AI Support: /support/live-support (That's me, darling! 💕)
-- Email: support@onelastai.co
+- Email: support@mumtaz.ai
 - Ticket Response: Within 24-48 hours
 
 ## 🎮 GAMIFICATION & REWARDS
@@ -160,9 +160,9 @@ const KNOWLEDGE_BASE = `
 - 99.9% uptime guarantee
 
 ## 🔗 SOCIAL MEDIA
-- Twitter/X: @onelastai
-- Facebook: /onelastai
-- Instagram: @onelastai
+- Twitter/X: @mumtazai
+- Facebook: /mumtazai
+- Instagram: @mumtazai
 - Discord: discord.gg/EXH6w9CH
 
 ## ❓ COMMON QUESTIONS
@@ -186,7 +186,7 @@ Q: How do I change my password?
 A: Go to /dashboard/security to update your password.
 
 Q: How do I contact a human?
-A: I can create a ticket for you, or email support@onelastai.co!
+A: I can create a ticket for you, or email support@mumtaz.ai!
 `;
 
 

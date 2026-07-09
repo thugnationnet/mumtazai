@@ -7,12 +7,12 @@ const SMTP_CONFIG = {
   port: parseInt(process.env.SMTP_PORT || '587'),
   secure: false,
   auth: {
-    user: process.env.SMTP_USER || 'noreply@onelastai.co',
+    user: process.env.SMTP_USER || 'noreply@mumtaz.ai',
     pass: process.env.SMTP_PASS || '',
   },
 };
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'support@onelastai.co';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'support@mumtaz.ai';
 
 // Create transporter
 function getTransporter() {
@@ -207,12 +207,12 @@ function getDemoRequestUserEmail(data: { name: string; date: string; time: strin
       </p>
       
       <div style="text-align: center;">
-        <a href="https://onelastai.co/agents" class="btn">Explore AI Agents →</a>
+        <a href="https://mumtaz.ai/agents" class="btn">Explore AI Agents →</a>
       </div>
     </div>
     <div class="footer">
       <p class="footer-text">
-        Questions? Reply to this email or contact support@onelastai.co<br>
+        Questions? Reply to this email or contact support@mumtaz.ai<br>
         © ${new Date().getFullYear()} One Last AI. All rights reserved.
       </p>
     </div>
@@ -254,7 +254,7 @@ export async function POST(request: NextRequest) {
       try {
         // Admin notification
         await transporter.sendMail({
-          from: 'One Last AI <noreply@onelastai.co>',
+          from: 'One Last AI <noreply@mumtaz.ai>',
           to: ADMIN_EMAIL,
           replyTo: email,
           subject: `🎯 New Demo Request from ${name}${company ? ` (${company})` : ''}`,
@@ -264,7 +264,7 @@ export async function POST(request: NextRequest) {
 
         // User confirmation
         await transporter.sendMail({
-          from: 'One Last AI <noreply@onelastai.co>',
+          from: 'One Last AI <noreply@mumtaz.ai>',
           to: email,
           subject: '🎉 Demo Request Received - One Last AI',
           html: getDemoRequestUserEmail({ name, date, time }),

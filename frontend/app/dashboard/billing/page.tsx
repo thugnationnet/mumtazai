@@ -143,15 +143,15 @@ export default function BillingPage() {
   };
 
   const getPurchaseUrl = (agentId: string, agentName: string) => {
-    if (agentId === 'canvas') return 'https://build.onelastai.co/overview/canvas-pricing';
+    if (agentId === 'canvas') return 'https://build.mumtaz.ai/overview/canvas-pricing';
     if (agentId === 'gencraft-pro') return '/overview/pricing';
     return `/subscribe?agent=${encodeURIComponent(agentName || agentId)}&slug=${agentId}`;
   };
 
   const getChatUrl = (agentId: string) => {
-    if (agentId === 'canvas') return 'https://build.onelastai.co/';
-    if (agentId === 'gencraft-pro') return 'https://studio.onelastai.co/';
-    return `https://chat.onelastai.co/agents/${agentId}`;
+    if (agentId === 'canvas') return 'https://build.mumtaz.ai/';
+    if (agentId === 'gencraft-pro') return 'https://studio.mumtaz.ai/';
+    return `https://chat.mumtaz.ai/agents/${agentId}`;
   };
 
   const getDisplayName = (sub: AgentSubscription) => {
@@ -464,7 +464,7 @@ export default function BillingPage() {
                 Purchase access to any of our AI agents to get started with intelligent conversations
               </p>
               <Link
-                href="https://onelastai.co/agents"
+                href="https://mumtaz.ai/agents"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl transition-colors"
               >
                 Browse Agents
@@ -496,7 +496,7 @@ export default function BillingPage() {
             <h3 className="text-lg font-bold text-gray-900 mb-4">Quick Links</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Link
-                href="https://onelastai.co/agents"
+                href="https://mumtaz.ai/agents"
                 className="flex items-center gap-3 p-4 bg-brand-50 rounded-xl hover:bg-brand-100 transition-colors group"
               >
                 <span className="text-2xl">🤖</span>

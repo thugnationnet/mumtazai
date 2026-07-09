@@ -203,7 +203,7 @@ export default function PerAgentPricingPage() {
 
                   {/* CTA Button */}
                   <Link
-                    href="https://onelastai.co/agents"
+                    href="https://mumtaz.ai/agents"
                     className={`block w-full text-center py-3.5 rounded-xl font-semibold transition-all ${
                       tier.recommended
                         ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg shadow-indigo-500/30'
@@ -415,7 +415,7 @@ export default function PerAgentPricingPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="https://onelastai.co/agents"
+                href="https://mumtaz.ai/agents"
                 className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-indigo-600 font-semibold rounded-xl hover:bg-gray-100 transition shadow-lg"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
