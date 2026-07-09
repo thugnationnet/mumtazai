@@ -786,33 +786,23 @@ function categorizeMemory(fact: string): AutoMemory['category'] {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// ISOLATED AGENT ROUTING
-// All agents have dedicated backend processes (ports 4001-4018).
-// On agent subdomains (e.g. ben-sega.mumtaz.ai) nginx routes to the
-// dedicated port via $backend_port map.
-// On the main domain (mumtaz.ai) nginx sends /api/agent/* to UCB (3008)
-// so we fall back to the shared /api/agent/chat-stream endpoint.
+// AGENT ROUTING
+// Each agent has a dedicated backend (ports 4001-4018).
+//
+// Agent subdomain  (e.g. ben-sega.mumtaz.ai):
+//   → /api/agent/chat-stream   → nginx $backend_port map → port 4002
+//
+// Main domain (mumtaz.ai) with per-agent nginx blocks:
+//   → /api/agent/ben-sega/chat-stream → nginx location → port 4002
 // ═══════════════════════════════════════════════════════════════════
-const ISOLATED_AGENTS = new Set([
-  'comedy-king',    // port 4001
-  'ben-sega',       // port 4002
-  'bishop-burger',  // port 4003
-  'drama-queen',    // port 4004
-  'chess-player',   // port 4005
-  'emma-emotional', // port 4006
-  'julie-girlfriend', // port 4007
-  'mrs-boss',       // port 4008
-  'knight-logic',   // port 4009
-  'lazy-pawn',      // port 4010
-  'nid-gaming',     // port 4011
-  'professor-astrology', // port 4012
-  'rook-jokey',     // port 4013
-  'einstein',       // port 4014
-  'chef-biew',      // port 4015
-  'tech-wizard',    // port 4016
-  'travel-buddy',   // port 4017
-  'fitness-guru',   // port 4018
-]);
+const AGENT_PORTS: Record<string, number> = {
+  'comedy-king': 4001, 'ben-sega': 4002, 'bishop-burger': 4003,
+  'drama-queen': 4004, 'chess-player': 4005, 'emma-emotional': 4006,
+  'julie-girlfriend': 4007, 'mrs-boss': 4008, 'knight-logic': 4009,
+  'lazy-pawn': 4010, 'nid-gaming': 4011, 'professor-astrology': 4012,
+  'rook-jokey': 4013, 'einstein': 4014, 'chef-biew': 4015,
+  'tech-wizard': 4016, 'travel-buddy': 4017, 'fitness-guru': 4018,
+};
 
 const NON_AGENT_SUBDOMAINS = new Set([
   'www', 'chat', 'studio', 'build', 'apps', 'demo', 'editor', 'lab', 'tools', 'community', 'support',
@@ -827,7 +817,15 @@ function isOnAgentSubdomain(): boolean {
 }
 
 function getChatStreamUrl(agentId: string, mode?: string): string {
-  if (isOnAgentSubdomain() && ISOLATED_AGENTS.has(agentId)) {
+  // On agent subdomain: nginx $backend_port map routes /api/agent/* to the right port
+  if (isOnAgentSubdomain()) {
+    if (mode === 'code') return '/api/agent/code-stream';
+    if (mode === 'images') return '/api/agent/images-stream';
+    if (mode === 'search') return '/api/agent/search-stream';
+    return '/api/agent/chat-stream';
+  }
+  // On main domain: per-agent nginx location blocks route /api/agent/{id}/* to dedicated ports
+  if (agentId in AGENT_PORTS) {
     if (mode === 'code') return `/api/agent/${agentId}/code-stream`;
     if (mode === 'images') return `/api/agent/${agentId}/images-stream`;
     if (mode === 'search') return `/api/agent/${agentId}/search-stream`;
