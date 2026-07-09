@@ -817,18 +817,15 @@ function isOnAgentSubdomain(): boolean {
 }
 
 function getChatStreamUrl(agentId: string, mode?: string): string {
-  // On agent subdomain: nginx $backend_port map routes /api/agent/* to the right port
+  // All modes (chat, code, images) share the same /api/agent/chat-stream endpoint.
+  // The mode is passed as a body parameter — there are no separate code-stream/images-stream routes.
+  // Only 'search' has its own dedicated endpoint (/api/agent/search).
   if (isOnAgentSubdomain()) {
-    if (mode === 'code') return '/api/agent/code-stream';
-    if (mode === 'images') return '/api/agent/images-stream';
-    if (mode === 'search') return '/api/agent/search-stream';
+    if (mode === 'search') return '/api/agent/search';
     return '/api/agent/chat-stream';
   }
-  // On main domain: per-agent nginx location blocks route /api/agent/{id}/* to dedicated ports
   if (agentId in AGENT_PORTS) {
-    if (mode === 'code') return `/api/agent/${agentId}/code-stream`;
-    if (mode === 'images') return `/api/agent/${agentId}/images-stream`;
-    if (mode === 'search') return `/api/agent/${agentId}/search-stream`;
+    if (mode === 'search') return `/api/agent/${agentId}/search`;
     return `/api/agent/${agentId}/chat-stream`;
   }
   return '/api/agent/chat-stream';

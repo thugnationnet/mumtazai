@@ -306,10 +306,10 @@ export default function RealtimeVoiceChat({
         playbackAnalyserRef.current = analyser;
       };
 
-      // 5. Add microphone track + explicit sendrecv audio transceiver for OpenAI
+      // 5. Add microphone track (creates a sendrecv audio transceiver automatically)
+      // Do NOT call addTransceiver separately — that would create a second audio m-line
+      // in the SDP which OpenAI rejects with "Invalid SDP offer".
       micStream.getTracks().forEach(track => pc.addTrack(track, micStream));
-      // Ensure we also receive audio from OpenAI (required for WHIP SDP exchange)
-      pc.addTransceiver('audio', { direction: 'sendrecv' });
 
       // Wire mic analyser for user audio visualization
       audioContextRef.current = new AudioContext({ sampleRate: 24000 });
