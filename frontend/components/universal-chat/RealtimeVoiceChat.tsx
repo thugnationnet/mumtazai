@@ -243,8 +243,17 @@ export default function RealtimeVoiceChat({
       greetingSentRef.current = false;
       currentResponseIdRef.current = null;
 
+      // On agent subdomains the backend is on $backend_port — no agentId in path needed.
+      // On main domain the per-agent nginx block strips the agentId before forwarding.
+      const _isAgentSub = typeof window !== 'undefined' &&
+        window.location.hostname.endsWith('.mumtaz.ai') &&
+        !['www','chat','studio','build','apps','demo','editor','lab','tools','community','support']
+          .some(s => window.location.hostname.startsWith(s + '.'));
+      const _realtimeUrl = _isAgentSub
+        ? '/api/agent/realtime/token'
+        : `/api/agent/${agentId}/realtime/token`;
       // Get ephemeral token from our backend (per-agent endpoint)
-      const tokenResponse = await fetch(`/api/agent/${agentId}/realtime/token`, {
+      const tokenResponse = await fetch(_realtimeUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ agentId: agentId || '' }),

@@ -3112,7 +3112,14 @@ export default function UniversalAgentChat({ agent }: UniversalAgentChatProps) {
       if (mode === 'search') {
         // Pre-fetch web search results, then include them in the streaming request for AI synthesis
         try {
-          const searchRes = await fetch(`/api/agent/${agent.id}/search`, {
+          const _isAgentSubSearch = typeof window !== 'undefined' &&
+            window.location.hostname.endsWith('.mumtaz.ai') &&
+            !['www','chat','studio','build','apps','demo','editor','lab','tools','community','support']
+              .some(s => window.location.hostname.startsWith(s + '.'));
+          const _searchUrl = _isAgentSubSearch
+            ? '/api/agent/search'
+            : `/api/agent/${agent.id}/search`;
+          const searchRes = await fetch(_searchUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
