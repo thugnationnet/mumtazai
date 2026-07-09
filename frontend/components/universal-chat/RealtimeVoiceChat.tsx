@@ -360,6 +360,9 @@ export default function RealtimeVoiceChat({
       dcRef.current.send(JSON.stringify(event));
     }
   };
+
+  // Handle events from OpenAI Realtime API
+  const handleRealtimeEvent = (event: any) => {
     switch (event.type) {
       case 'session.created':
         break;
