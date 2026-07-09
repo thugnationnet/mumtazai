@@ -787,11 +787,29 @@ function categorizeMemory(fact: string): AutoMemory['category'] {
 
 // ═══════════════════════════════════════════════════════════════════
 // ISOLATED AGENT ROUTING
-// Agents in this set are served by their own backend process.
+// All agents are served by their own dedicated backend process.
 // Nginx routes /api/agent/{agentId}/chat-stream → agent's dedicated port.
-// Non-isolated agents keep the shared /api/agent/chat-stream endpoint.
 // ═══════════════════════════════════════════════════════════════════
-const ISOLATED_AGENTS = new Set(['comedy-king']);
+const ISOLATED_AGENTS = new Set([
+  'comedy-king',    // port 4001
+  'ben-sega',       // port 4002
+  'bishop-burger',  // port 4003
+  'drama-queen',    // port 4004
+  'chess-player',   // port 4005
+  'emma-emotional', // port 4006
+  'julie-girlfriend', // port 4007
+  'mrs-boss',       // port 4008
+  'knight-logic',   // port 4009
+  'lazy-pawn',      // port 4010
+  'nid-gaming',     // port 4011
+  'professor-astrology', // port 4012
+  'rook-jokey',     // port 4013
+  'einstein',       // port 4014
+  'chef-biew',      // port 4015
+  'tech-wizard',    // port 4016
+  'travel-buddy',   // port 4017
+  'fitness-guru',   // port 4018
+]);
 
 function getChatStreamUrl(agentId: string, mode?: string): string {
   if (ISOLATED_AGENTS.has(agentId)) {
@@ -4778,7 +4796,7 @@ export default function UniversalAgentChat({ agent }: UniversalAgentChatProps) {
                   style={{ boxShadow: '0 -4px 24px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05)' }}
                 >
                   {[
-                    { id: 'chat' as const, icon: ChatBubbleLeftIcon, label: 'Agent', desc: 'Mistral-powered assistant', color: 'text-blue-600', bgActive: 'bg-blue-50' },
+                    { id: 'chat' as const, icon: ChatBubbleLeftIcon, label: 'Agent', desc: 'AI-powered assistant', color: 'text-blue-600', bgActive: 'bg-blue-50' },
                     { id: 'images' as const, icon: PhotoIcon, label: 'Images', desc: 'DALL-E 3 generation', color: 'text-purple-600', bgActive: 'bg-purple-50' },
                     { id: 'code' as const, icon: CodeBracketIcon, label: 'Code', desc: 'Codestral optimized for code', color: 'text-emerald-600', bgActive: 'bg-emerald-50' },
                     { id: 'search' as const, icon: MagnifyingGlassIcon, label: 'Search', desc: 'Web search + AI summary', color: 'text-blue-600', bgActive: 'bg-blue-50' },
