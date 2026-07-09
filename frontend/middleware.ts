@@ -45,7 +45,8 @@ export function middleware(request: NextRequest) {
 
   const route = SUBDOMAIN_ROUTES[subdomain];
   if (route) {
-    return NextResponse.redirect(new URL(route, request.url));
+    // Rewrite (not redirect) so the URL stays clean at the subdomain root
+    return NextResponse.rewrite(new URL(route, request.url));
   }
 
   // Main domain (mumtaz.ai, www.mumtaz.ai) — redirect to homepage
