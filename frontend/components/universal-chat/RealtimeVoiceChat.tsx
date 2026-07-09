@@ -112,8 +112,10 @@ export default function RealtimeVoiceChat({
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [callDuration, setCallDuration] = useState<number>(0);
 
-  // Audio / WS refs
-  const wsRef = useRef<WebSocket | null>(null);
+  // Audio / WebRTC refs
+  const pcRef   = useRef<RTCPeerConnection | null>(null);  // WebRTC PeerConnection
+  const dcRef   = useRef<RTCDataChannel | null>(null);     // DataChannel for control events
+  const audioElRef = useRef<HTMLAudioElement | null>(null); // plays AI audio
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -235,7 +237,7 @@ export default function RealtimeVoiceChat({
   }, [isOpen]);
 
 
-  // Connect to OpenAI Realtime API via our backend proxy
+  // Connect to OpenAI Realtime API via WebRTC (SDP proxy through our backend)
   const connectToRealtime = async () => {
     try {
       setConnectionState('connecting');
@@ -243,85 +245,107 @@ export default function RealtimeVoiceChat({
       greetingSentRef.current = false;
       currentResponseIdRef.current = null;
 
-      // On agent subdomains the backend is on $backend_port — no agentId in path needed.
-      // On main domain the per-agent nginx block strips the agentId before forwarding.
+      // 1. Mic access first — fail fast before creating the peer connection
+      const micStream = await navigator.mediaDevices.getUserMedia({
+        audio: { sampleRate: 24000, channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+      });
+      streamRef.current = micStream;
+
+      // 2. Create RTCPeerConnection
+      const pc = new RTCPeerConnection();
+      pcRef.current = pc;
+
+      // 3. DataChannel for OpenAI control events (MUST be created before createOffer)
+      const dc = pc.createDataChannel('oai-events', { ordered: true });
+      dcRef.current = dc;
+      dc.onmessage = (e) => handleRealtimeEvent(JSON.parse(e.data));
+      dc.onopen = () => {
+        // Configure session after data channel is open
+        const sendConfig = () => {
+          if (dc.readyState !== 'open') return;
+          dc.send(JSON.stringify({
+            type: 'session.update',
+            session: {
+              modalities: ['text', 'audio'],
+              voice: selectedVoice,
+              turn_detection: { type: 'server_vad', threshold: 0.65, prefix_padding_ms: 600, silence_duration_ms: 800 },
+            },
+          }));
+          // Send greeting
+          if (!greetingSentRef.current) {
+            greetingSentRef.current = true;
+            dc.send(JSON.stringify({
+              type: 'response.create',
+              response: { modalities: ['text', 'audio'], instructions: 'Say one short natural greeting in character in English — one sentence only.' },
+            }));
+          }
+        };
+        sendConfig();
+        setConnectionState('connected');
+      };
+
+      // 4. Handle incoming AI audio track
+      pc.ontrack = (event) => {
+        const el = new Audio();
+        el.srcObject = event.streams[0];
+        el.autoplay = true;
+        audioElRef.current = el;
+        // Wire analyser for AI audio visualization
+        const audioCtx = new AudioContext();
+        playbackContextRef.current = audioCtx;
+        const src = audioCtx.createMediaStreamSource(event.streams[0]);
+        const analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 256;
+        src.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        playbackAnalyserRef.current = analyser;
+      };
+
+      // 5. Add microphone track
+      micStream.getTracks().forEach(track => pc.addTrack(track, micStream));
+
+      // Wire mic analyser for user audio visualization
+      audioContextRef.current = new AudioContext({ sampleRate: 24000 });
+      const micSource = audioContextRef.current.createMediaStreamSource(micStream);
+      analyserRef.current = audioContextRef.current.createAnalyser();
+      analyserRef.current.fftSize = 256;
+      micSource.connect(analyserRef.current);
+
+      // 6. Create SDP offer and wait for ICE gathering
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+      await new Promise<void>((resolve) => {
+        if (pc.iceGatheringState === 'complete') { resolve(); return; }
+        const check = () => { if (pc.iceGatheringState === 'complete') { pc.removeEventListener('icegatheringstatechange', check); resolve(); } };
+        pc.addEventListener('icegatheringstatechange', check);
+        setTimeout(resolve, 5000); // timeout fallback
+      });
+
+      // 7. Send SDP offer to our backend proxy
       const _isAgentSub = typeof window !== 'undefined' &&
         window.location.hostname.endsWith('.mumtaz.ai') &&
         !['www','chat','studio','build','apps','demo','editor','lab','tools','community','support']
           .some(s => window.location.hostname.startsWith(s + '.'));
-      const _realtimeUrl = _isAgentSub
+      const _sdpUrl = _isAgentSub
         ? '/api/agent/realtime/token'
         : `/api/agent/${agentId}/realtime/token`;
-      // Get ephemeral token from our backend (per-agent endpoint)
-      const tokenResponse = await fetch(_realtimeUrl, {
+
+      const sdpResponse = await fetch(_sdpUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ agentId: agentId || '' }),
+        body: JSON.stringify({ offer: pc.localDescription?.sdp, agentId: agentId || '' }),
       });
 
-      if (!tokenResponse.ok) {
-        if (tokenResponse.status === 401) {
-          throw new Error('Please log in to use voice chat. Authentication is required for realtime sessions.');
-        }
-        throw new Error('Failed to get session token');
+      if (!sdpResponse.ok) {
+        const errData = await sdpResponse.json().catch(() => ({}));
+        throw new Error(errData.error || `SDP exchange failed (${sdpResponse.status})`);
       }
 
-      const { token, wsUrl } = await tokenResponse.json();
+      const { answer } = await sdpResponse.json();
+      if (!answer) throw new Error('No SDP answer from server');
 
-      // Connect to OpenAI Realtime WebSocket
-      const ws = new WebSocket(wsUrl, [
-        'realtime',
-        `openai-insecure-api-key.${token}`,
-        'openai-beta.realtime-v1',
-      ]);
-
-      wsRef.current = ws;
-
-      ws.onopen = async () => {
-        
-        // Configure the session with agent-specific voice
-        // Note: The real personality prompt + English language enforcement
-        // is set server-side in the /api/realtime/token endpoint.
-        // The session.update here only overrides voice/VAD tuning.
-        ws.send(JSON.stringify({
-          type: 'session.update',
-          session: {
-            modalities: ['text', 'audio'],
-            voice: selectedVoice,
-            input_audio_format: 'pcm16',
-            output_audio_format: 'pcm16',
-            input_audio_transcription: {
-              model: 'whisper-1',
-            },
-            turn_detection: {
-              type: 'server_vad',
-              threshold: 0.65,
-              prefix_padding_ms: 600,
-              silence_duration_ms: 800,
-            },
-          },
-        }));
-
-        // Start capturing audio
-        await startAudioCapture();
-        setConnectionState('connected');
-      };
-
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        handleRealtimeEvent(data);
-      };
-
-      ws.onerror = (error) => {
-        console.error('[RealtimeVoice] WebSocket error:', error);
-        setErrorMessage('Connection error');
-        setConnectionState('error');
-      };
-
-      ws.onclose = () => {
-        setConnectionState('disconnected');
-        stopAudioCapture();
-      };
+      // 8. Set remote description — WebRTC call established
+      await pc.setRemoteDescription({ type: 'answer', sdp: answer });
 
     } catch (error: any) {
       console.error('[RealtimeVoice] Connection failed:', error);
@@ -330,23 +354,27 @@ export default function RealtimeVoiceChat({
     }
   };
 
-  // Handle events from OpenAI Realtime API
-  const handleRealtimeEvent = (event: any) => {
+  // Send a control event via the WebRTC DataChannel
+  const sendEvent = (event: object) => {
+    if (dcRef.current?.readyState === 'open') {
+      dcRef.current.send(JSON.stringify(event));
+    }
+  };
     switch (event.type) {
       case 'session.created':
         break;
 
       case 'session.updated':
         // Agent greets the user ONCE with a short natural in-character line
-        if (!greetingSentRef.current && wsRef.current?.readyState === WebSocket.OPEN) {
+        if (!greetingSentRef.current && dcRef.current?.readyState === 'open') {
           greetingSentRef.current = true;
-          wsRef.current.send(JSON.stringify({
+          sendEvent({
             type: 'response.create',
             response: {
               modalities: ['text', 'audio'],
               instructions: 'Say one short natural greeting in character in English — one sentence only.',
             },
-          }));
+          });
         }
         break;
 
@@ -359,14 +387,10 @@ export default function RealtimeVoiceChat({
         stopAudioPlayback();
         
         // Only send response.cancel if AI is actively responding
-        if (hasActiveResponseRef.current && wsRef.current?.readyState === WebSocket.OPEN) {
+        if (hasActiveResponseRef.current && dcRef.current?.readyState === 'open') {
           try {
-            wsRef.current.send(JSON.stringify({
-              type: 'response.cancel',
-            }));
-          } catch (e) {
-            // WebSocket may have closed between check and send
-          }
+            sendEvent({ type: 'response.cancel' });
+          } catch (e) {}
           hasActiveResponseRef.current = false;
         }
         break;
@@ -513,59 +537,10 @@ export default function RealtimeVoiceChat({
     }
   };
 
-  // Start capturing audio from microphone
+  // Start capturing audio from microphone (used for visualization only — track is added to RTCPeerConnection)
   const startAudioCapture = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          sampleRate: 24000,
-          channelCount: 1,
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true,
-        },
-      });
-      streamRef.current = stream;
-
-      audioContextRef.current = new AudioContext({ sampleRate: 24000 });
-      const source = audioContextRef.current.createMediaStreamSource(stream);
-
-      // Setup analyser for mic visualization
-      analyserRef.current = audioContextRef.current.createAnalyser();
-      analyserRef.current.fftSize = 256;
-      source.connect(analyserRef.current);
-
-      // Load audio worklet for processing
-      await audioContextRef.current.audioWorklet.addModule('/audio-processor.js');
-      
-      const workletNode = new AudioWorkletNode(audioContextRef.current, 'audio-processor');
-      workletNodeRef.current = workletNode;
-
-      workletNode.port.onmessage = (event) => {
-        if (wsRef.current?.readyState === WebSocket.OPEN && event.data) {
-          // Convert Float32 to Int16 and send
-          const float32Data = event.data;
-          const int16Data = new Int16Array(float32Data.length);
-          for (let i = 0; i < float32Data.length; i++) {
-            int16Data[i] = Math.max(-32768, Math.min(32767, float32Data[i] * 32768));
-          }
-          
-          // Convert to base64 and send
-          const base64 = btoa(String.fromCharCode(...new Uint8Array(int16Data.buffer)));
-          wsRef.current.send(JSON.stringify({
-            type: 'input_audio_buffer.append',
-            audio: base64,
-          }));
-        }
-      };
-
-      source.connect(workletNode);
-
-    } catch (error: any) {
-      console.error('[RealtimeVoice] Audio capture failed:', error);
-      setErrorMessage('Microphone access denied');
-      setConnectionState('error');
-    }
+    // No-op: mic stream and RTCPeerConnection track are set up in connectToRealtime.
+    // This function kept for compatibility with stopAudioCapture calls.
   };
 
   // Stop audio capture
@@ -601,10 +576,9 @@ export default function RealtimeVoiceChat({
 
   // Disconnect from realtime API
   const disconnect = () => {
-    if (wsRef.current) {
-      wsRef.current.close();
-      wsRef.current = null;
-    }
+    if (dcRef.current) { dcRef.current.close(); dcRef.current = null; }
+    if (pcRef.current) { pcRef.current.close(); pcRef.current = null; }
+    if (audioElRef.current) { audioElRef.current.srcObject = null; audioElRef.current = null; }
     stopAudioCapture();
     setConnectionState('disconnected');
     setSpeakingState('idle');
