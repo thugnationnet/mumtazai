@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { getAgentChatUrl } from '@/lib/agentUrl';
 
 const availableAgents = [
   { slug: 'ben-sega', name: 'Ben Sega' },
@@ -62,8 +63,8 @@ export default function RandomAgent() {
         const data = await response.json();
 
         if (data.hasAccess) {
-          // User has subscription, go to agent chat
-          window.location.href = `/agents/${randomAgent.slug}`;
+          // User has subscription — go to dedicated agent subdomain
+          window.location.href = getAgentChatUrl(randomAgent.slug);
         } else {
           // No subscription, go to subscribe page
           router.push(
