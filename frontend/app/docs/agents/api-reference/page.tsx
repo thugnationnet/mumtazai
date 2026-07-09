@@ -32,12 +32,12 @@ export default function APIReferencePage() {
               <h2 className="text-2xl font-bold text-neural-900">API Overview</h2>
             </div>
             <p className="text-neural-600 mb-4">
-              The One Last AI API provides RESTful endpoints to integrate AI agents into your applications, websites, and systems. 
+              The Mumtaz AI API provides RESTful endpoints to integrate AI agents into your applications, websites, and systems. 
               The API uses JSON for request and response payloads and requires authentication via API keys.
             </p>
             <div className="bg-gray-50 p-4 rounded-xl border border-neural-200 text-sm">
               <p className="text-neural-600 mb-2"><strong>Base URL:</strong></p>
-              <code className="text-green-600">https://api.One Last AI.com/v1</code>
+              <code className="text-green-600">https://api.mumtaz.ai/v1</code>
             </div>
           </section>
 
@@ -49,7 +49,7 @@ export default function APIReferencePage() {
               <div>
                 <h3 className="text-lg font-semibold text-brand-600 mb-2">API Keys</h3>
                 <p className="text-neural-600 mb-3">
-                  All API requests require an API key in the Authorization header. You can generate API keys from your One Last AI dashboard under Settings → API Keys.
+                  All API requests require an API key in the Authorization header. You can generate API keys from your Mumtaz AI dashboard under Settings → API Keys.
                 </p>
               </div>
 
@@ -235,7 +235,7 @@ export default function APIReferencePage() {
                 <div className="bg-gray-50 p-4 rounded-xl border border-neural-200 font-mono text-sm text-neural-700 overflow-auto">
                   <pre>{`// Create conversation
 const response = await fetch(
-  'https://api.One Last AI.com/v1/conversations',
+  'https://api.mumtaz.ai/v1/conversations',
   {
     method: 'POST',
     headers: {
@@ -252,7 +252,7 @@ const { conversationId } = await response.json();
 
 // Send message
 const msgResponse = await fetch(
-  'https://api.One Last AI.com/v1/agents/einstein/message',
+  'https://api.mumtaz.ai/v1/agents/einstein/message',
   {
     method: 'POST',
     headers: {
@@ -284,7 +284,7 @@ headers = {
 
 # Create conversation
 conv_response = requests.post(
-    "https://api.One Last AI.com/v1/conversations",
+    "https://api.mumtaz.ai/v1/conversations",
     headers=headers,
     json={"agentId": "einstein"}
 )
@@ -293,7 +293,7 @@ conversation_id = conv_response.json()["conversationId"]
 
 # Send message
 msg_response = requests.post(
-    "https://api.One Last AI.com/v1/agents/einstein/message",
+    "https://api.mumtaz.ai/v1/agents/einstein/message",
     headers=headers,
     json={
         "conversationId": conversation_id,

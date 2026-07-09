@@ -55,7 +55,7 @@ export default function DocsAPI() {
       title: "List All Agents",
       language: "JavaScript",
       code: `// Get all agents
-const response = await fetch('https://api.One Last AI.com/v1/agents', {
+const response = await fetch('https://api.mumtaz.ai/v1/agents', {
   method: 'GET',
   headers: {
     'Authorization': 'Bearer YOUR_API_KEY',
@@ -73,7 +73,7 @@ console.log(agents);`
 
 # Create a new agent
 response = requests.post(
-  'https://api.One Last AI.com/v1/agents',
+  'https://api.mumtaz.ai/v1/agents',
   headers={
     'Authorization': 'Bearer YOUR_API_KEY',
     'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ print(agent['id'])`
       title: "Send Message",
       language: "JavaScript",
       code: `// Send a message to an agent
-const response = await fetch('https://api.One Last AI.com/v1/conversations', {
+const response = await fetch('https://api.mumtaz.ai/v1/conversations', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_API_KEY',
@@ -150,7 +150,7 @@ console.log(result.reply);`
               Base URL
             </h3>
             <code className="block bg-gray-900 p-4 rounded-lg text-gray-200 text-sm">
-              https://api.One Last AI.com/v1
+              https://api.mumtaz.ai/v1
             </code>
             <p className="text-neural-600 text-sm mt-3">
               All API requests should be made to this base URL with proper versioning.
@@ -208,7 +208,7 @@ console.log(result.reply);`
                 <span className="flex-shrink-0 w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
                 <div>
                   <p className="font-semibold text-neural-900">Sign in to your account</p>
-                  <p className="text-neural-600 text-sm">Log in to the One Last AI dashboard</p>
+                  <p className="text-neural-600 text-sm">Log in to the Mumtaz AI dashboard</p>
                 </div>
               </li>
               <li className="flex gap-4">

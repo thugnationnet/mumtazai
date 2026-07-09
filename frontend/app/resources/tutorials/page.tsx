@@ -417,7 +417,7 @@ export default function TutorialsPage() {
             {/* CTA */}
             <div className="pt-6 border-t border-neural-100">
               <Link
-                href={`https://chat.mumtaz.ai/agents/${selectedAgentData.id}`}
+                href={`https://${selectedAgentData.id}.mumtaz.ai`}
                 className={`inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${selectedAgentData.color} text-white rounded-xl font-semibold hover:opacity-90 transition shadow-lg`}
               >
                 Start Using {selectedAgentData.name}

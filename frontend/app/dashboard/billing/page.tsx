@@ -151,7 +151,7 @@ export default function BillingPage() {
   const getChatUrl = (agentId: string) => {
     if (agentId === 'canvas') return 'https://build.mumtaz.ai/';
     if (agentId === 'gencraft-pro') return 'https://studio.mumtaz.ai/';
-    return `https://chat.mumtaz.ai/agents/${agentId}`;
+    return `https://${agentId}.mumtaz.ai`;
   };
 
   const getDisplayName = (sub: AgentSubscription) => {

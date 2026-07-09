@@ -42,9 +42,9 @@ export default function DocumentationPage() {
       content: (
         <div className="space-y-6">
           <div>
-            <h3 className="text-2xl font-bold text-neural-900 mb-3">Welcome to One Last AI</h3>
+            <h3 className="text-2xl font-bold text-neural-900 mb-3">Welcome to Mumtaz AI</h3>
             <p className="text-neural-600 leading-relaxed">
-              One Last AI is a powerful platform that lets you interact with specialized AI agents for various purposes. Whether you need help with physics, cooking advice, emotional support, or entertainment, our 18 unique AI personalities are ready to assist you.
+              Mumtaz AI is a powerful platform that lets you interact with specialized AI agents for various purposes. Whether you need help with physics, cooking advice, emotional support, or entertainment, our 18 unique AI personalities are ready to assist you.
             </p>
           </div>
 
@@ -90,7 +90,7 @@ export default function DocumentationPage() {
 
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-xl border border-blue-100">
             <p className="text-neural-700 text-sm">
-              💡 <strong>Tip:</strong> Start with the &quot;Integration Guide&quot; section to learn how to connect One Last AI to your platform.
+              💡 <strong>Tip:</strong> Start with the &quot;Integration Guide&quot; section to learn how to connect Mumtaz AI to your platform.
             </p>
           </div>
         </div>
@@ -104,7 +104,7 @@ export default function DocumentationPage() {
           <div>
             <h3 className="text-2xl font-bold text-neural-900 mb-3">API Reference</h3>
             <p className="text-neural-600 leading-relaxed">
-              The One Last AI API provides RESTful endpoints for managing agents, conversations, and more.
+              The Mumtaz AI API provides RESTful endpoints for managing agents, conversations, and more.
             </p>
           </div>
 
@@ -156,7 +156,7 @@ export default function DocumentationPage() {
           <div>
             <h3 className="text-2xl font-bold text-neural-900 mb-3">Authentication</h3>
             <p className="text-neural-600 leading-relaxed">
-              All One Last AI API requests require authentication using an API key.
+              All Mumtaz AI API requests require authentication using an API key.
             </p>
           </div>
 
@@ -202,7 +202,7 @@ export default function DocumentationPage() {
           <div>
             <h3 className="text-2xl font-bold text-neural-900 mb-3">Integration Guide</h3>
             <p className="text-neural-600 leading-relaxed">
-              Learn how to integrate One Last AI with your applications.
+              Learn how to integrate Mumtaz AI with your applications.
             </p>
           </div>
 
@@ -224,7 +224,7 @@ export default function DocumentationPage() {
             <h4 className="text-xl font-bold text-neural-900 mb-3">Slack Integration</h4>
             <ol className="space-y-2 list-decimal list-inside text-neural-600">
               <li>Go to your workspace settings</li>
-              <li>Connect One Last AI to your Slack workspace</li>
+              <li>Connect Mumtaz AI to your Slack workspace</li>
               <li>Authorize the required permissions</li>
               <li>Your agent is now available in Slack!</li>
             </ol>
@@ -232,7 +232,7 @@ export default function DocumentationPage() {
 
           <div>
             <h4 className="text-xl font-bold text-neural-900 mb-3">Discord Integration</h4>
-            <p className="text-neural-600">Similar to Slack, you can integrate One Last AI with Discord to make your agents available as bots in your servers.</p>
+            <p className="text-neural-600">Similar to Slack, you can integrate Mumtaz AI with Discord to make your agents available as bots in your servers.</p>
           </div>
 
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-xl border border-blue-100">
@@ -260,7 +260,7 @@ export default function DocumentationPage() {
             <div className="space-y-2 text-neural-600">
               <p>1. Configure a webhook URL in your dashboard</p>
               <p>2. Choose which events to subscribe to</p>
-              <p>3. One Last AI will POST to your URL when events occur</p>
+              <p>3. Mumtaz AI will POST to your URL when events occur</p>
             </div>
           </div>
 
@@ -308,7 +308,7 @@ export default function DocumentationPage() {
           <div>
             <h3 className="text-2xl font-bold text-neural-900 mb-3">Canvas Builder</h3>
             <p className="text-neural-600 leading-relaxed">
-              Canvas is the AI-powered app generator on One Last AI. Describe what you want to build in plain text and Canvas generates a fully functional web application — complete with HTML, CSS, JavaScript, and React components — in seconds.
+              Canvas is the AI-powered app generator on Mumtaz AI. Describe what you want to build in plain text and Canvas generates a fully functional web application — complete with HTML, CSS, JavaScript, and React components — in seconds.
             </p>
           </div>
 
@@ -392,7 +392,7 @@ export default function DocumentationPage() {
           <div>
             <h3 className="text-2xl font-bold text-neural-900 mb-3">Canvas Studio IDE</h3>
             <p className="text-neural-600 leading-relaxed">
-              Canvas Studio is the full-featured online IDE on One Last AI. Unlike the single-prompt Canvas Builder, Canvas Studio gives you a complete development environment with a multi-file editor, file tree, terminal, live preview, and 17 starter templates — all powered by AI.
+              Canvas Studio is the full-featured online IDE on Mumtaz AI. Unlike the single-prompt Canvas Builder, Canvas Studio gives you a complete development environment with a multi-file editor, file tree, terminal, live preview, and 17 starter templates — all powered by AI.
             </p>
           </div>
 
@@ -601,7 +601,7 @@ export default function DocumentationPage() {
             </ul>
           </div>
 
-          <Link href={`https://chat.mumtaz.ai/agents/${agentId}`} className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold transition shadow-lg shadow-blue-500/25">
+          <Link href={`https://${agentId}.mumtaz.ai`} className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-semibold transition shadow-lg shadow-blue-500/25">
             Try {agent.name} Now
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -622,7 +622,7 @@ export default function DocumentationPage() {
       <section className="section-padding bg-gradient-to-r from-brand-600 to-accent-600 text-white">
         <div className="container-custom text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Documentation & Agents</h1>
-          <p className="text-xl opacity-90 max-w-3xl mx-auto">Learn everything about One Last AI and explore our 18 specialized AI agents</p>
+          <p className="text-xl opacity-90 max-w-3xl mx-auto">Learn everything about Mumtaz AI and explore our 18 specialized AI agents</p>
         </div>
       </section>
 

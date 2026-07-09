@@ -219,7 +219,7 @@ export default function AgentManagementPage() {
     if (agentId === 'gencraft-pro') {
       window.location.href = 'https://studio.mumtaz.ai/';
     } else {
-      window.location.href = `https://chat.mumtaz.ai/agents/${agentId}`;
+      window.location.href = `https://${agentId}.mumtaz.ai`;
     }
   };
 
