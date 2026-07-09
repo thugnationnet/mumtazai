@@ -199,15 +199,15 @@ const ALL_PROVIDER_CONFIGS = {
   },
 };
 
-// Build cascade from AGENT_PROVIDER_CASCADE env var.
+// Build cascade from AGENT_PROVIDER_CASCADE env var — read lazily at request time
+// so dotenv has already injected the per-agent .env before the value is resolved.
 // comedy-king.env sets "openai,xai,mistral" → openai is primary for this agent.
 // Shared backend (no env set) defaults to "mistral,xai,openai".
-const _cascadeEnv = (process.env.AGENT_PROVIDER_CASCADE || 'mistral,xai,openai')
-  .split(',').map(s => s.trim()).filter(Boolean);
-const PROVIDER_CASCADE = _cascadeEnv
-  .map(name => ALL_PROVIDER_CONFIGS[name])
-  .filter(Boolean);
-console.log(`[chat-stream] Provider cascade: ${PROVIDER_CASCADE.map(p => p.name).join(' → ')} (from AGENT_PROVIDER_CASCADE=${process.env.AGENT_PROVIDER_CASCADE || 'default'})`);
+function getProviderCascade() {
+  const cascadeEnv = (process.env.AGENT_PROVIDER_CASCADE || 'mistral,xai,openai')
+    .split(',').map(s => s.trim()).filter(Boolean);
+  return cascadeEnv.map(name => ALL_PROVIDER_CONFIGS[name]).filter(Boolean);
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // MODE-SPECIFIC PROVIDER PREFERENCES
@@ -243,6 +243,9 @@ function getCascadeForMode(mode) {
     const resolved = order.map(name => ALL_PROVIDER_CONFIGS[name]).filter(Boolean);
     if (resolved.length > 0) return resolved;
   }
+
+  // Read cascade fresh from env (lazy — dotenv has already run by now)
+  const PROVIDER_CASCADE = getProviderCascade();
 
   // Fall back to hardcoded per-mode preference table
   const preferred = MODE_PREFERRED_PROVIDERS[mode] || [];
