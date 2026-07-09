@@ -787,8 +787,11 @@ function categorizeMemory(fact: string): AutoMemory['category'] {
 
 // ═══════════════════════════════════════════════════════════════════
 // ISOLATED AGENT ROUTING
-// All agents are served by their own dedicated backend process.
-// Nginx routes /api/agent/{agentId}/chat-stream → agent's dedicated port.
+// All agents have dedicated backend processes (ports 4001-4018).
+// On agent subdomains (e.g. ben-sega.mumtaz.ai) nginx routes to the
+// dedicated port via $backend_port map.
+// On the main domain (mumtaz.ai) nginx sends /api/agent/* to UCB (3008)
+// so we fall back to the shared /api/agent/chat-stream endpoint.
 // ═══════════════════════════════════════════════════════════════════
 const ISOLATED_AGENTS = new Set([
   'comedy-king',    // port 4001
@@ -811,8 +814,20 @@ const ISOLATED_AGENTS = new Set([
   'fitness-guru',   // port 4018
 ]);
 
+const NON_AGENT_SUBDOMAINS = new Set([
+  'www', 'chat', 'studio', 'build', 'apps', 'demo', 'editor', 'lab', 'tools', 'community', 'support',
+]);
+
+function isOnAgentSubdomain(): boolean {
+  if (typeof window === 'undefined') return false;
+  const hostname = window.location.hostname;
+  if (!hostname.endsWith('.mumtaz.ai')) return false;
+  const sub = hostname.replace('.mumtaz.ai', '');
+  return !NON_AGENT_SUBDOMAINS.has(sub);
+}
+
 function getChatStreamUrl(agentId: string, mode?: string): string {
-  if (ISOLATED_AGENTS.has(agentId)) {
+  if (isOnAgentSubdomain() && ISOLATED_AGENTS.has(agentId)) {
     if (mode === 'code') return `/api/agent/${agentId}/code-stream`;
     if (mode === 'images') return `/api/agent/${agentId}/images-stream`;
     if (mode === 'search') return `/api/agent/${agentId}/search-stream`;
